@@ -10,9 +10,14 @@
     <title>Title</title>
 </head>
 <body>
-<div class="container text-center" id ="projectshere">
+<div class="container text-center" id ="projectshere"></div>
 
-<div>
+<div class="newBorad" >
+    <a href="javascript:void(0)" class="container text-center" id ="newprojectshere" onclick="newBoard()"></a>
+
+    <input type="text" id="newBoardInput" placeholder="Project Name" style="display: none;">
+    <input type="button" id="save" class="btn btn-default page-scroll bt-lg" value="Save" style="display: none;" onclick="saveNewBoard()">
+</div>
 
 </body>
 </html>

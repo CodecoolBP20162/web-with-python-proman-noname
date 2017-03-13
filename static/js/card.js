@@ -4,30 +4,28 @@
 $(document).ready(function () {
     var cards = JSON.parse(localStorage.getItem("board1"));
     for (var card in cards) {
-        var newDiv = document.createElement("p");
-        var newContent = document.createTextNode(cards[card]);
-        newDiv.appendChild(newContent);
-        var currentDiv = document.getElementById("p1");
-        document.body.insertBefore(newDiv, currentDiv);
+        var newContent = cards[card];
+        var card_button = $('<input type="button" value="'+newContent+'"/>');
+        $("body").append(card_button);
     }
 
 });
 
 function add_card() {
     var cards = JSON.parse(localStorage.getItem("board1"));
-    var length = cards.length()
-    cards[length] = "Card "+length;
-    for (var card in cards) {
-        console.log(cards[card]);
-    }
+    var length = Object.keys(cards).length;
+    newContent = "Card " + eval(length + 1);
+    cards[length + 1] = newContent
+    var card_button = $('<input type="button" value="'+newContent+'"/>');
+    $("body").append(card_button);
     localStorage.setItem("board1", JSON.stringify(cards));
-    window.location.reload(false);
 
 }
 
 function create_example_data() {
+    localStorage.clear();
     var cards = {1: "Card 1", 2: "Card 2", 3: "Card 3"};
     localStorage.setItem("board1", JSON.stringify(cards));
-    window.location.reload(false);
+    location.reload();
 }
     

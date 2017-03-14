@@ -39,25 +39,25 @@ function create_example_data() {
 }
 
 function create_card(content, index) {
-    return $('<div class="col-lg-2" style="width: 200px; height: 300px; background-color: #b44214; ' +
+    return $('<div class="col-xs-2" style="width: 200px; height: 300px; background-color: #b44214; ' +
         'word-wrap:break-word; margin:5px;border-radius:25px">' +
         '<textarea id="textarea' + index + '"readonly maxlength="30" style="width: 160px; height: 230px; background-color: #b44214; ' +
         'word-wrap:break-word; margin:5px; font-size: 30px; border: none; resize: none;">' + content + '</textarea>' +
         '<div class="button_group" style="position: absolute; bottom: 10px; right: 50px">' +
-        '<button style="background-color: transparent; border: none;"><img src="../static/css/pencil_and_paper-512.png" height="30" width="30" onclick="edit_card(' + index + ')"></button>' +
-        '<button style="background-color: transparent; border: none;"><img src="../static/css/save_icon.png" height="30" width="30" onclick="save_card(' + index + ')"></button>' +
+        '<img src="../static/css/pencil_and_paper-512.png" height="30" width="30" onclick="edit_card(' + index + ')">' +
+        '<img src="../static/css/save_icon.png" height="30" width="30" onclick="save_card(' + index + ')">' +
         '</div> </div>');
 }
 
 function create_add_card() {
-    return $('<div class="col-lg-2" style="width: 200px; height: 300px; background-color: #b44214; ' +
+    return $('<div class="col-xs-2" style="width: 200px; height: 300px; background-color: #b44214; ' +
         'margin:5px;border-radius:25px">' +
             '<img src="../static/css/plus.png" height="150" width="100" onclick="add_card()" style="position: absolute; left: 50px; top: 75px;">'+
         '</div>');
 }
 
 function edit_card(index) {
-    textarea = "textarea" + index
+    textarea = "textarea" + index;
     document.getElementById(textarea).readOnly = false;
     document.getElementById(textarea).focus();
 }

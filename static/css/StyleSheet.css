@@ -1,6 +1,8 @@
 body {
     font-family: sans-serif;
-    background: deepskyblue;
+    background: darkslategrey;
+    padding-top: 100px;
+    padding-left: 25px;
 }
 
 .card {
@@ -10,15 +12,14 @@ body {
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     transition: 0.3s;
     border-radius: 5px; /* 5px rounded corners */
-    height: 50px;
-    width: 100px;
-    background-color: white;
-
-    margin-right: 20px;
-    margin-left: 20px;
-    margin-top: 20px;
-    margin-bottom: 20px;
+    height: 100px;
+    width: 150px;
+    background-color: #dfd7ca;
+    color: #204d74;
+    font-weight: bold;
+    padding: 10px;
 }
+
 
 /* On mouse-over, add a deeper shadow */
 .card:hover {
@@ -28,6 +29,8 @@ body {
 /* Add some padding inside the card container */
 .container {
     padding: 10px 10px;
+    text-overflow: ellipsis;
+
 }
 
 .row {
@@ -43,7 +46,22 @@ body {
     display: inline-block;
     width: 150px;
     height: 100px;
-    padding: 10px;
-    border: 1px solid #aaaaaa;
+    border: 0px solid #aaaaaa;
     opacity: 40;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+
+}
+
+nav{
+    font-family: Verdana;
+}
+
+.newBoard{
+    float:right;
+    margin-right: 25px;
+    margin-left: 10px;
 }

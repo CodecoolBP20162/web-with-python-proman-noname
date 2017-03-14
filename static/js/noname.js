@@ -32,17 +32,20 @@ function Projects() {
     };
 };
 
-/*
-var projects = new Projects();
-console.log(projects.boardDict.length);
-projects.add("NoName");
-console.log(projects.dictlen);
-projects.add("SpaceShip");
-projects.add("Codezero");
-console.log(projects.dictlen);
-projects.add("Nuclear missile");
-console.log(projects.boardDict);
-localStorage.setItem("projects", JSON.stringify(projects));*/
+var exampleData=function () {
+    var projects = new Projects();
+    console.log(projects.boardDict.length);
+    projects.add("NoName");
+    console.log(projects.dictlen);
+    projects.add("SpaceShip");
+    projects.add("Codezero");
+    console.log(projects.dictlen);
+    projects.add("Nuclear missile");
+    console.log(projects.boardDict);
+    localStorage.setItem("projects", JSON.stringify(projects));
+
+}
+
 
 
 var load_projects = function () {
@@ -60,14 +63,20 @@ var load_projects = function () {
         $("#" + board).append(htmltag);
     };
 
-    $("#newprojectshere").append("<div class='card' >New Board</div>");
+    $("#newprojectshere").append("<div class='card' >&times;</div>");
 
 };
 
 var newBoard = function () {
     document.getElementById('newBoardInput').style.display = 'flex';
     document.getElementById('save').style.display = 'flex';
+    $("p").slideDown();
 };
+
+var hide = function(){
+    document.getElementById('newBoardInput').style.display = 'none';
+    document.getElementById('save').style.display = 'none';
+}
 
 var saveNewBoard = function () {
     var newBoard = $('#newBoardInput').val();

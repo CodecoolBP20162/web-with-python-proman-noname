@@ -7,13 +7,14 @@ $(document).ready(function () {
     var length = eval(Object.keys(cards).length+1);
     var title = $('<h1>' + board_title + '</h1>');
     $("body").prepend(title)
+    var add_card = create_add_card();
+    $("#container").append(add_card);
     for (var card in cards) {
         var text = cards[card];
         var card = create_card(text, card);
         $("#container").append(card);
     }
-    var card = create_card("Add card", length);
-    $("#container").append(card);
+
 });
 
 function add_card() {
@@ -46,6 +47,13 @@ function create_card(content, index) {
         '<button style="background-color: transparent; border: none;"><img src="../static/css/pencil_and_paper-512.png" height="30" width="30" onclick="edit_card(' + index + ')"></button>' +
         '<button style="background-color: transparent; border: none;"><img src="../static/css/save_icon.png" height="30" width="30" onclick="save_card(' + index + ')"></button>' +
         '</div> </div>');
+}
+
+function create_add_card() {
+    return $('<div class="col-lg-2"  align="center" style="width: 200px; height: 300px; background-color: #b44214; ' +
+        'margin:5px;border-radius:25px">' +
+            '<img src="../static/css/plus.png" height="150" width="100" onclick="add_card()">'+
+        '</div>');
 }
 
 function edit_card(index) {

@@ -33,16 +33,16 @@ function Projects() {
 };
 
 /*
-var projects = new Projects();
-console.log(projects.boardDict.length);
-projects.add("NoName");
-console.log(projects.dictlen);
-projects.add("SpaceShip");
-projects.add("Codezero");
-console.log(projects.dictlen);
-projects.add("Nuclear missile");
-console.log(projects.boardDict);
-localStorage.setItem("projects", JSON.stringify(projects));*/
+ var projects = new Projects();
+ console.log(projects.boardDict.length);
+ projects.add("NoName");
+ console.log(projects.dictlen);
+ projects.add("SpaceShip");
+ projects.add("Codezero");
+ console.log(projects.dictlen);
+ projects.add("Nuclear missile");
+ console.log(projects.boardDict);
+ localStorage.setItem("projects", JSON.stringify(projects));*/
 
 
 var load_projects = function () {
@@ -56,9 +56,10 @@ var load_projects = function () {
         var boardname = boardsObject.boardDict[board].name;
         $("#projectshere").append("<div class='cardplace'    id=" + board + "></div>");
 
-        var htmltag = "<div id=" + boardname + " class='card' draggable='true' ondrop='drop(event)' ondragover='allowDrop(event)' ondragenter='dragenter(event)' ondragstart='drag(event)'>" + boardname + "</div>"
+        var htmltag = "<div id=" + boardname + " class='card' draggable='true'  ondragover='allowDrop(event)' ondragenter='dragenter(event)' ondragstart='drag(event)' ondragend='dragend(event)'>" + boardname + "</div>"
         $("#" + board).append(htmltag);
-    };
+    }
+    ;
 
     $("#newprojectshere").append("<div class='card' >New Board</div>");
 
@@ -86,42 +87,39 @@ var replace = function (first, second) {
 $(document).ready(function () {
     load_projects();
 });
-var dragged=Node;
+var dragged = Node;
 function allowDrop(ev) {
     ev.preventDefault();
 
 }
 
 function dragenter(ev) {
-    var contid=ev.target.parentNode.id;
-    var targetid=dragged.parentNode.id;
-    if (ev.target.parentNode===dragged.parentNode) {ev.preventDefault();}
+    var contid = ev.target.parentNode.id;
+    var targetid = dragged.parentNode.id;
+    if (ev.target.parentNode === dragged.parentNode) {
+        ev.preventDefault();
+    }
     else {
         ev.preventDefault();
-        console.log(ev.target.parentNode);
-        ev.target.parentNode.replaceChild(dragged,ev.target);
+        ev.target.parentNode.replaceChild(dragged, ev.target);
 
         $('#' + targetid).empty();
         $('#' + targetid).append(ev.target);
+        ev.target.style.opacity=1;
         replace(contid, targetid);
     };
+
+}
+
+function dragend(ev) {
+    ev.target.style.opacity=1;
 
 }
 
 function drag(ev) {
     ev.dataTransfer.setData("boardid", ev.target.id);
     ev.dataTransfer.setData("contid", ev.target.parentNode.id);
-    dragged=ev.target;
+    dragged =ev.target;
+    ev.target.style.opacity=0;
 
-}
-
-function drop(ev) {
-    ev.preventDefault();
-   /* var data = ev.dataTransfer.getData("boardid");
-    var contid = ev.dataTransfer.getData("contid");
-    var targetid=ev.target.parentNode.id;
-    ev.target.parentNode.replaceChild(document.getElementById(data),ev.target);
-    $('#' + contid).empty();
-    $('#' + contid).append(ev.target);
-    replace(contid, targetid);*/
-}
+};

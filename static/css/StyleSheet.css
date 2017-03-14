@@ -10,14 +10,9 @@ body {
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     transition: 0.3s;
     border-radius: 5px; /* 5px rounded corners */
-    height: 50px;
-    width: 100px;
+    height: 100px;
+    width: 200px;
     background-color: white;
-
-    margin-right: 20px;
-    margin-left: 20px;
-    margin-top: 20px;
-    margin-bottom: 20px;
 }
 
 /* On mouse-over, add a deeper shadow */
@@ -41,9 +36,12 @@ body {
 
 .cardplace {
     display: inline-block;
-    width: 150px;
+    width: 200px;
     height: 100px;
-    padding: 10px;
+    margin-left: 20px;
     border: 1px solid #aaaaaa;
     opacity: 40;
+    background: darkblue;
+    margin-bottom: 20px;
 }
+

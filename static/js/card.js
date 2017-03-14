@@ -38,10 +38,10 @@ function create_example_data() {
 
 function create_card(content) {
     return $('<div class="col-lg-2" style="width: 200px; height: 300px; background-color: #b44214; ' +
-        'margin: auto; word-wrap:break-word">' +
+        'margin: auto; word-wrap:break-word;margin:5px 5px 5px 5px;border-radius: 25px">' +
         '<h2>' + content + '</h2>' +
-        '<div class="button_group" style="position: absolute; bottom: 0; right: 0">' +
-        '<button class="w3-button w3-green">Edit</button>' +
-        '<button class="w3-button w3-red">Save</button>' +
+        '<div class="button_group" style="position: absolute; bottom: 10px; right: 50px">' +
+        '<button style="margin:5px" class="btn btn-success">Edit</button>' +
+        '<button class="btn btn-info">Save</button>' +
         '</div> </div>');
 }

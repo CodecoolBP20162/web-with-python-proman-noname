@@ -46,10 +46,11 @@ body {
 
 .cardplace {
     display: inline-block;
-    width: 200px;
+    width: 150px;
     height: 100px;
     border: 0px solid #aaaaaa;
     opacity: 40;
+    background: darkkhaki;
     margin-left: 10px;
     margin-right: 10px;
     margin-top: 10px;
@@ -66,5 +67,9 @@ nav{
     float:right;
     margin-right: 25px;
     margin-left: 10px;
+}
+.new {
+     width: 150px;
+    height: 300px;
 }
 

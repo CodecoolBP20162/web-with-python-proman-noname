@@ -46,7 +46,7 @@ var exampleData=function () {
 
 }
 
-
+//exampleData();
 
 var load_projects = function () {
     var boardsObject = JSON.parse(localStorage.getItem("projects"));
@@ -64,7 +64,9 @@ var load_projects = function () {
     }
     ;
 
-    $("#newprojectshere").append("<div class='card' >&times;</div>");
+    $("#newprojectshere").append("<div class='card new' id='newboardcard'>&times;</div>");
+    $("#newboardcard").append("<input type='text' id='newBoardInput' placeholder='Project Name' style='display: none;' required>");
+    $("#newboardcard").append("<input type='button' id='save' class='btn btn-default page-scroll bt-lg' value='Save' style='display: none;' onclick='saveNewBoard(),hide()'>");
 
 };
 

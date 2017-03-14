@@ -33,16 +33,16 @@ function Projects() {
 };
 
 /*
- var projects=new Projects();
-  console.log(projects.boardDict.length);
- projects.add("NoName");
-  console.log(projects.dictlen);
- projects.add("SpaceShip");
- projects.add("Codezero");
-  console.log(projects.dictlen);
- projects.add("Nuclear missile");
- console.log(projects.boardDict);
- localStorage.setItem("projects",JSON.stringify(projects));*/
+var projects = new Projects();
+console.log(projects.boardDict.length);
+projects.add("NoName");
+console.log(projects.dictlen);
+projects.add("SpaceShip");
+projects.add("Codezero");
+console.log(projects.dictlen);
+projects.add("Nuclear missile");
+console.log(projects.boardDict);
+localStorage.setItem("projects", JSON.stringify(projects));*/
 
 
 var load_projects = function () {
@@ -52,10 +52,15 @@ var load_projects = function () {
 
 
     for (var board in boardsObject.boardDict) {
-        $("#projectshere").append("<div class='card'>" + boardsObject.boardDict[board].name + "</div>");
+
+        var boardname = boardsObject.boardDict[board].name;
+        $("#projectshere").append("<div class='cardplace'    id=" + board + "></div>");
+
+        var htmltag = "<div id=" + boardname + " class='card' draggable='true' ondrop='drop(event)' ondragover='allowDrop(event)' ondragstart='drag(event)'>" + boardname + "</div>"
+        $("#" + board).append(htmltag);
     };
 
-    $("#newprojectshere").append("<div class='card'>New Board</div>");
+    $("#newprojectshere").append("<div class='card' >New Board</div>");
 
 };
 
@@ -71,13 +76,33 @@ var saveNewBoard = function () {
     load_projects();
 };
 
-var replace = function () {
+var replace = function (first, second) {
     var projects = new Projects();
     projects.get();
-    projects.replace(0, 1);
-    load_projects();
+    projects.replace(first, second);
+    //load_projects();
 };
 
 $(document).ready(function () {
     load_projects();
 });
+
+function allowDrop(ev) {
+    ev.preventDefault();
+}
+
+function drag(ev) {
+    ev.dataTransfer.setData("boardid", ev.target.id);
+    ev.dataTransfer.setData("contid", ev.target.parentNode.id);
+}
+
+function drop(ev) {
+    ev.preventDefault();
+    var data = ev.dataTransfer.getData("boardid");
+    var contid = ev.dataTransfer.getData("contid");
+    var targetid=ev.target.parentNode.id;
+    ev.target.parentNode.replaceChild(document.getElementById(data),ev.target);
+    $('#' + contid).empty();
+    $('#' + contid).append(ev.target);
+    replace(contid, targetid);
+}

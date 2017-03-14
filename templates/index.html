@@ -4,8 +4,6 @@
 <link href="{{ url_for('static', filename='css/StyleSheet.css') }}" rel="stylesheet">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src=" {{ url_for('static', filename='js/noname.js') }} " type="text/javascript"></script>
-<script src="cdnjs.cloudflare.com/ajax/libs/interact.js/1.2.6/interact.min.js"></script>
-<script src="cdn.jsdelivr.net/interact.js/1.2.6/interact.min.js"></script>
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -13,12 +11,14 @@
 <body>
 <div class="container text-center" id ="projectshere"></div>
 
-<div class="newBorad" >
+<div class="newBoard" >
     <a href="javascript:void(0)" class="container text-center" id ="newprojectshere" onclick="newBoard()"></a>
 
     <input type="text" id="newBoardInput" placeholder="Project Name" style="display: none;">
     <input type="button" id="save" class="btn btn-default page-scroll bt-lg" value="Save" style="display: none;" onclick="saveNewBoard()">
 </div>
  <input type="button" class="btn btn-default" value="Csere" onclick="replace()">
+
+
 </body>
 </html>

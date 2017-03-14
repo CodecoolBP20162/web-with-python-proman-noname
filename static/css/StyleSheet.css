@@ -37,3 +37,13 @@ body {
     margin-top: 20px;
     margin-bottom: 20px;
 }
+
+
+.cardplace {
+    display: inline-block;
+    width: 150px;
+    height: 100px;
+    padding: 10px;
+    border: 1px solid #aaaaaa;
+    opacity: 40;
+}

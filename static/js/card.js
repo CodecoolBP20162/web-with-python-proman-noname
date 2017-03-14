@@ -41,7 +41,7 @@ function create_card(content) {
         'margin: auto; word-wrap:break-word;margin:5px 5px 5px 5px;border-radius: 25px">' +
         '<h2>' + content + '</h2>' +
         '<div class="button_group" style="position: absolute; bottom: 10px; right: 50px">' +
-        '<button style="margin:5px" class="btn btn-success">Edit</button>' +
-        '<button class="btn btn-info">Save</button>' +
+        '<button style="background-color: transparent; border: none;"><img src="../static/css/pencil_and_paper-512.png" height="30" width="30"></button>' +
+        '<button style="background-color: transparent; border: none;"><img src="../static/css/save_icon.png" height="30" width="30"></button>' +
         '</div> </div>');
 }

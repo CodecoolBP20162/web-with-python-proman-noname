@@ -50,9 +50,9 @@ function create_card(content, index) {
 }
 
 function create_add_card() {
-    return $('<div class="col-lg-2"  align="center" style="width: 200px; height: 300px; background-color: #b44214; ' +
+    return $('<div class="col-lg-2" style="width: 200px; height: 300px; background-color: #b44214; ' +
         'margin:5px;border-radius:25px">' +
-            '<img src="../static/css/plus.png" height="150" width="100" onclick="add_card()">'+
+            '<img src="../static/css/plus.png" height="150" width="100" onclick="add_card()" style="position: absolute; left: 50px; top: 75px;">'+
         '</div>');
 }
 

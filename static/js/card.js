@@ -43,8 +43,8 @@ function create_card(content, index) {
         '<textarea id="textarea' + index + '"readonly maxlength="30" style="width: 160px; height: 230px; background-color: #b44214; ' +
         'word-wrap:break-word; margin:5px; font-size: 30px; border: none; resize: none;">' + content + '</textarea>' +
         '<div class="button_group" style="position: absolute; bottom: 10px; right: 50px">' +
-        '<button style="margin:5px" class="btn btn-success" onclick="edit_card(' + index + ')">Edit</button>' +
-        '<button style="margin:5px" class="btn btn-info" onclick="save_card(' + index + ')">Save</button>' +
+        '<button style="background-color: transparent; border: none;"><img src="../static/css/pencil_and_paper-512.png" height="30" width="30" onclick="edit_card(' + index + ')"></button>' +
+        '<button style="background-color: transparent; border: none;"><img src="../static/css/save_icon.png" height="30" width="30" onclick="save_card(' + index + ')"></button>' +
         '</div> </div>');
 }
 

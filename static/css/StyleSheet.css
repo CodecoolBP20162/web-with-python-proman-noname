@@ -13,11 +13,13 @@ body {
     transition: 0.3s;
     border-radius: 5px; /* 5px rounded corners */
     height: 100px;
+
     width: 150px;
     background-color: #dfd7ca;
     color: #204d74;
     font-weight: bold;
     padding: 10px;
+
 }
 
 
@@ -44,7 +46,7 @@ body {
 
 .cardplace {
     display: inline-block;
-    width: 150px;
+    width: 200px;
     height: 100px;
     border: 0px solid #aaaaaa;
     opacity: 40;
@@ -65,3 +67,4 @@ nav{
     margin-right: 25px;
     margin-left: 10px;
 }
+

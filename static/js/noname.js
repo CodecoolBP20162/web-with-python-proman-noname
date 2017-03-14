@@ -95,9 +95,7 @@ var replace = function (first, second) {
     //load_projects();
 };
 
-$(document).ready(function () {
-    load_projects();
-});
+
 var dragged = Node;
 function allowDrop(ev) {
     ev.preventDefault();
@@ -134,3 +132,7 @@ function drag(ev) {
     ev.target.style.opacity=0;
 
 };
+
+$(document).ready(function () {
+    load_projects();
+});

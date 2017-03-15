@@ -65,15 +65,14 @@ var load_projects = function () {
     ;
 
     $("#newprojectshere").append("<div class='card new' id='newboardcard'>&times;</div>");
-    $("#newboardcard").append("<input type='text' id='newBoardInput' placeholder='Project Name' style='display: none;' required>");
-    $("#newboardcard").append("<input type='button' id='save' class='btn btn-default page-scroll bt-lg' value='Save' style='display: none;' onclick='saveNewBoard(),hide()'>");
+    $("#newboardcard").append("<input type='text' class='inputBox' id='newBoardInput' size='12' placeholder='Project Name' required>");
+    $("#newboardcard").append("<input type='button' id='save' class='inputButton' value='Save' onclick='saveNewBoard(),hide()'>");
 
 };
 
 var newBoard = function () {
     document.getElementById('newBoardInput').style.display = 'flex';
     document.getElementById('save').style.display = 'flex';
-    $("p").slideDown();
 };
 
 var hide = function(){
@@ -134,5 +133,7 @@ function drag(ev) {
 };
 
 $(document).ready(function () {
+    /*localStorage.clear();*/
+    /*exampleData();*/
     load_projects();
 });

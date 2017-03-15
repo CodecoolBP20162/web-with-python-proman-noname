@@ -5,25 +5,20 @@ $(document).ready(function () {
     var board_title = localStorage.getItem("board");
     var cards = JSON.parse(localStorage.getItem(board_title));
     var length = eval(Object.keys(cards).length+1);
-    var title = $('<h1>' + board_title + '</h1>');
-    $("body").prepend(title)
-    var add_card = create_add_card();
-    $("#container").append(add_card);
-    var add_card = $("#add_card");
-        add_card.animate({height: '300px', opacity: '0.3'}, "slow");
-        add_card.animate({opacity: '1'},"slow");
+    $("body").prepend($('<h1>' + board_title + '</h1>'))
+    $("#container").append(create_add_card_card());
+    $("#add_card").animate({height: '300px', opacity: '0.3'}, 400);
+    $("#add_card").animate({opacity: '1'},"slow");
     for (var card_number in cards) {
         var text = cards[card_number];
-        var card = create_card(text, card_number);
-        $("#container").append(card);
-        var card = $("#card"+card_number);
-        document.getElementById("card"+card_number).style.width = "200px";
-        card.animate({height: '300px', opacity: '0.3'}, "slow");
-        card.animate({opacity: '1'},"slow");
+        $("#container").append(create_card(text, card_number));
+        $("#card"+card_number).width ("170");
+        $("#card"+card_number).animate({height: '300px', opacity: '0.3'}, 400);
+        $("#card"+card_number).animate({opacity: '1'},"slow");
 
     }
-
 });
+
 
 function add_card() {
     var board_title = localStorage.getItem("board");
@@ -32,19 +27,17 @@ function add_card() {
     var index = eval(length + 1)
     text = "";
     cards[length + 1] = text
-    var card = create_card(text, index);
-    $("#container").append(card);
-    var card = $("#card"+index);
-    card.animate({height: '300px', opacity: '0.3'}, "slow");
-    card.animate({width: '200px', opacity: '0.3'}, "slow");
-    card.animate({opacity: '1'},"slow", function() {
+    $("#container").append(create_card(text, index));
+    $("#card"+index).animate({height: '300px', opacity: '0.3'}, "fast");
+    $("#card"+index).animate({width: '200px', opacity: '0.3'}, "fast");
+    $("#card"+index).animate({opacity: '1'},"slow", function() {
     localStorage.setItem(board_title, JSON.stringify(cards));
-    textarea = "textarea" + index;
-    document.getElementById(textarea).readOnly = false;
-    document.getElementById(textarea).focus();
-    document.getElementById("edit_card"+index).remove();
+    $("#textarea"+index).prop("readOnly",false);
+    $("#textarea"+index).focus();
+    $("#edit_card"+index).remove();
     $("#card"+index).append('<img id="save_card'+index+'" src="../static/css/save_icon.png" height="30" width="30" onclick="save_card(' + index + ')" style="position: absolute; left: 90px; top: 250px;">')
     });
+
 
 }
 
@@ -65,7 +58,7 @@ function create_card(content, index) {
         '</div> </div>');
 }
 
-function create_add_card() {
+function create_add_card_card() {
     return $('<div class="col-xs-2" id="add_card" onclick="add_card()" style="width: 200px; height: 1px; background-color: #b44214; ' +
         'margin:5px;border-radius:25px ;opacity: 0.3">' +
         '<h2 align="center" style="font-size: 30px">Add new card</h2>'+
@@ -74,26 +67,24 @@ function create_add_card() {
 }
 
 function edit_card(index) {
-    textarea = "textarea" + index;
-    document.getElementById(textarea).readOnly = false;
-    document.getElementById(textarea).focus();
-    $( "#edit_card"+index).fadeOut( "slow", function() {
-        document.getElementById("edit_card"+index).remove();
+    $("#textarea"+index).prop("readOnly",false);
+    $("#textarea"+index).focus();
+    $( "#edit_card"+index).fadeOut( 400, function() {
+        $("#edit_card"+index).remove();
         $("#card"+index).append('<img id="save_card'+index+'" src="../static/css/save_icon.png" height="30" width="30" onclick="save_card(' + index + ')" style="position: absolute; left: 90px; top: 250px;">')
     });
 
 }
 
 function save_card(index) {
-    textarea = "textarea" + index
-    document.getElementById(textarea).readOnly = true;
-    var new_text = document.getElementById(textarea).value;
+    $("#textarea"+index).prop("readOnly",true);
+    var new_text = $("#textarea"+index).val();
     var board_title = localStorage.getItem("board");
     var cards = JSON.parse(localStorage.getItem(board_title));
     cards[index] = new_text;
     localStorage.setItem(board_title, JSON.stringify(cards));
-    $( "#save_card"+index).fadeOut( "slow", function() {
-        document.getElementById("save_card"+index).remove();
+    $( "#save_card"+index).fadeOut( 400, function() {
+        $("#save_card"+index).remove();
         $("#card"+index).append('<img id="edit_card'+index+'" src="../static/css/pencil_and_paper-512.png" height="30" width="30" onclick="edit_card(' + index + ')" style="position: absolute; left: 90px; top: 250px;">')
     });
 

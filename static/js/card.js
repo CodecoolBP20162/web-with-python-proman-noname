@@ -32,7 +32,7 @@ function show_board() {
     var cards = get_data("cards");
 
     function show_title() {
-        $("body").prepend($('<h1>' + board_title + '</h1>'));
+        $("body").prepend($('<h1>' + board_title + '</h1><h5 id="haha"></h5>'));
     }
 
     function show_create_card_card() {
@@ -85,6 +85,8 @@ function add_card() {
 
         create_new_card();
         show_new_card();
+    } else {
+        show_popup()
     }
 }
 
@@ -136,4 +138,11 @@ function save_card(index) {
     save_card_data(index, new_text);
     switch_to_edit_button();
     can_add = true;
+}
+
+function show_popup() {
+    $("#bsalert").remove()
+
+    $("#haha").append('<div class="alert alert-info fade in" id="bsalert"> <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> <strong>Fill out and save the last card.</strong></div>').hide().fadeIn(1000).fadeOut(1500);
+
 }

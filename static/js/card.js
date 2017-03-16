@@ -3,79 +3,137 @@
  */
 
 
-function show_board() {
-    $("#projectshere").empty();
+var can_add = true;
+
+function get_data(what_to_return) {
     var board_title = localStorage.getItem("board");
-    var cards = JSON.parse(localStorage.getItem(board_title));
-    console.log(cards);
-
-    var title = $('<h1>' + board_title + '</h1>');
-
-
-
-    $("body").prepend(title);
-    console.log(cards);
-    var add_card = create_add_card();
-    $("#container").append(add_card);
-    for (var card in cards) {
-        var text = cards[card];
-        var card = create_card(text, card);
-        $("#container").append(card);
+    switch (what_to_return) {
+        case "board_title":
+            return board_title;
+            break;
+        case "cards":
+            return JSON.parse(localStorage.getItem(board_title));
+            break;
     }
-
 }
 
-function add_card() {
-    var board_title = localStorage.getItem("board");
-    var cards = JSON.parse(localStorage.getItem(board_title));
-    var length = Object.keys(cards).length;
-    var index = eval(length + 1);
-    text = "Card " + index;
-    cards[length + 1] = text;
-    var card = create_card(text, index);
-    $("#container").append(card);
+function save_card_data(index, new_text) {
+    var board_title = get_data("board_title");
+    var cards = get_data("cards");
+    cards[index] = new_text;
     localStorage.setItem(board_title, JSON.stringify(cards));
+}
 
+function show_board() {
+    $("#projectshere").empty();
+    $("#newprojectshere").empty();
+
+    var board_title = get_data("board_title");
+    var cards = get_data("cards");
+
+    function show_title() {
+        $("body").prepend($('<h1>' + board_title + '</h1>'));
+    }
+
+    function show_create_card_card() {
+        $("#container").append(create_add_card_card());
+        $("#add_card").animate({height: '300px', opacity: '0.3'}, 400);
+        $("#add_card").animate({opacity: '1'}, "slow");
+    }
+
+    function show_cards() {
+        for (var card_number in cards) {
+            var text = cards[card_number];
+            $("#container").append(create_card(text, card_number));
+            $("#card" + card_number).width("170");
+            $("#card" + card_number).animate({height: '300px', opacity: '0.3'}, 400);
+            $("#card" + card_number).animate({opacity: '1'}, "slow");
+        }
+    }
+
+    show_title();
+    show_create_card_card();
+    show_cards()
+}
+
+
+
+function add_card() {
+    if (can_add === true) {
+        can_add = false;
+        var board_title = get_data("board_title");
+        var cards = get_data("cards");
+        var length = Object.keys(cards).length;
+        var index = eval(length + 1)
+
+        function create_new_card() {
+            text = "";
+            cards[length + 1] = text;
+            $("#container").append(create_card(text, index));
+        }
+
+        function show_new_card() {
+            $("#card" + index).animate({height: '300px', opacity: '0.3'}, "fast");
+            $("#card" + index).animate({width: '200px', opacity: '0.3'}, "fast");
+            $("#card" + index).animate({opacity: '1'}, "slow", function () {
+                $("#textarea" + index).prop("readOnly", false);
+                $("#textarea" + index).focus();
+                $("#edit_card" + index).remove();
+                $("#card" + index).append('<img class ="edit_save_button" id="save_card' + index + '" src="../static/css/save_icon.png" onclick="save_card(' + index + ')">')
+            });
+        }
+
+        create_new_card();
+        show_new_card();
+    }
 }
 
 function create_example_data() {
     localStorage.clear();
     localStorage.setItem("board", "board_name_from_boards");
-    var cards = {1: "Card 1", 2: "Card 2", 3: "Card 3"};
+    var cards = {1: "Card 1,Task1", 2: "Card 2,Task2", 3: "Card 3,Task3"};
     localStorage.setItem("board_name_from_boards", JSON.stringify(cards));
     location.reload();
 }
 
 function create_card(content, index) {
-    return $('<div class="col-lg-2" style="width: 200px; height: 300px; background-color: #b44214; ' +
-        'word-wrap:break-word; margin:5px;border-radius:25px">' +
-        '<textarea id="textarea' + index + '"readonly maxlength="30" style="width: 160px; height: 230px; background-color: #b44214; ' +
-        'word-wrap:break-word; margin:5px; font-size: 30px; border: none; resize: none;">' + content + '</textarea>' +
-        '<div class="button_group" style="position: absolute; bottom: 10px; right: 50px">' +
-        '<button class="buttonsave"><img src="../static/css/pencil_and_paper-512.png" height="30" width="30" onclick="edit_card(' + index + ')"></button>' +
-        '<button class="buttonsave"><img src="../static/css/save_icon.png" height="30" width="30" onclick="save_card(' + index + ')"></button>' +
+
+    return $('<div id="card' + index + '" class="col-xs-2 new1_col-xs-2">' +
+        '<textarea class="textarea" maxlength=30 readonly id="textarea' + index + '">' + content + '</textarea>' +
+        '<img class="edit_save_button" id="edit_card' + index + '" src="../static/css/pencil_and_paper-512.png" onclick="edit_card(' + index + ')">' +
         '</div> </div>');
 }
 
-function create_add_card() {
-    return $('<div class="col-lg-2" style="width: 200px; height: 300px; background-color: #b44214; ' +
-        'margin:5px;border-radius:25px">' +
-            '<img src="../static/css/plus.png" height="150" width="100" onclick="add_card()" style="position: absolute; left: 50px; top: 75px;">'+
+function create_add_card_card() {
+    return $('<div class="col-xs-2 new2_col-xs-2"  id="add_card" onclick="add_card()">' +
+        '<h2 class="h2">Add new card</h2>' +
+        '<img class="plus_image "src="../static/css/plus.png">' +
         '</div>');
 }
 
 function edit_card(index) {
-    textarea = "textarea" + index;
-    document.getElementById(textarea).readOnly = false;
-    document.getElementById(textarea).focus();
+
+    $("#textarea" + index).prop("readOnly", false);
+    $("#textarea" + index).focus();
+    $("#edit_card" + index).fadeOut(400, function () {
+        $("#edit_card" + index).remove();
+        $("#card" + index).append('<img class="edit_save_button" id="save_card' + index + '" src="../static/css/save_icon.png" onclick="save_card(' + index + ')">');
+    });
+
 }
 
 function save_card(index) {
-    textarea = "textarea" + index;
-    document.getElementById(textarea).readOnly = true;
-    var new_text = document.getElementById(textarea).value;
-    var board_title = localStorage.getItem("board");
-    var cards = JSON.parse(localStorage.getItem(board_title));
-    cards[index] = new_text;
-    localStorage.setItem(board_title, JSON.stringify(cards));
+    var new_text = $("#textarea" + index).val();
+
+    function switch_to_edit_button() {
+        $("#textarea" + index).prop("readOnly", true);
+        $("#save_card" + index).fadeOut(400, function () {
+            $("#save_card" + index).remove();
+            $("#card" + index).append('<img class="edit_save_button" id="edit_card' + index + '" src="../static/css/pencil_and_paper-512.png" onclick="edit_card(' + index + ')">');
+        });
+    }
+
+    save_card_data(index, new_text);
+    switch_to_edit_button();
+    can_add = true;
 }

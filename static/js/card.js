@@ -1,9 +1,12 @@
 /**
  * Created by peter on 2017.03.13..
  */
-$(document).ready(function () {
+function showBoard() {
     var board_title = localStorage.getItem("board");
+    console.log(board_title);
     var cards = JSON.parse(localStorage.getItem(board_title));
+    console.log(cards);
+    /*
     var length = eval(Object.keys(cards).length+1);
     var title = $('<h1>' + board_title + '</h1>');
     $("body").prepend(title)
@@ -14,8 +17,9 @@ $(document).ready(function () {
         var card = create_card(text, card);
         $("#container").append(card);
     }
+    */
 
-});
+};
 
 function add_card() {
     var board_title = localStorage.getItem("board");

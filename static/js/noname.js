@@ -9,7 +9,9 @@ function Board(name) {
 function Projects() {
     this.boardDict = {};
     this.add = function (name) {
-        this.boardDict[Object.keys(this.boardDict).length] = new Board(name);
+        this.boardDict[Object.keys(this.boardDict).length] = name;
+        var board=new Board(name);
+        
 
     };
     this.get = function () {
@@ -138,6 +140,6 @@ $(document).ready(function () {
 function addClick() {
     $(".card").bind("click",function () {
         localStorage.setItem("board",this.id);
-        show_board();
+        showBoard();
     })
 }

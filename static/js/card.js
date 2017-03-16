@@ -1,12 +1,15 @@
 /**
  * Created by peter on 2017.03.13..
  */
-$(document).ready(function () {
-    var board_title = localStorage.getItem("board");
-    var cards = JSON.parse(localStorage.getItem(board_title));
-    var length = eval(Object.keys(cards).length+1);
-    var title = $('<h1>' + board_title + '</h1>');
-    $("body").prepend(title)
+
+
+function show_board(board) {
+    $("#projectshere").empty();
+
+    var title = $('<h1>' + board.name + '</h1>');
+    var cards=board["cards"];
+    $("body").prepend(title);
+    console.log(cards);
     var add_card = create_add_card();
     $("#container").append(add_card);
     for (var card in cards) {
@@ -14,16 +17,15 @@ $(document).ready(function () {
         var card = create_card(text, card);
         $("#container").append(card);
     }
-
-});
+}
 
 function add_card() {
     var board_title = localStorage.getItem("board");
     var cards = JSON.parse(localStorage.getItem(board_title));
     var length = Object.keys(cards).length;
-    var index = eval(length + 1)
+    var index = eval(length + 1);
     text = "Card " + index;
-    cards[length + 1] = text
+    cards[length + 1] = text;
     var card = create_card(text, index);
     $("#container").append(card);
     localStorage.setItem(board_title, JSON.stringify(cards));
@@ -44,8 +46,8 @@ function create_card(content, index) {
         '<textarea id="textarea' + index + '"readonly maxlength="30" style="width: 160px; height: 230px; background-color: #b44214; ' +
         'word-wrap:break-word; margin:5px; font-size: 30px; border: none; resize: none;">' + content + '</textarea>' +
         '<div class="button_group" style="position: absolute; bottom: 10px; right: 50px">' +
-        '<button style="background-color: transparent; border: none;"><img src="../static/css/pencil_and_paper-512.png" height="30" width="30" onclick="edit_card(' + index + ')"></button>' +
-        '<button style="background-color: transparent; border: none;"><img src="../static/css/save_icon.png" height="30" width="30" onclick="save_card(' + index + ')"></button>' +
+        '<button class="buttonsave"><img src="../static/css/pencil_and_paper-512.png" height="30" width="30" onclick="edit_card(' + index + ')"></button>' +
+        '<button class="buttonsave"><img src="../static/css/save_icon.png" height="30" width="30" onclick="save_card(' + index + ')"></button>' +
         '</div> </div>');
 }
 

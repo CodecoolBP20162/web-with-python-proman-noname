@@ -77,7 +77,7 @@ var load_projects = function () {
 
     $("#projectshere").empty();
     $("#newprojectshere").empty();
-
+    $("#projectshere").append("<div class='newBoard'><a href='javascript:void(0)' class='container text-center' id ='newprojectshere' ></a></div>");
 
     for (var board in boards) {
 
@@ -85,28 +85,41 @@ var load_projects = function () {
 
         $("#projectshere").append("<div class='cardplace'    id=" + board + "></div>");
 
-        var htmltag = "<div id=" + boardname + " class='card' draggable='true'     > " + boardname + "</div>";
+
+        var htmltag = "<div id=" + boardname + " class='card' draggable='true'     ><input type='image' src='/static/pictures/pin.png' height='40' width='40'><p></p> " + boardname + "</div>";
+
         $("#" + board).append(htmltag);
     }
     ;
 
-    $("#newprojectshere").append("<div class='card new' id='newboardcard'>&times;</div>");
-    $("#newboardcard").append("<input type='text' id='newBoardInput' placeholder='Project Name' style='display: none;' required>");
-    $("#newboardcard").append("<input type='button' id='save' class='btn btn-default page-scroll bt-lg' value='Save' style='display: none;' onclick='saveNewBoard(),hide()'>");
+    $("#newprojectshere").append("<div class='card new' id='newboardcard'><input type='image' src='/static/pictures/plus.png' height='40' width='40' onclick='showInputs()'></div>");
+    $("#newboardcard").append("<input type='text' class='inputBox' id='newBoardInput' size=10x'  maxlength='30' placeholder='Project Name' required>");
+    $("#newboardcard").append("<input type='button' id='save' class='inputButton' value='Save' onclick='saveNewBoard()'>");
+
+    
     dragOn();
+
 
 };
 
 var newBoard = function () {
     document.getElementById('newBoardInput').style.display = 'flex';
     document.getElementById('save').style.display = 'flex';
-    $("p").slideDown();
 };
 
-var hide = function () {
-    document.getElementById('newBoardInput').style.display = 'none';
-    document.getElementById('save').style.display = 'none';
-};
+
+var showInputs = function(){
+    var inputBox = document.getElementById('newBoardInput');
+    var inputButton = document.getElementById('save');
+    if (inputBox.style.display === 'none') {
+        inputBox.style.display = 'flex';
+        inputButton.style.display = 'flex';
+    } else {
+        inputBox.style.display = 'none';
+        inputButton.style.display = 'none';
+    }
+}
+
 
 var saveNewBoard = function () {
     var newBoard = $('#newBoardInput').val();
@@ -163,6 +176,8 @@ function drag(ev) {
 }
 
 $(document).ready(function () {
+    /*localStorage.clear();*/
+    /*exampleData();*/
     load_projects();
 });
 

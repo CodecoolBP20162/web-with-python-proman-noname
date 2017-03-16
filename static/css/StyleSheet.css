@@ -1,6 +1,7 @@
 body {
     font-family:'Lobster Two', Helvetica, sans-serif;
     background-image: url("/static/pictures/blue_background.jpg");
+    background-size: cover;
     padding-top: 100px;
     padding-left: 25px;
     color: #1a5253;
@@ -28,7 +29,9 @@ body {
 
 /* On mouse-over, add a deeper shadow */
 .card:hover {
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    -moz-box-shadow: 0 0 100px #ccc;
+    -webkit-box-shadow: 0 0 100px #ccc;
+    box-shadow: 0 0 100px #ccc;
 }
 
 /* Add some padding inside the card container */
@@ -45,6 +48,7 @@ body {
     border: 0px solid #aaaaaa;
     opacity: 40;
     background: #277b7b;
+
     margin-left: 10px;
     margin-right: 10px;
     margin-top: 10px;

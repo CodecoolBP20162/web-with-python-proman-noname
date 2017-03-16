@@ -87,7 +87,7 @@ function add_card() {
 function create_example_data() {
     localStorage.clear();
     localStorage.setItem("board", "board_name_from_boards");
-    var cards = {1: "Card 1", 2: "Card 2", 3: "Card 3"};
+    var cards = {1: "Card 1,Task1", 2: "Card 2,Task2", 3: "Card 3,Task3"};
     localStorage.setItem("board_name_from_boards", JSON.stringify(cards));
     location.reload();
 }

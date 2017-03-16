@@ -31,7 +31,6 @@ function show_board() {
     var board_title = get_data("board_title");
     var cards = get_data("cards");
 
-
     function show_title() {
         $("body").prepend($('<h1>' + board_title + '</h1>'));
     }
@@ -46,7 +45,7 @@ function show_board() {
         for (var card_number in cards) {
             var text = cards[card_number];
             $("#container").append(create_card(text, card_number));
-            $("#card" + card_number).width("200");
+            $("#card" + card_number).width("170");
             $("#card" + card_number).animate({height: '300px', opacity: '0.3'}, 400);
             $("#card" + card_number).animate({opacity: '1'}, "slow");
         }
@@ -54,8 +53,7 @@ function show_board() {
 
     show_title();
     show_create_card_card();
-    show_cards();
-    dragOn("ball");
+    show_cards()
 }
 
 
@@ -66,7 +64,7 @@ function add_card() {
         var board_title = get_data("board_title");
         var cards = get_data("cards");
         var length = Object.keys(cards).length;
-        var index = eval(length + 1);
+        var index = eval(length + 1)
 
         function create_new_card() {
             text = "";
@@ -81,13 +79,14 @@ function add_card() {
                 $("#textarea" + index).prop("readOnly", false);
                 $("#textarea" + index).focus();
                 $("#edit_card" + index).remove();
-                $("#card" + index).append('<img type="image" class ="edit_save_button" id="save_card' + index + '" src="../static/pictures/floppy.png" onclick="save_card(' + index + ')">')
+                $("#card" + index).append('<img class ="edit_save_button" id="save_card' + index + '" src="../static/pictures/floppy.png" onclick="save_card(' + index + ')">')
             });
         }
 
         create_new_card();
         show_new_card();
-        dragOn("ball");
+    } else {
+        show_popup()
     }
 }
 
@@ -139,4 +138,11 @@ function save_card(index) {
     save_card_data(index, new_text);
     switch_to_edit_button();
     can_add = true;
+}
+
+function show_popup() {
+    $("#bsalert").remove()
+
+    $("#haha").append('<div class="alert alert-info fade in" id="bsalert"> <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> <strong>Fill out and save the last card.</strong></div>').hide().fadeIn(1000).fadeOut(1500);
+
 }

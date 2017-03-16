@@ -84,7 +84,7 @@ var load_projects = function () {
 
     $("#projectshere").empty();
     $("#newprojectshere").empty();
-    $("#projectshere").append("<div class='cardplace'><div class='card' id='newboardcard'><input draggable='false' type='image' class='plus' src='/static/pictures/plus.png' height='40' width='40' onclick='showInputs()'></div></div>");
+    $("#projectshere").append("<div class='cardplace'><div class='card' id='newboardcard'><input type='image' class='plus' src='/static/pictures/plus.png' height='40' width='40' onclick='showInputs()'></div></div>");
 
 
     for (var board in boards) {
@@ -104,6 +104,7 @@ var load_projects = function () {
     $("#newboardcard").append("<input type='button' id='save' class='inputButton' value='Save' onclick='saveNewBoard()'>");
     dragOn("boardcard");
 };
+
 
 
 var showInputs = function () {
@@ -145,7 +146,9 @@ var dragged = Node;
 
 function allowDrop(ev) {
     ev.preventDefault();
+
 }
+
 
 function dragenter(ev) {
 
@@ -171,6 +174,8 @@ function dragenter(ev) {
                 replaceCard(contid, targetid);
         }
     }
+
+
 }
 
 
@@ -180,6 +185,7 @@ function dragend(ev) {
 }
 
 function drag(ev) {
+    console.log(ev);
     ev.originalEvent.dataTransfer.setData("boardid", ev.target.id);
     ev.originalEvent.dataTransfer.setData("contid", ev.target.parentNode.id);
     dragged = ev.target;

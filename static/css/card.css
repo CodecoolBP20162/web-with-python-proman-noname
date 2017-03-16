@@ -1,13 +1,14 @@
 .edit_save_button {
     position: absolute;
     left: 90px;
-    top: 250px;
-    height: 30px;
-    width: 30px;
+    top: 245px;
+    height: 40px;
+    width: 40px;
 }
 
+
 .plus_image {
-    height: 150px;
+    height: 100px;
     width: 100px;
     position: absolute;
     left: 50px;
@@ -22,26 +23,42 @@
 .new2_col-xs-2 {
     width: 200px;
     height: 1px;
-    background-color: #b44214;
+    background-color: #fde6a1;
     margin: 5px;
     border-radius: 25px;
     opacity: 0.3;
+    -webkit-border-bottom-left-radius: 20px 500px;
+    -webkit-border-bottom-right-radius: 500px 30px;
+    -webkit-border-top-right-radius: 10px 100px;
+
 }
 
 .new1_col-xs-2 {
+    font-size:50px;
     width: 1px;
-    height: 1px;
-    background-color: #b44214;
+    height: 100px;
     word-wrap: break-word;
     margin: 5px;
     border-radius: 25px;
     opacity: 0.3;
+    -webkit-border-bottom-left-radius: 20px 500px;
+    -webkit-border-bottom-right-radius: 500px 30px;
+    -webkit-border-top-right-radius: 10px 100px;
+
+    background:
+        -webkit-gradient(
+            linear,
+            left top, left bottom,
+            from(#1a5253),
+            color-stop(2%,#fde6a1)
+        );
+    -webkit-background-size: 100% 41px;
 }
 
 .textarea {
     width: 160px;
-    height: 200px;
-    background-color: #b44214;
+    height: 150px;
+    background: rgba(0,0,0,0.0);
     word-wrap: break-word;
     margin: 5px;
     font-size: 30px;

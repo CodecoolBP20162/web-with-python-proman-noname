@@ -3,6 +3,7 @@ body {
     background-image: url("/static/pictures/blue_background.jpg");
     padding-top: 100px;
     padding-left: 25px;
+    color: #1a5253;
 }
 
 .card {
@@ -16,23 +17,12 @@ body {
 
     width: 200px;
     background: #fde6a1;
-    color: #1a5253;
     font-size: 28px;
     word-wrap:break-word;
 
     -webkit-border-bottom-left-radius: 20px 500px;
     -webkit-border-bottom-right-radius: 500px 30px;
     -webkit-border-top-right-radius: 10px 100px;
-
-    /*background:
-        -webkit-gradient(
-            linear,
-            left top, left bottom,
-            from(#1a5253),
-            color-stop(2%,#fde6a1)
-        );
-    -webkit-background-size: 100% 43px;*/
-
 }
 
 
@@ -66,31 +56,24 @@ body {
 
 }
 
-/*.newBoard{
-    margin-right: 25px;
-    margin-left: 10px;
-}*/
-.new {
-    padding: 20px;
-    /*float: left;*/
-    width: 200px;
-    height: 200px;
-    background: #fde6a1;
-}
+
 
 .inputBox{
+    color: #1a5253;
     position: absolute;
-    top: 50%;
+    top: 45%;
+    left: 8%;
     display: none;
 }
 
 .inputButton{
+    color: #1a5253;
     position: absolute;
-    top: 75%;
-    left:30%;
+    top: 70%;
+    left:40%;
     cursor: pointer;
     border-radius: 5px;
-    font-size: 17px;
+    font-size: 20px;
     background-color: lavender;
     display: none;
 }
@@ -106,9 +89,20 @@ body {
 .navbar-default .navbar-brand {
     color: #e8e2cf;
     font-size: 30px;
+}
+
+.navbar-default .navbar-brand .nav .navbar-nav .navbar-right{
+    color: #e8e2cf;
+    font-size: 25px;
+}
 
 .buttonsave {
     background-color: transparent;
     border: none;
 
+}
+
+.plus{
+    position:relative;
+    top: 10%;
 }

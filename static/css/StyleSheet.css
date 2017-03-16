@@ -27,6 +27,18 @@ body {
 }
 
 
+.newcard{
+    width: 200px;
+    background:
+        -webkit-gradient(
+            linear,
+            left top, left bottom,
+            from(#1a5253),
+            color-stop(2%,#fde6a1)
+        );
+    -webkit-background-size: 100% 41px;
+}
+
 /* On mouse-over, add a deeper shadow */
 .card:hover {
     -moz-box-shadow: 0 0 100px #ccc;
@@ -60,7 +72,23 @@ body {
 
 }
 
+.cardplace2 {
+    display: inline-flex;
+    width: 200px;
+    height: 300px;
+    border: 0px solid #aaaaaa;
+    opacity: 40;
+    background: #277b7b;
 
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    -webkit-border-bottom-left-radius: 20px 500px;
+    -webkit-border-bottom-right-radius: 500px 30px;
+    -webkit-border-top-right-radius: 10px 100px;
+}
 
 .inputBox{
     color: #1a5253;

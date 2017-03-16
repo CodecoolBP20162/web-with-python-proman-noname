@@ -30,7 +30,7 @@ function show_board() {
 
     var board_title = get_data("board_title");
     var cards = get_data("cards");
-    console.log(cards);
+
 
     function show_title() {
         $("body").prepend($('<h1>' + board_title + '</h1>'));
@@ -46,7 +46,7 @@ function show_board() {
         for (var card_number in cards) {
             var text = cards[card_number];
             $("#container").append(create_card(text, card_number));
-            $("#card" + card_number).width("170");
+            $("#card" + card_number).width("200");
             $("#card" + card_number).animate({height: '300px', opacity: '0.3'}, 400);
             $("#card" + card_number).animate({opacity: '1'}, "slow");
         }
@@ -54,7 +54,8 @@ function show_board() {
 
     show_title();
     show_create_card_card();
-    show_cards()
+    show_cards();
+    dragOn("ball");
 }
 
 
@@ -64,6 +65,7 @@ function add_card() {
         can_add = false;
         var board_title = get_data("board_title");
         var cards = get_data("cards");
+        console.log(cards);
         var length = Object.keys(cards).length;
         var index = eval(length + 1);
 
@@ -80,12 +82,14 @@ function add_card() {
                 $("#textarea" + index).prop("readOnly", false);
                 $("#textarea" + index).focus();
                 $("#edit_card" + index).remove();
-                $("#card" + index).append('<img class ="edit_save_button" id="save_card' + index + '" src="../static/pictures/floppy.png" onclick="save_card(' + index + ')">')
+                $("#card" + index).append('<img type="image" class ="edit_save_button" id="save_card' + index + '" src="../static/pictures/floppy.png" onclick="save_card(' + index + ')">')
             });
         }
 
         create_new_card();
         show_new_card();
+
+        dragOn("ball");
     }
 }
 
@@ -99,10 +103,10 @@ function create_example_data() {
 
 function create_card(content, index) {
 
-    return $('<div id="card' + index + '" class="col-xs-2 new1_col-xs-2">' + "<input type='image' class='pin' src='/static/pictures/pin.png' height='40' width='40'><p></p>" +
-        '<textarea class="textarea" maxlength=30 readonly id="textarea' + index + '">' + content + '</textarea>' +
-        '<img class="edit_save_button" id="edit_card' + index + '" src="../static/pictures/pen.png" onclick="edit_card(' + index + ')">' +
-        '</div> </div>');
+    return $('<div class="cardplace2" id='+index+'><div id="card' + index + '" class="card newcard ball" draggable="true">' + "<input type='image' draggable='false' class='pin' src='/static/pictures/pin.png' height='40' width='40'><p></p>" +
+        '<textarea draggable="false"class="textarea" maxlength=30 readonly id="textarea' + index + '">' + content + '</textarea>' +
+        '<img class="edit_save_button" draggable="false" id="edit_card' + index + '" src="../static/pictures/pen.png" onclick="edit_card(' + index + ')">' +
+        '</div> </div></div>');
 }
 
 function create_add_card_card() {

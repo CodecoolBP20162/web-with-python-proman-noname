@@ -69,7 +69,7 @@ var exampleData = function () {
 
 };
 
-//exampleData();
+exampleData();
 
 var load_projects = function () {
     var boards = JSON.parse(localStorage.getItem("projects"));

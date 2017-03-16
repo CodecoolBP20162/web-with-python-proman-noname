@@ -2,6 +2,7 @@
  * Created by peter on 2017.03.13..
  */
 
+
 var can_add = true;
 
 function get_data(what_to_return) {
@@ -54,6 +55,30 @@ $(document).ready(function () {
 });
 
 
+function show_board() {
+    $("#projectshere").empty();
+    var board_title = localStorage.getItem("board");
+    var cards = JSON.parse(localStorage.getItem(board_title));
+    console.log(cards);
+
+    var title = $('<h1>' + board_title + '</h1>');
+
+
+
+    $("body").prepend(title);
+    console.log(cards);
+    var add_card = create_add_card();
+    $("#container").append(add_card);
+    for (var card in cards) {
+        var text = cards[card];
+        var card = create_card(text, card);
+        $("#container").append(card);
+    }
+
+}
+
+
+
 function add_card() {
     if (can_add === true) {
         can_add = false;
@@ -93,6 +118,7 @@ function create_example_data() {
 }
 
 function create_card(content, index) {
+
     return $('<div id="card' + index + '" class="col-xs-2 new1_col-xs-2">' +
         '<textarea class="textarea" maxlength=30 readonly id="textarea' + index + '">' + content + '</textarea>' +
         '<img class="edit_save_button" id="edit_card' + index + '" src="../static/css/pencil_and_paper-512.png" onclick="edit_card(' + index + ')">' +
@@ -107,6 +133,7 @@ function create_add_card_card() {
 }
 
 function edit_card(index) {
+
     $("#textarea" + index).prop("readOnly", false);
     $("#textarea" + index).focus();
     $("#edit_card" + index).fadeOut(400, function () {

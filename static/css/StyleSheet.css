@@ -1,0 +1,114 @@
+body {
+    font-family:'Lobster Two', Helvetica, sans-serif;
+    background-image: url("/static/pictures/blue_background.jpg");
+    padding-top: 100px;
+    padding-left: 25px;
+}
+
+.card {
+    /* Add shadows to create the "card" effect */
+    display: inline-block;
+    position: relative;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    border-radius: 5px; /* 5px rounded corners */
+    height: 200px;
+
+    width: 200px;
+    background: #fde6a1;
+    color: #1a5253;
+    font-size: 28px;
+    word-wrap:break-word;
+
+    -webkit-border-bottom-left-radius: 20px 500px;
+    -webkit-border-bottom-right-radius: 500px 30px;
+    -webkit-border-top-right-radius: 10px 100px;
+
+    /*background:
+        -webkit-gradient(
+            linear,
+            left top, left bottom,
+            from(#1a5253),
+            color-stop(2%,#fde6a1)
+        );
+    -webkit-background-size: 100% 43px;*/
+
+}
+
+
+/* On mouse-over, add a deeper shadow */
+.card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+/* Add some padding inside the card container */
+.container {
+    padding: 10px 10px;
+}
+
+
+
+.cardplace {
+    display: inline-flex;
+    width: 200px;
+    height: 200px;
+    border: 0px solid #aaaaaa;
+    opacity: 40;
+    background: #277b7b;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    -webkit-border-bottom-left-radius: 20px 500px;
+    -webkit-border-bottom-right-radius: 500px 30px;
+    -webkit-border-top-right-radius: 10px 100px;
+
+}
+
+/*.newBoard{
+    margin-right: 25px;
+    margin-left: 10px;
+}*/
+.new {
+    padding: 20px;
+    /*float: left;*/
+    width: 200px;
+    height: 200px;
+    background: #fde6a1;
+}
+
+.inputBox{
+    position: absolute;
+    top: 50%;
+    display: none;
+}
+
+.inputButton{
+    position: absolute;
+    top: 75%;
+    left:30%;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 17px;
+    background-color: lavender;
+    display: none;
+}
+
+.navbar-default{
+    background-color: #37404f;
+    background-image: none;
+    font-family: Verdana;
+
+}
+
+
+.navbar-default .navbar-brand {
+    color: #e8e2cf;
+    font-size: 30px;
+
+.buttonsave {
+    background-color: transparent;
+    border: none;
+
+}

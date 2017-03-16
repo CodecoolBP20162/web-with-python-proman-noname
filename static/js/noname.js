@@ -142,6 +142,7 @@ var replaceCard = function (first, second) {
 
 var dragged = Node;
 
+
 function allowDrop(ev) {
     ev.preventDefault();
 }
@@ -156,9 +157,6 @@ function dragenter(ev) {
         if (contid === targetid) {
             ev.preventDefault();
         } else {
-
-
-
             ev.preventDefault();
             ev.target.parentNode.replaceChild(dragged, ev.target);
 
@@ -189,15 +187,30 @@ function drag(ev) {
 }
 
 $(document).ready(function () {
-    //exampleData();
-    load_projects();
+
+    var actual=localStorage.getItem("actual");
+
+
+    if (actual===null) {
+        load_projects();
+    } else {
+        if (actual==="true"){
+            load_projects();
+        } else {
+            show_board();
+        }
+    }
+
 });
 
+function setActual() {
+    localStorage.setItem("actual",true);
+    location.reload();
 
+}
 $(document).on('click', '.boardcard', function (e) {
     localStorage.setItem("board", this.id);
-    var valami = JSON.parse(localStorage.getItem(this.id));
-    console.log(valami);
+    localStorage.setItem("actual",false);
     show_board();
 });
 

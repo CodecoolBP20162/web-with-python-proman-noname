@@ -15,6 +15,11 @@
 <link href="{{ url_for('static', filename='css/StyleSheet.css') }}" rel="stylesheet">
 
 
+<link rel="stylesheet" href="{{ url_for('static', filename='css/card.css') }}">
+
+
+
+
 </head>
 <body>
  <nav class="navbar navbar-default navbar-fixed-top">
@@ -27,6 +32,11 @@
     <button class="btn btn-primary" id="button2" , onclick="create_example_data()">Reset local storage</button>
     <div class="container" style="position:relative" id="container"></div>
 </div>
+
+
+<div class="container-fluid" id="container">
+</div>
+
 <div class="newBoard" >
     <a href="javascript:void(0)" class="container text-center" id ="newprojectshere" onclick="newBoard()"></a>
 
@@ -36,7 +46,6 @@
 
 
  <div class="container text-center" id ="projectshere"></div>
-<div class="semmi" id="alakul">asdasds</div>
 
 </body>
 </html>

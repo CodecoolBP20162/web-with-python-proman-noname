@@ -24,7 +24,9 @@ function save_card_data(index, new_text) {
     localStorage.setItem(board_title, JSON.stringify(cards));
 }
 
-$(document).ready(function () {
+function show_board() {
+    $("#projectshere").empty();
+    $("#newprojectshere").empty();
 
     var board_title = get_data("board_title");
     var cards = get_data("cards");
@@ -52,29 +54,6 @@ $(document).ready(function () {
     show_title();
     show_create_card_card();
     show_cards()
-});
-
-
-function show_board() {
-    $("#projectshere").empty();
-    var board_title = localStorage.getItem("board");
-    var cards = JSON.parse(localStorage.getItem(board_title));
-    console.log(cards);
-
-    var title = $('<h1>' + board_title + '</h1>');
-
-
-
-    $("body").prepend(title);
-    console.log(cards);
-    var add_card = create_add_card();
-    $("#container").append(add_card);
-    for (var card in cards) {
-        var text = cards[card];
-        var card = create_card(text, card);
-        $("#container").append(card);
-    }
-
 }
 
 

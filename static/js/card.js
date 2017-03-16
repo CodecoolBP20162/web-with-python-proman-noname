@@ -57,8 +57,8 @@ $(document).ready(function () {
 function add_card() {
     if (can_add === true) {
         can_add = false;
-        var board_title = localStorage.getItem("board");
-        var cards = JSON.parse(localStorage.getItem(board_title));
+        var board_title = get_data("board_title");
+        var cards = get_data("cards");
         var length = Object.keys(cards).length;
         var index = eval(length + 1)
 

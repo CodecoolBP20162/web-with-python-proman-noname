@@ -85,7 +85,7 @@ var load_projects = function () {
 
         $("#projectshere").append("<div class='cardplace'    id=" + board + "></div>");
 
-        var htmltag = "<div id=" + boardname + " class='card' draggable='true'  ondragover='allowDrop(event)' ondragenter='dragenter(event)' ondragstart='drag(event)' ondragend='dragend(event)'>" + boardname + "</div>"
+        var htmltag = "<div id=" + boardname + " class='card' draggable='true'     > " + boardname + "</div>";
         $("#" + board).append(htmltag);
     }
     ;
@@ -93,7 +93,7 @@ var load_projects = function () {
     $("#newprojectshere").append("<div class='card new' id='newboardcard'>&times;</div>");
     $("#newboardcard").append("<input type='text' id='newBoardInput' placeholder='Project Name' style='display: none;' required>");
     $("#newboardcard").append("<input type='button' id='save' class='btn btn-default page-scroll bt-lg' value='Save' style='display: none;' onclick='saveNewBoard(),hide()'>");
-    addClick()
+    dragOn();
 
 };
 
@@ -119,7 +119,6 @@ var replace = function (first, second) {
     var projects = new Projects();
     projects.get();
     projects.replace(first, second);
-    //load_projects();
 };
 
 
@@ -128,13 +127,6 @@ var dragged = Node;
 function allowDrop(ev) {
     ev.preventDefault();
 
-}
-
-
-function load_board(boardName) {
-    var board = new Board(boardName);
-    board.get();
-    show_board(board)
 }
 
 
@@ -153,7 +145,7 @@ function dragenter(ev) {
         ev.target.style.opacity = 1;
         replace(contid, targetid);
     }
-    ;
+
 
 }
 
@@ -163,19 +155,38 @@ function dragend(ev) {
 }
 
 function drag(ev) {
-    ev.dataTransfer.setData("boardid", ev.target.id);
-    ev.dataTransfer.setData("contid", ev.target.parentNode.id);
+    console.log(ev);
+    ev.originalEvent.dataTransfer.setData("boardid", ev.target.id);
+    ev.originalEvent.dataTransfer.setData("contid", ev.target.parentNode.id);
     dragged = ev.target;
     ev.target.style.opacity = 0;
-
-};
+}
 
 $(document).ready(function () {
     load_projects();
 });
 
-function addClick() {
-    $(".card").click(function () {
-        load_board(this.id);
-    })
+
+$(document).on('click', '.card', function (e) {
+    localStorage.setItem("board", this.id);
+    show_board();
+});
+
+
+function dragOn() {
+    $('.card').each(function () {
+        $(this).on('dragstart', function (e) {
+            drag(e);
+        });
+        $(this).on('dragover', function (e) {
+            allowDrop(e);
+        });
+        $(this).on('dragenter', function (e) {
+            dragenter(e);
+        });
+        $(this).on('dragend', function (e) {
+            dragend(e);
+        });
+    });
 }
+

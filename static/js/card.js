@@ -3,11 +3,16 @@
  */
 
 
-function show_board(board) {
+function show_board() {
     $("#projectshere").empty();
+    var board_title = localStorage.getItem("board");
+    var cards = JSON.parse(localStorage.getItem(board_title));
+    console.log(cards);
 
-    var title = $('<h1>' + board.name + '</h1>');
-    var cards=board["cards"];
+    var title = $('<h1>' + board_title + '</h1>');
+
+
+
     $("body").prepend(title);
     console.log(cards);
     var add_card = create_add_card();
@@ -17,6 +22,7 @@ function show_board(board) {
         var card = create_card(text, card);
         $("#container").append(card);
     }
+
 }
 
 function add_card() {
@@ -59,13 +65,13 @@ function create_add_card() {
 }
 
 function edit_card(index) {
-    textarea = "textarea" + index
+    textarea = "textarea" + index;
     document.getElementById(textarea).readOnly = false;
     document.getElementById(textarea).focus();
 }
 
 function save_card(index) {
-    textarea = "textarea" + index
+    textarea = "textarea" + index;
     document.getElementById(textarea).readOnly = true;
     var new_text = document.getElementById(textarea).value;
     var board_title = localStorage.getItem("board");

@@ -24,6 +24,13 @@ function Board(name) {
         this.save();
     }
 
+    this.replace =function (first,second) {
+        var temp = this.cards[first];
+        this.cards[first] = this.boardDict[second];
+        this.cards[second] = temp;
+        this.save();
+    }
+
 }
 
 function Projects() {
@@ -86,7 +93,7 @@ var load_projects = function () {
         $("#projectshere").append("<div class='cardplace'    id=" + board + "></div>");
 
 
-        var htmltag = "<div id=" + boardname + " class='card' draggable='true'     ><input type='image' src='/static/pictures/pin.png' height='40' width='40'><p></p> " + boardname + "</div>";
+        var htmltag = "<div id=" + boardname + " class='card boardcard' draggable='true'     ><input type='image' src='/static/pictures/pin.png' height='40' width='40'><p></p> " + boardname + "</div>";
 
         $("#" + board).append(htmltag);
     }
@@ -134,6 +141,14 @@ var replace = function (first, second) {
     projects.replace(first, second);
 };
 
+var replace = function (first, second) {
+    var boardname=get_data("board_title");
+    var board = new Board(boardname);
+
+    board.get();
+    projects.replace(first, second);
+};
+
 
 var dragged = Node;
 
@@ -141,7 +156,6 @@ function allowDrop(ev) {
     ev.preventDefault();
 
 }
-
 
 function dragenter(ev) {
     var contid = ev.target.parentNode.id;
@@ -157,6 +171,25 @@ function dragenter(ev) {
         $('#' + targetid).append(ev.target);
         ev.target.style.opacity = 1;
         replace(contid, targetid);
+    }
+
+
+}
+
+function dragenterCard(ev) {
+    var contid = ev.target.parentNode.id;
+    var targetid = dragged.parentNode.id;
+    if (ev.target.parentNode === dragged.parentNode) {
+        ev.preventDefault();
+    }
+    else {
+        ev.preventDefault();
+        ev.target.parentNode.replaceChild(dragged, ev.target);
+
+        $('#' + targetid).empty();
+        $('#' + targetid).append(ev.target);
+        ev.target.style.opacity = 1;
+        replaceCard(contid, targetid);
     }
 
 
@@ -182,7 +215,7 @@ $(document).ready(function () {
 });
 
 
-$(document).on('click', '.card', function (e) {
+$(document).on('click', '.boardcard', function (e) {
     localStorage.setItem("board", this.id);
     show_board();
 });
@@ -191,6 +224,7 @@ $(document).on('click', '.card', function (e) {
 function dragOn() {
     $('.card').each(function () {
         $(this).on('dragstart', function (e) {
+            console.log(this);
             drag(e);
         });
         $(this).on('dragover', function (e) {
@@ -198,6 +232,24 @@ function dragOn() {
         });
         $(this).on('dragenter', function (e) {
             dragenter(e);
+        });
+        $(this).on('dragend', function (e) {
+            dragend(e);
+        });
+    });
+}
+
+function dragonBall() {
+    $('.ball').each(function () {
+        $(this).on('dragstart', function (e) {
+            console.log(this);
+            drag(e);
+        });
+        $(this).on('dragover', function (e) {
+            allowDrop(e);
+        });
+        $(this).on('dragenter', function (e) {
+            dragenterCard(e);
         });
         $(this).on('dragend', function (e) {
             dragend(e);

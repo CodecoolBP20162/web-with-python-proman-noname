@@ -77,7 +77,8 @@ var load_projects = function () {
 
     $("#projectshere").empty();
     $("#newprojectshere").empty();
-    $("#projectshere").append("<div class='newBoard'><a href='javascript:void(0)' class='container text-center' id ='newprojectshere' ></a></div>");
+    $("#projectshere").append("<div class='cardplace'><div class='card' id='newboardcard'><input type='image' class='plus' src='/static/pictures/plus.png' height='40' width='40' onclick='showInputs()'></div></div>");
+
 
     for (var board in boards) {
 
@@ -86,13 +87,12 @@ var load_projects = function () {
         $("#projectshere").append("<div class='cardplace'    id=" + board + "></div>");
 
 
-        var htmltag = "<div id=" + boardname + " class='card' draggable='true'     ><input type='image' src='/static/pictures/pin.png' height='40' width='40'><p></p> " + boardname + "</div>";
+        var htmltag = "<div id=" + boardname + " class='card boardcard' draggable='true'     ><input type='image' src='/static/pictures/pin.png' height='40' width='40'><p></p> " + boardname + "</div>";
 
         $("#" + board).append(htmltag);
     }
     ;
 
-    $("#newprojectshere").append("<div class='card new' id='newboardcard'><input type='image' src='/static/pictures/plus.png' height='40' width='40' onclick='showInputs()'></div>");
     $("#newboardcard").append("<input type='text' class='inputBox' id='newBoardInput' size=10x'  maxlength='30' placeholder='Project Name' required>");
     $("#newboardcard").append("<input type='button' id='save' class='inputButton' value='Save' onclick='saveNewBoard()'>");
 
@@ -102,10 +102,6 @@ var load_projects = function () {
 
 };
 
-var newBoard = function () {
-    document.getElementById('newBoardInput').style.display = 'flex';
-    document.getElementById('save').style.display = 'flex';
-};
 
 
 var showInputs = function(){
@@ -125,6 +121,7 @@ var saveNewBoard = function () {
     var newBoard = $('#newBoardInput').val();
     var projects = new Projects();
     projects.update(newBoard);
+    showInputs();
     load_projects();
 };
 
@@ -182,7 +179,7 @@ $(document).ready(function () {
 });
 
 
-$(document).on('click', '.card', function (e) {
+$(document).on('click', '.boardcard', function (e) {
     localStorage.setItem("board", this.id);
     show_board();
 });

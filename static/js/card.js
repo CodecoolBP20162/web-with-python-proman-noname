@@ -79,7 +79,7 @@ function add_card() {
                 $("#textarea" + index).prop("readOnly", false);
                 $("#textarea" + index).focus();
                 $("#edit_card" + index).remove();
-                $("#card" + index).append('<img class ="edit_save_button" id="save_card' + index + '" src="../static/css/save_icon.png" onclick="save_card(' + index + ')">')
+                $("#card" + index).append('<img class ="edit_save_button" id="save_card' + index + '" src="../static/pictures/floppy.png" onclick="save_card(' + index + ')">')
             });
         }
 
@@ -98,16 +98,16 @@ function create_example_data() {
 
 function create_card(content, index) {
 
-    return $('<div id="card' + index + '" class="col-xs-2 new1_col-xs-2">' +
+    return $('<div id="card' + index + '" class="col-xs-2 new1_col-xs-2">' + "<input type='image' class='pin' src='/static/pictures/pin.png' height='40' width='40'><p></p>" +
         '<textarea class="textarea" maxlength=30 readonly id="textarea' + index + '">' + content + '</textarea>' +
-        '<img class="edit_save_button" id="edit_card' + index + '" src="../static/css/pencil_and_paper-512.png" onclick="edit_card(' + index + ')">' +
+        '<img class="edit_save_button" id="edit_card' + index + '" src="../static/pictures/pen.png" onclick="edit_card(' + index + ')">' +
         '</div> </div>');
 }
 
 function create_add_card_card() {
     return $('<div class="col-xs-2 new2_col-xs-2"  id="add_card" onclick="add_card()">' +
         '<h2 class="h2">Add new card</h2>' +
-        '<img class="plus_image "src="../static/css/plus.png">' +
+        '<img class="plus_image "src="../static/pictures/plus.png">' +
         '</div>');
 }
 
@@ -117,7 +117,7 @@ function edit_card(index) {
     $("#textarea" + index).focus();
     $("#edit_card" + index).fadeOut(400, function () {
         $("#edit_card" + index).remove();
-        $("#card" + index).append('<img class="edit_save_button" id="save_card' + index + '" src="../static/css/save_icon.png" onclick="save_card(' + index + ')">');
+        $("#card" + index).append('<img class="edit_save_button" id="save_card' + index + '" src="../static/pictures/floppy.png" onclick="save_card(' + index + ')">');
     });
 
 }
@@ -129,7 +129,7 @@ function save_card(index) {
         $("#textarea" + index).prop("readOnly", true);
         $("#save_card" + index).fadeOut(400, function () {
             $("#save_card" + index).remove();
-            $("#card" + index).append('<img class="edit_save_button" id="edit_card' + index + '" src="../static/css/pencil_and_paper-512.png" onclick="edit_card(' + index + ')">');
+            $("#card" + index).append('<img class="edit_save_button" id="edit_card' + index + '" src="../static/pictures/pen.png" onclick="edit_card(' + index + ')">');
         });
     }
 

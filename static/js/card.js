@@ -65,7 +65,6 @@ function add_card() {
         can_add = false;
         var board_title = get_data("board_title");
         var cards = get_data("cards");
-        console.log(cards);
         var length = Object.keys(cards).length;
         var index = eval(length + 1);
 
@@ -88,7 +87,6 @@ function add_card() {
 
         create_new_card();
         show_new_card();
-
         dragOn("ball");
     }
 }

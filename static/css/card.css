@@ -1,0 +1,50 @@
+.edit_save_button {
+    position: absolute;
+    left: 90px;
+    top: 250px;
+    height: 30px;
+    width: 30px;
+}
+
+.plus_image {
+    height: 150px;
+    width: 100px;
+    position: absolute;
+    left: 50px;
+    top: 100px;
+}
+
+.h2 {
+    text-align: center;
+    font-size: 30px;
+}
+
+.new2_col-xs-2 {
+    width: 200px;
+    height: 1px;
+    background-color: #b44214;
+    margin: 5px;
+    border-radius: 25px;
+    opacity: 0.3;
+}
+
+.new1_col-xs-2 {
+    width: 1px;
+    height: 1px;
+    background-color: #b44214;
+    word-wrap: break-word;
+    margin: 5px;
+    border-radius: 25px;
+    opacity: 0.3;
+}
+
+.textarea {
+    width: 160px;
+    height: 200px;
+    background-color: #b44214;
+    word-wrap: break-word;
+    margin: 5px;
+    font-size: 30px;
+    border: none;
+    resize: none;
+}

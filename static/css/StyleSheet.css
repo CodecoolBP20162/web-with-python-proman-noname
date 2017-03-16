@@ -102,8 +102,13 @@ body {
 
 }
 
+
 .navbar-default .navbar-brand {
     color: #e8e2cf;
     font-size: 30px;
+
+.buttonsave {
+    background-color: transparent;
+    border: none;
 
 }

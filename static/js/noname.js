@@ -1,24 +1,48 @@
+function Card(title) {
+    this.title = title;
+
+}
 function Board(name) {
     this.name = name;
-    this.dict = {};
-    this.add = function (item) {
-        this.dict[item] = "week1";
-    }
-};
-
-function Projects() {
-    this.boardDict = {};
-    this.add = function (name) {
-        this.boardDict[Object.keys(this.boardDict).length] = new Board(name);
+    this.cards = {};
+    this.add = function (cardtitle) {
+        this.cards[Object.keys(this.cards).length] = cardtitle;
+        var newCard = new Card(cardtitle);
+        localStorage.setItem(cardtitle, JSON.stringify(newCard));
 
     };
     this.get = function () {
-        var dict = JSON.parse(localStorage.getItem("projects"));
-        this.boardDict = dict["boardDict"];
+        this.cards = JSON.parse(localStorage.getItem(this.name));
+
     };
     this.save = function () {
-        localStorage.setItem("projects", JSON.stringify(this));
+        localStorage.setItem(this.name, JSON.stringify(this.cards));
     };
+
+    this.update = function (cardtitle) {
+        this.add(cardtitle);
+        this.save();
+    }
+
+}
+
+function Projects() {
+    this.boardDict = {};
+    this.add = function (boardName) {
+        this.boardDict[Object.keys(this.boardDict).length] = boardName;
+        var newBoard = new Board(boardName);
+        localStorage.setItem(boardName, JSON.stringify(newBoard.cards));
+
+
+    };
+    this.get = function () {
+        this.boardDict = JSON.parse(localStorage.getItem("projects"));
+
+    };
+    this.save = function () {
+        localStorage.setItem("projects", JSON.stringify(this.boardDict));
+    };
+
     this.update = function (item) {
         this.get();
         this.add(item);
@@ -30,36 +54,40 @@ function Projects() {
         this.boardDict[second] = temp;
         this.save();
     };
-};
+}
 
-var exampleData=function () {
+var exampleData = function () {
     var projects = new Projects();
-    console.log(projects.boardDict.length);
+
+
     projects.add("NoName");
-    console.log(projects.dictlen);
     projects.add("SpaceShip");
     projects.add("Codezero");
-    console.log(projects.dictlen);
-    projects.add("Nuclear missile");
-    console.log(projects.boardDict);
-    localStorage.setItem("projects", JSON.stringify(projects));
 
-}
+    projects.add("Nuclear missile");
+    projects.save();
+
+};
 
 //exampleData();
 
 var load_projects = function () {
-    var boardsObject = JSON.parse(localStorage.getItem("projects"));
+    var boards = JSON.parse(localStorage.getItem("projects"));
+
+
     $("#projectshere").empty();
     $("#newprojectshere").empty();
     $("#projectshere").append("<div class='newBoard'><a href='javascript:void(0)' class='container text-center' id ='newprojectshere' ></a></div>");
 
-    for (var board in boardsObject.boardDict) {
+    for (var board in boards) {
 
-        var boardname = boardsObject.boardDict[board].name;
+        var boardname = boards[board];
+
         $("#projectshere").append("<div class='cardplace'    id=" + board + "></div>");
 
-        var htmltag = "<div id=" + boardname + " class='card' draggable='true'  ondragover='allowDrop(event)' ondragenter='dragenter(event)' ondragstart='drag(event)' ondragend='dragend(event)'><input type='image' src='/static/pictures/pin.png' height='40' width='40'><p></p>" + boardname + "</div>"
+
+        var htmltag = "<div id=" + boardname + " class='card' draggable='true'     ><input type='image' src='/static/pictures/pin.png' height='40' width='40'><p></p> " + boardname + "</div>";
+
         $("#" + board).append(htmltag);
     }
     ;
@@ -68,12 +96,17 @@ var load_projects = function () {
     $("#newboardcard").append("<input type='text' class='inputBox' id='newBoardInput' size=10x'  maxlength='30' placeholder='Project Name' required>");
     $("#newboardcard").append("<input type='button' id='save' class='inputButton' value='Save' onclick='saveNewBoard()'>");
 
+    
+    dragOn();
+
+
 };
 
 var newBoard = function () {
     document.getElementById('newBoardInput').style.display = 'flex';
     document.getElementById('save').style.display = 'flex';
 };
+
 
 var showInputs = function(){
     var inputBox = document.getElementById('newBoardInput');
@@ -87,6 +120,7 @@ var showInputs = function(){
     }
 }
 
+
 var saveNewBoard = function () {
     var newBoard = $('#newBoardInput').val();
     var projects = new Projects();
@@ -98,15 +132,16 @@ var replace = function (first, second) {
     var projects = new Projects();
     projects.get();
     projects.replace(first, second);
-    //load_projects();
 };
 
 
 var dragged = Node;
+
 function allowDrop(ev) {
     ev.preventDefault();
 
 }
+
 
 function dragenter(ev) {
     var contid = ev.target.parentNode.id;
@@ -120,27 +155,53 @@ function dragenter(ev) {
 
         $('#' + targetid).empty();
         $('#' + targetid).append(ev.target);
-        ev.target.style.opacity=1;
+        ev.target.style.opacity = 1;
         replace(contid, targetid);
-    };
+    }
+
 
 }
 
 function dragend(ev) {
-    ev.target.style.opacity=1;
+    ev.target.style.opacity = 1;
 
 }
 
 function drag(ev) {
-    ev.dataTransfer.setData("boardid", ev.target.id);
-    ev.dataTransfer.setData("contid", ev.target.parentNode.id);
-    dragged =ev.target;
-    ev.target.style.opacity=0;
-
-};
+    console.log(ev);
+    ev.originalEvent.dataTransfer.setData("boardid", ev.target.id);
+    ev.originalEvent.dataTransfer.setData("contid", ev.target.parentNode.id);
+    dragged = ev.target;
+    ev.target.style.opacity = 0;
+}
 
 $(document).ready(function () {
     /*localStorage.clear();*/
     /*exampleData();*/
     load_projects();
 });
+
+
+$(document).on('click', '.card', function (e) {
+    localStorage.setItem("board", this.id);
+    show_board();
+});
+
+
+function dragOn() {
+    $('.card').each(function () {
+        $(this).on('dragstart', function (e) {
+            drag(e);
+        });
+        $(this).on('dragover', function (e) {
+            allowDrop(e);
+        });
+        $(this).on('dragenter', function (e) {
+            dragenter(e);
+        });
+        $(this).on('dragend', function (e) {
+            dragend(e);
+        });
+    });
+}
+

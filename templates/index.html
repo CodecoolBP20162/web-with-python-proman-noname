@@ -1,14 +1,20 @@
 <!DOCTYPE html>
+<meta charset="UTF-8">
+<title>ProMan</title>
 <html lang="en">
 <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
-<link href="{{ url_for('static', filename='css/StyleSheet.css') }}" rel="stylesheet">
 <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
 <link href='http://fonts.googleapis.com/css?family=Lobster+Two' rel='stylesheet' type='text/css'>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap_solar.min.css') }}">
+<script src=" {{ url_for('static', filename='js/card.js') }} " type="text/javascript"></script>
+<script src="{{ url_for('static', filename='js/bootstrap.min.js') }} " type="text/javascript"></script>
 <script src=" {{ url_for('static', filename='js/noname.js') }} " type="text/javascript"></script>
-<head>
-    <meta charset="UTF-8">
-    <title>ProMan</title>
+<link href="{{ url_for('static', filename='css/StyleSheet.css') }}" rel="stylesheet">
+
+
 </head>
 <body>
  <nav class="navbar navbar-default navbar-fixed-top">
@@ -17,9 +23,20 @@
   </div>
 </nav>
 
+ <div>
+    <button class="btn btn-primary" id="button2" , onclick="create_example_data()">Reset local storage</button>
+    <div class="container" style="position:relative" id="container"></div>
+</div>
+<div class="newBoard" >
+    <a href="javascript:void(0)" class="container text-center" id ="newprojectshere" onclick="newBoard()"></a>
+
+
+</div>
+
+
+
  <div class="container text-center" id ="projectshere"></div>
-
-
+<div class="semmi" id="alakul">asdasds</div>
 
 </body>
 </html>

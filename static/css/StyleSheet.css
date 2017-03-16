@@ -123,10 +123,6 @@ body {
     font-size: 30px;
 }
 
-.navbar-default .navbar-brand .nav .navbar-nav .navbar-right{
-    color: #e8e2cf;
-    font-size: 25px;
-}
 
 .buttonsave {
     background-color: transparent;
@@ -137,4 +133,9 @@ body {
 .plus{
     position:relative;
     top: 10%;
+}
+
+.nav.navbar-nav.navbar-right li a{
+    font-size:25px;
+    color: #e8e2cf;
 }

@@ -185,7 +185,6 @@ function dragend(ev) {
 }
 
 function drag(ev) {
-    console.log(ev);
     ev.originalEvent.dataTransfer.setData("boardid", ev.target.id);
     ev.originalEvent.dataTransfer.setData("contid", ev.target.parentNode.id);
     dragged = ev.target;

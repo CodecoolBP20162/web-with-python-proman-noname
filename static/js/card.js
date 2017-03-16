@@ -32,7 +32,7 @@ function show_board() {
     var cards = get_data("cards");
 
     function show_title() {
-        $("body").prepend($('<h1>' + board_title + '</h1>'));
+        $("body").prepend($('<h1>' + board_title + '</h1><h5 id="haha"></h5>'));
     }
 
     function show_create_card_card() {
@@ -65,7 +65,7 @@ function add_card() {
         var board_title = get_data("board_title");
         var cards = get_data("cards");
         var length = Object.keys(cards).length;
-        var index = eval(length + 1)
+        var index = eval(length + 1);
 
         function create_new_card() {
             text = "";

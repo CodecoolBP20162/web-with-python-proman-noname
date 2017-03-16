@@ -67,20 +67,15 @@ function Projects() {
 
 var exampleData = function () {
     var projects = new Projects();
-
-
     projects.add("NoName");
     projects.add("SpaceShip");
     projects.add("Codezero");
-
     projects.add("Nuclear missile");
     projects.save();
-
 };
 
 var load_projects = function () {
     var boards = JSON.parse(localStorage.getItem("projects"));
-
 
     $("#projectshere").empty();
     $("#newprojectshere").empty();
@@ -98,14 +93,11 @@ var load_projects = function () {
 
         $("#" + board).append(htmltag);
     }
-    ;
 
     $("#newboardcard").append("<input type='text' class='inputBox' id='newBoardInput' size=10x'  maxlength='30' placeholder='Project Name' required>");
     $("#newboardcard").append("<input type='button' id='save' class='inputButton' value='Save' onclick='saveNewBoard()'>");
     dragOn("boardcard");
 };
-
-
 
 var showInputs = function () {
     var inputBox = document.getElementById('newBoardInput');
@@ -118,7 +110,6 @@ var showInputs = function () {
         inputButton.style.display = 'none';
     }
 };
-
 
 var saveNewBoard = function () {
     var newBoard = $('#newBoardInput').val();
@@ -143,15 +134,11 @@ var replaceCard = function (first, second) {
 
 var dragged = Node;
 
-
 function allowDrop(ev) {
     ev.preventDefault();
-
 }
 
-
 function dragenter(ev) {
-
     if (ev.target.classList.contains("boardcard") || ev.target.classList.contains("ball")) {
 
         var targetid = ev.target.parentNode.id;
@@ -174,10 +161,7 @@ function dragenter(ev) {
                 replaceCard(contid, targetid);
         }
     }
-
-
 }
-
 
 function dragend(ev) {
     ev.target.style.opacity = 1;
@@ -194,8 +178,6 @@ function drag(ev) {
 $(document).ready(function () {
 
     var actual=localStorage.getItem("actual");
-
-
     if (actual===null) {
         load_projects();
     } else {
@@ -205,7 +187,6 @@ $(document).ready(function () {
             show_board();
         }
     }
-
 });
 
 function setActual() {
@@ -236,4 +217,3 @@ function dragOn(className) {
         });
     });
 }
-

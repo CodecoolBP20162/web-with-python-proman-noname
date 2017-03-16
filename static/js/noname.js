@@ -36,12 +36,9 @@ var exampleData=function () {
     var projects = new Projects();
     console.log(projects.boardDict.length);
     projects.add("NoName");
-    console.log(projects.dictlen);
     projects.add("SpaceShip");
     projects.add("Codezero");
-    console.log(projects.dictlen);
     projects.add("Nuclear missile");
-    console.log(projects.boardDict);
     localStorage.setItem("projects", JSON.stringify(projects));
 
 }
@@ -135,4 +132,12 @@ function drag(ev) {
 
 $(document).ready(function () {
     load_projects();
+    addClick();
 });
+
+function addClick() {
+    $(".card").bind("click",function () {
+        localStorage.setItem("board",this.id);
+        show_board();
+    })
+}

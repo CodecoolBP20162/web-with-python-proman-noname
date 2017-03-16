@@ -45,7 +45,7 @@ function show_board() {
         for (var card_number in cards) {
             var text = cards[card_number];
             $("#container").append(create_card(text, card_number));
-            $("#card" + card_number).width("170");
+            $("#card" + card_number).width("200");
             $("#card" + card_number).animate({height: '300px', opacity: '0.3'}, 400);
             $("#card" + card_number).animate({opacity: '1'}, "slow");
         }
@@ -53,7 +53,8 @@ function show_board() {
 
     show_title();
     show_create_card_card();
-    show_cards()
+    show_cards();
+    dragOn("ball");
 }
 
 
@@ -85,6 +86,7 @@ function add_card() {
 
         create_new_card();
         show_new_card();
+        dragOn("ball");
     } else {
         show_popup()
     }
@@ -141,7 +143,7 @@ function save_card(index) {
 }
 
 function show_popup() {
-    $("#bsalert").remove()
+    $("#bsalert").remove();
 
     $("#haha").append('<div class="alert alert-info fade in" id="bsalert"> <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> <strong>Fill out and save the last card.</strong></div>').hide().fadeIn(1000).fadeOut(1500);
 

@@ -19,9 +19,10 @@ function get_data(what_to_return) {
 
 function save_card_data(index, new_text) {
     var board_title = get_data("board_title");
-    var cards = get_data("cards");
+    var board = get_data("cards");
+    var cards=board.cards;
     cards[index] = new_text;
-    localStorage.setItem(board_title, JSON.stringify(cards));
+    localStorage.setItem(board_title, JSON.stringify(board));
 }
 
 function show_board() {
@@ -29,10 +30,13 @@ function show_board() {
     $("#newprojectshere").empty();
 
     var board_title = get_data("board_title");
-    var cards = get_data("cards");
+
+    var board = get_data("cards");
+    var cards=board.cards;
+
 
     function show_title() {
-        $("body").prepend($('<h1>' + board_title + '</h1><h5 id="haha"></h5>'));
+        $("body").prepend($('<h1>' + board.name + '</h1><h5 id="haha"></h5>'));
     }
 
     function show_create_card_card() {
@@ -55,6 +59,7 @@ function show_board() {
     show_create_card_card();
     show_cards();
     dragOn("ball");
+
 }
 
 
@@ -63,7 +68,9 @@ function add_card() {
     if (can_add === true) {
         can_add = false;
         var board_title = get_data("board_title");
-        var cards = get_data("cards");
+        var board = get_data("cards");
+        var cards=board.cards;
+        console.log(cards);
         var length = Object.keys(cards).length;
         var index = eval(length + 1);
 

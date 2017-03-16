@@ -2,8 +2,12 @@ function Card(title) {
     this.title = title;
 
 }
-function Board(name) {
-    this.name = name;
+function Board(loc,name) {
+    if (name ===undefined)
+    {this.name=""}
+    else {this.name = name;}
+
+    this.location=loc;
     this.cards = {};
     this.add = function (cardtitle) {
         this.cards[Object.keys(this.cards).length] = cardtitle;
@@ -12,11 +16,13 @@ function Board(name) {
 
     };
     this.get = function () {
-        this.cards = JSON.parse(localStorage.getItem(this.name));
-
+        var boardObj = JSON.parse(localStorage.getItem(this.location));
+        this.name=boardObj["name"];
+        this.location=boardObj["location"];
+        this.cards=boardObj["cards"];
     };
     this.save = function () {
-        localStorage.setItem(this.name, JSON.stringify(this.cards));
+        localStorage.setItem(this.location, JSON.stringify(this));
     };
 
     this.update = function (cardtitle) {
@@ -36,10 +42,11 @@ function Board(name) {
 function Projects() {
     this.boardDict = {};
     this.add = function (boardName) {
-        this.boardDict[Object.keys(this.boardDict).length] = boardName;
-        var newBoard = new Board(boardName);
-        console.log(newBoard.cards);
-        localStorage.setItem(boardName, JSON.stringify(newBoard.cards));
+        var len=Object.keys(this.boardDict).length;
+        var location="board"+len.toString();
+        this.boardDict[len] = location;
+        var newBoard = new Board(location,boardName);
+        localStorage.setItem(location, JSON.stringify(newBoard));
 
 
     };
@@ -84,20 +91,25 @@ var load_projects = function () {
 
     for (var board in boards) {
 
-        var boardname = boards[board];
+        var boardloc = boards[board];
+        var boardObj = new Board(boardloc);
+        boardObj.get();
 
-        $("#projectshere").append("<div class='cardplace'    id=" + board + "></div>");
 
 
-        var htmltag = "<div id=" + boardname + " class='card boardcard' draggable='true'><input draggable='false' type='image' src='/static/pictures/pin.png' height='40' width='40'><p></p> " + boardname + "</div>";
+         $("#projectshere").append("<div class='cardplace'    id=" + board + "></div>");
 
-        $("#" + board).append(htmltag);
-    }
 
-    $("#newboardcard").append("<input type='text' class='inputBox' id='newBoardInput' size=10x'  maxlength='30' placeholder='Project Name' required>");
-    $("#newboardcard").append("<input type='button' id='save' class='inputButton' value='Save' onclick='saveNewBoard()'>");
-    dragOn("boardcard");
+         var htmltag = "<div id=" + boardObj.location + " class='card boardcard' draggable='true'><input draggable='false' type='image' src='/static/pictures/pin.png' height='40' width='40'><p></p> " + boardObj.name + "</div>";
+
+         $("#" + board).append(htmltag);
+         }
+
+         $("#newboardcard").append("<input type='text' class='inputBox' id='newBoardInput' size=10x'  maxlength='30' placeholder='Project Name' required>");
+         $("#newboardcard").append("<input type='button' id='save' class='inputButton' value='Save' onclick='saveNewBoard()'>");
+         dragOn("boardcard");
 };
+
 
 var showInputs = function () {
     var inputBox = document.getElementById('newBoardInput');
@@ -176,7 +188,7 @@ function drag(ev) {
 }
 
 $(document).ready(function () {
-
+    //exampleData();
     var actual=localStorage.getItem("actual");
     if (actual===null) {
         load_projects();

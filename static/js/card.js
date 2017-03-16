@@ -1,6 +1,9 @@
 /**
  * Created by peter on 2017.03.13..
  */
+
+var can_add = true;
+
 $(document).ready(function () {
     var board_title = localStorage.getItem("board");
     var cards = JSON.parse(localStorage.getItem(board_title));
@@ -21,24 +24,24 @@ $(document).ready(function () {
 
 
 function add_card() {
-    var board_title = localStorage.getItem("board");
-    var cards = JSON.parse(localStorage.getItem(board_title));
-    var length = Object.keys(cards).length;
-    var index = eval(length + 1)
-    text = "";
-    cards[length + 1] = text
-    $("#container").append(create_card(text, index));
-    $("#card"+index).animate({height: '300px', opacity: '0.3'}, "fast");
-    $("#card"+index).animate({width: '200px', opacity: '0.3'}, "fast");
-    $("#card"+index).animate({opacity: '1'},"slow", function() {
-    localStorage.setItem(board_title, JSON.stringify(cards));
-    $("#textarea"+index).prop("readOnly",false);
-    $("#textarea"+index).focus();
-    $("#edit_card"+index).remove();
-    $("#card"+index).append('<img id="save_card'+index+'" src="../static/css/save_icon.png" height="30" width="30" onclick="save_card(' + index + ')" style="position: absolute; left: 90px; top: 250px;">')
-    });
-
-
+    if (can_add === true) {
+        can_add = false;
+        var board_title = localStorage.getItem("board");
+        var cards = JSON.parse(localStorage.getItem(board_title));
+        var length = Object.keys(cards).length;
+        var index = eval(length + 1)
+        text = "";
+        cards[length + 1] = text
+        $("#container").append(create_card(text, index));
+        $("#card" + index).animate({height: '300px', opacity: '0.3'}, "fast");
+        $("#card" + index).animate({width: '200px', opacity: '0.3'}, "fast");
+        $("#card" + index).animate({opacity: '1'}, "slow", function () {
+            $("#textarea" + index).prop("readOnly", false);
+            $("#textarea" + index).focus();
+            $("#edit_card" + index).remove();
+            $("#card" + index).append('<img id="save_card' + index + '" src="../static/css/save_icon.png" height="30" width="30" onclick="save_card(' + index + ')" style="position: absolute; left: 90px; top: 250px;">')
+        });
+    }
 }
 
 function create_example_data() {
@@ -86,6 +89,7 @@ function save_card(index) {
     $( "#save_card"+index).fadeOut( 400, function() {
         $("#save_card"+index).remove();
         $("#card"+index).append('<img id="edit_card'+index+'" src="../static/css/pencil_and_paper-512.png" height="30" width="30" onclick="edit_card(' + index + ')" style="position: absolute; left: 90px; top: 250px;">')
+        can_add = true;
     });
 
 }

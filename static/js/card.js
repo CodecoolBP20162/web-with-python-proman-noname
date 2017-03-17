@@ -36,7 +36,7 @@ function show_board() {
 
 
     function show_title() {
-        $("body").prepend($('<h1>' + board.name + '</h1><h5 id="haha"></h5>'));
+        $("body").prepend($('<h1 draggable="true" ondragstart="iMmagic(event)">' + board.name + '</h1><h5 id="haha"></h5>'));
     }
 
     function show_create_card_card() {
@@ -87,7 +87,7 @@ function add_card() {
                 $("#textarea" + index).prop("readOnly", false);
                 $("#textarea" + index).focus();
                 $("#edit_card" + index).remove();
-                $("#card" + index).append('<img class ="edit_save_button" id="save_card' + index + '" src="../static/pictures/floppy.png" onclick="save_card(' + index + ')">')
+                //$("#card" + index).append('<img class ="edit_save_button" id="save_card' + index + '" src="../static/pictures/floppy.png" onclick="save_card(' + index + ')">')
             });
         }
 

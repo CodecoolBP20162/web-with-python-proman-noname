@@ -151,6 +151,9 @@ function allowDrop(ev) {
 }
 
 function dragenter(ev) {
+    if (dragged.classList.contains("boardcard")|| dragged.classList.contains("ball")) {
+
+
     if (ev.target.classList.contains("boardcard") || ev.target.classList.contains("ball")) {
 
         var targetid = ev.target.parentNode.id;
@@ -173,6 +176,7 @@ function dragenter(ev) {
                 replaceCard(contid, targetid);
         }
     }
+    }
 }
 
 function dragend(ev) {
@@ -181,8 +185,6 @@ function dragend(ev) {
 }
 
 function drag(ev) {
-    ev.originalEvent.dataTransfer.setData("boardid", ev.target.id);
-    ev.originalEvent.dataTransfer.setData("contid", ev.target.parentNode.id);
     dragged = ev.target;
     dragged.style.opacity = 0;
 }
@@ -229,3 +231,15 @@ function dragOn(className) {
         });
     });
 }
+
+function iMmagic(ev){
+    dragged=this.target;
+    var img = new Image();
+    img.src="/static/pictures/immi.png";
+    img.style='position: absolute; display: block; margin-top: -1200px; left: 0;';
+
+    document.body.appendChild(img);
+    ev.dataTransfer.setDragImage(img, 0, 0);
+
+}
+

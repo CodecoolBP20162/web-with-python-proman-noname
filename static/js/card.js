@@ -84,8 +84,8 @@ function add_card() {
         can_add = false;
         var board_title = get_data("board_title");
         var cards = get_data("cards");
-        var length = Object.keys(cards).length;
-        var index = eval(length + 1)
+        var length = parseInt(Object.keys(cards).length);
+        var index = length + 1;
 
         function create_new_card() {
             text = "";
@@ -120,7 +120,7 @@ function create_example_data() {
 function create_card(content, index) {
 
     return $('<div id="card' + index + '" class="col-xs-2 new1_col-xs-2">' +
-        '<textarea class="textarea" maxlength=30 readonly id="textarea' + index + '">' + content + '</textarea>' +
+        '<textarea class="textarea" placeholder="..." maxlength=30 readonly id="textarea' + index + '">' + content + '</textarea>' +
         '<img class="edit_save_button" id="edit_card' + index + '" src="../static/css/pencil_and_paper-512.png" onclick="edit_card(' + index + ')">' +
         '</div> </div>');
 }

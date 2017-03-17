@@ -86,7 +86,7 @@ var load_projects = function () {
 
     $("#projectshere").empty();
     $("#newprojectshere").empty();
-    $("#projectshere").append("<div class='cardplace'><div class='card' id='newboardcard'><input type='image' class='plus' src='/static/pictures/plus.png' height='40' width='40' onclick='showInputs()'></div></div>");
+    $("#projectshere").append("<div class='cardplace' onclick='showInputs()'><div class='card' id='newboardcard'><img class='plus' src='/static/pictures/plus.png' height='40' width='40'></div></div>");
 
 
     for (var board in boards) {
@@ -100,7 +100,7 @@ var load_projects = function () {
          $("#projectshere").append("<div class='cardplace'    id=" + board + "></div>");
 
 
-         var htmltag = "<div id=" + boardObj.location + " class='card boardcard' draggable='true'><input draggable='false' type='image' src='/static/pictures/pin.png' height='40' width='40'><p></p> " + boardObj.name + "</div>";
+         var htmltag = "<div id=" + boardObj.location + " class='card boardcard' draggable='true'><img draggable='false' type='image' src='/static/pictures/pin.png' height='40' width='40'><p></p> " + boardObj.name + "</div>";
 
          $("#" + board).append(htmltag);
          }
@@ -152,30 +152,28 @@ function allowDrop(ev) {
 
 function dragenter(ev) {
     if (dragged.classList.contains("boardcard")|| dragged.classList.contains("ball")) {
+        if (ev.target.classList.contains("boardcard") || ev.target.classList.contains("ball")) {
 
+            var targetid = ev.target.parentNode.id;
+            var contid = dragged.parentNode.id;
 
-    if (ev.target.classList.contains("boardcard") || ev.target.classList.contains("ball")) {
+            if (contid === targetid) {
+                ev.preventDefault();
+            } else {
+                ev.preventDefault();
+                ev.target.parentNode.replaceChild(dragged, ev.target);
 
-        var targetid = ev.target.parentNode.id;
-        var contid = dragged.parentNode.id;
-
-        if (contid === targetid) {
-            ev.preventDefault();
-        } else {
-            ev.preventDefault();
-            ev.target.parentNode.replaceChild(dragged, ev.target);
-
-            $('#' + contid).empty();
-            $('#' + contid).append(ev.target);
-            ev.target.style.opacity = 1;
-            console.log(ev.target);
-            if (dragged.classList.contains("boardcard")) {
-                replace(contid, targetid);
+                $('#' + contid).empty();
+                $('#' + contid).append(ev.target);
+                ev.target.style.opacity = 1;
+                console.log(ev.target);
+                if (dragged.classList.contains("boardcard")) {
+                    replace(contid, targetid);
+                }
+                else
+                    replaceCard(contid, targetid);
             }
-            else
-                replaceCard(contid, targetid);
         }
-    }
     }
 }
 
@@ -190,7 +188,6 @@ function drag(ev) {
 }
 
 $(document).ready(function () {
-    //exampleData();
     var actual=localStorage.getItem("actual");
     if (actual===null) {
         load_projects();
@@ -233,13 +230,13 @@ function dragOn(className) {
 }
 
 function iMmagic(ev){
-    dragged=this.target;
-    var img = new Image();
-    img.src="/static/pictures/immi.png";
-    img.style='position: absolute; display: block; margin-top: -1200px; left: 0;';
+   dragged=this.target;
+   var img = new Image();
+   img.src="/static/pictures/immi.png";
+   img.style='position: absolute; display: block; margin-top: -1200px; left: 0;';
 
-    document.body.appendChild(img);
-    ev.dataTransfer.setDragImage(img, 0, 0);
+   document.body.appendChild(img);
+   ev.dataTransfer.setDragImage(img, 0, 0);
 
 }
 

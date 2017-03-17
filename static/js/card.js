@@ -30,33 +30,33 @@ function show_board() {
     $("#newprojectshere").empty();
 
     var board_title = get_data("board_title");
-
     var board = get_data("cards");
     var cards=board.cards;
 
-
     function show_title() {
-        $("body").prepend($('<h1 draggable="true" ondragstart="iMmagic(event)">' + board.name + '</h1><h5 id="haha"></h5>'));
+        $("body").prepend($('<h1 draggable="true" ondragstart="iMmagic(event)">' + board.name + '</h1><h5 id="alert_message"></h5>'));
     }
 
-    function show_create_card_card() {
+    function show_create_add_card() {
         $("#container").append(create_add_card_card());
-        $("#add_card").animate({height: '300px', opacity: '0.3'}, 400);
-        $("#add_card").animate({opacity: '1'}, "slow");
+        $("#add_card_card").animate({height: '300px', opacity: '0.3'}, 400);
+        $("#add_card_card").animate({opacity: '1'}, "slow");
     }
 
     function show_cards() {
         for (var card_number in cards) {
             var text = cards[card_number];
             $("#container").append(create_card(text, card_number));
-            $("#card" + card_number).width("200");
-            $("#card" + card_number).animate({height: '300px', opacity: '0.3'}, 400);
-            $("#card" + card_number).animate({opacity: '1'}, "slow");
+            $("#" + card_number).width("200");
+            $("#" + card_number).height("1");
+            $("#" + card_number).animate({height: '300px', opacity: '0.3'}, 400);
+            $("#" + card_number).animate({opacity: '1'}, "slow");
+
         }
     }
 
     show_title();
-    show_create_card_card();
+    show_create_add_card();
     show_cards();
     dragOn("ball");
 
@@ -81,13 +81,15 @@ function add_card() {
         }
 
         function show_new_card() {
-            $("#card" + index).animate({height: '300px', opacity: '0.3'}, "fast");
-            $("#card" + index).animate({width: '200px', opacity: '0.3'}, "fast");
-            $("#card" + index).animate({opacity: '1'}, "slow", function () {
+            $("#" + index).height("1");
+            $("#" + index).animate({height: '300px', opacity: '0.3'}, "slow");
+            $("#" + index).width("1");
+            $("#" + index).animate({width: '200px', opacity: '0.3'}, "slow");
+            $("#" + index).animate({opacity: '1'}, "slow", function () {
                 $("#textarea" + index).prop("readOnly", false);
                 $("#textarea" + index).focus();
                 $("#edit_card" + index).remove();
-                //$("#card" + index).append('<img class ="edit_save_button" id="save_card' + index + '" src="../static/pictures/floppy.png" onclick="save_card(' + index + ')">')
+                $("#card" + index).append('<img class ="edit_save_button" id="save_card' + index + '" src="../static/pictures/floppy.png" onclick="save_card(' + index + ')">')
             });
         }
 
@@ -108,18 +110,17 @@ function create_example_data() {
 }
 
 function create_card(content, index) {
-
-    return $('<div class="cardplace2" id='+index+'><div id="card' + index + '" class="card newcard ball" draggable="true">' + "<input type='image' draggable='false' class='pin' src='/static/pictures/pin.png' height='40' width='40'><p></p>" +
+    return $('<div class="cardplace2" id='+index+' style="opacity:0.3;" ><div id="card' + index + '" class="card newcard ball" draggable="true" style="height:300px;">' + "<img draggable='false' class='pin' src='/static/pictures/pin.png' height='40' width='40'>" +
         '<textarea draggable="false"class="textarea" maxlength=30 readonly id="textarea' + index + '">' + content + '</textarea>' +
         '<img class="edit_save_button" draggable="false" id="edit_card' + index + '" src="../static/pictures/pen.png" onclick="edit_card(' + index + ')">' +
         '</div> </div></div>');
 }
 
 function create_add_card_card() {
-    return $('<div class="col-xs-2 new2_col-xs-2"  id="add_card" onclick="add_card()">' +
+    return $('<div id="add_card_card" class="cardplace2" style="opacity:0.3;"><div class="card" style="height:300px;" id="add_card" onclick="add_card()"><img draggable="false" class="pin">' +
         '<h2 class="h2">Add new card</h2>' +
         '<img class="plus_image "src="../static/pictures/plus.png">' +
-        '</div>');
+        '</div></div>');
 }
 
 function edit_card(index) {
@@ -151,7 +152,6 @@ function save_card(index) {
 
 function show_popup() {
     $("#bsalert").remove();
-
-    $("#haha").append('<div class="alert alert-info fade in" id="bsalert"> <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> <strong>Fill out and save the last card.</strong></div>').hide().fadeIn(1000).fadeOut(1500);
+    $("#alert_message").append('<div class="alert alert-info fade in" id="bsalert"> <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> <strong>Fill out and save the last card.</strong></div>').hide().fadeIn(1000).fadeOut(1500);
 
 }

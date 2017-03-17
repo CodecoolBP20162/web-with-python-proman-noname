@@ -63,4 +63,11 @@
     font-size: 30px;
     border: none;
     resize: none;
+    overflow: auto;
+    outline: none;
+    rows:3;
+
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
 }

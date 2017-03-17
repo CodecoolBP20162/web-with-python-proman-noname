@@ -34,7 +34,7 @@ function show_board() {
     var cards=board.cards;
 
     function show_title() {
-        $("body").prepend($('<h1>' + board.name + '</h1><h5 id="alert_message"></h5>'));
+        $("body").prepend($('<h1 draggable="true" ondragstart="iMmagic(event)">' + board.name + '</h1><h5 id="alert_message"></h5>'));
     }
 
     function show_create_add_card() {

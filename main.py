@@ -11,6 +11,7 @@ app = Flask(__name__)
 def main():
     return render_template("index.html")
 
+
 @app.route("/show_status")
 def show_status():
     elements = []

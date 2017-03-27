@@ -128,9 +128,6 @@ ENV/
 #ideas
 .idea/
 
-#dbopen
-dbopen.txt
-
 # JIRA plugin
 atlassian-ide-plugin.xml
 

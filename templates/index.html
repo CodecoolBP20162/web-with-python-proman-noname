@@ -3,8 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 </head>
 <body>
-    Hello!
+Hello!
+<form action="javascript:show_status()"><input type="submit" value="Submit"></form>
+<script>
+    function show_status() {
+        $.get({
+            url: "/show_status", success: function (data) {
+                $("body").append(data)
+            }
+        })
+    }
+</script>
 </body>
 </html>

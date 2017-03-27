@@ -1,4 +1,4 @@
-from models import *
+from models.models import *
 
 class User(BaseModel):
     name = CharField()

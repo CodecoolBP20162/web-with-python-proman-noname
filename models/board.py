@@ -1,4 +1,4 @@
-from models import *
+from models.models import *
 
 class Board(BaseModel):
     name = CharField()

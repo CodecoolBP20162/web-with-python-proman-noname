@@ -1,12 +1,9 @@
-#left2 {
-    padding: 40px;
-    background-color: green;
+.boardbox {
+    height: 50px;
+    width: 100px;
+    border:solid 2px black;
 }
 
-#right2 {
-    padding: 40px;
-    background-color: red;
-}
 
 .col-xs-3 {
     border:solid 2px black;

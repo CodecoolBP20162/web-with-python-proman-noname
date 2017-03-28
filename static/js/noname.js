@@ -1,9 +1,19 @@
 $(function() {
-      var drake = dragula({
+
+      initDragula();
+
+});
+
+
+
+
+function initDragula() {
+    var drake = dragula({
           isContainer: function (el) {
               return el.classList.contains('newList');
           }
       });
+
       drake.on('drop',function (el, target,source) {
           var children=target.children;
           for(var i=0;i<children.length;i++){
@@ -16,7 +26,9 @@ $(function() {
               $(sourcechild[i]).attr("id",i)
           }
       });
-});
+}
+
+
 
 function updateData(data) {
     $.ajax({

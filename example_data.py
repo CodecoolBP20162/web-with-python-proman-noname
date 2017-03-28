@@ -6,7 +6,7 @@ from models.status import Status
 
 
 def create_example_data():
-    if not User.select():
+    if not Cell.select():
         user = User(name='Example User', login_name='user', password='user')
         user.save()
 
@@ -21,6 +21,6 @@ def create_example_data():
         Boardstable.create(board=board2, user=user)
         Boardstable.create(board=board3, user=user)
 
-        Cell.create(text="Rocket",name="Weapon", board=board1, status=Status.get(Status.status == "New"))
-        Cell.create(text="Kalasnyikov", name="Weapon", board=board1, status=Status.get(Status.status == "In progress"))
-        Cell.create(text="Grenade", name="Weapon", board=board1, status=Status.get(Status.status == "Done"))
+        Cell.create(text="Rocket",name="Weapon", order=1, board=board1, status=Status.get(Status.status == "New"))
+        Cell.create(text="Kalasnyikov", name="Weapon", order=2, board=board1, status=Status.get(Status.status == "In progress"))
+        Cell.create(text="Grenade", name="Weapon", order=3, board=board1, status=Status.get(Status.status == "Done"))

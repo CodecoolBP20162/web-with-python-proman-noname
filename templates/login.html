@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1">
+        <title>3rd Personal Assessment</title>
+        <script src="http://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+        <script src="{{ url_for( 'static', filename='main.js') }}"></script>
+        <link rel="stylesheet" type="text/css" href="{{ url_for( 'static', filename='bfa.css')  }}">
+    </head>
+    <body>
+        <form method="post" action="/">
+            <div>
+                <label for="name">Name</label>
+                <input type="text" name="name" id="name">
+            </div>
+            <div>
+                <label for="email">Email</label>
+                <input type="text" name="email" id="email">
+            </div>
+            <div>
+                <input id="bfa" type="submit" value="Submit">
+            </div>
+
+        </form>
+    <div id="result"></div>
+    </body>
+</html>

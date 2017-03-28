@@ -4,15 +4,70 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="{{ url_for('static', filename='font/Stay_Writer_.ttf') }}" rel='stylesheet' type='text/font'>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
 </head>
 <body>
+
+
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  <a href="#">Home</a>
+  <a href="#">New card</a>
+  <a href="#">Credits</a>
+  <a href="#">Contact</a>
+  <a href="#">Log out</a>
+</div>
+<span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; menu</span>
+
+<script>
+function openNav() {
+    document.getElementById("mySidenav").style.width = "250px";
+    document.getElementById("main").style.marginLeft = "250px";
+}
+
+function closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
+    document.getElementById("main").style.marginLeft= "0";
+}
+</script>
+<div id="title_id">BOARD TITLE</div>
+
+<div class="container-fluid"id="main">
+
+    <div class="row">
+        <div class="col-sm-3"><div id="new_status">
+            <div class="status_name">New</div>
+            <div id="new"></div>
+        </div></div>
+        <div class="col-sm-3"><div id="in_progress_status">
+            <div class="status_name">In Progress</div>
+            <div id="progress"></div>
+        </div></div>
+        <div class="col-sm-3" ><div id="review_status">
+            <div class="status_name">Review</div>
+            <div id="review"></div>
+        </div></div>
+        <div class="col-sm-3"><div id="done_status">
+            <div class="status_name">Done</div>
+            <div id="done"></div>
+        </div></div>
+    </div>
+</div>
+
 Hello!
 <form action="javascript:show_status()"><input type="submit" value="Submit"></form>
+
 <script>
     function show_status() {
         $.get({
             url: "/show_status", success: function (data) {
-                $("body").append(data)
+                console.log(typeof data);
+                $("body").append(data[0]);
+                console.log(data, data[0]);
             }
         })
     }

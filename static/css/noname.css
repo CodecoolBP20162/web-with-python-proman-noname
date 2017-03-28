@@ -4,9 +4,18 @@
     border:solid 2px black;
 }
 
+.newBoard {
+    height: 50px;
+    width: 100px;
+    border:solid 2px black;
+
+}
+
 
 .col-xs-3 {
     border:solid 2px black;
+    margin-right: 3px;
+    margin-bottom: 3px;
 }
 
 .gu-mirror {

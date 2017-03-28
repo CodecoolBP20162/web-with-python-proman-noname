@@ -21,6 +21,7 @@ function initDragula() {
               updateData(data);
               $(children[i]).attr("id",i)
           }
+
           var sourcechild=source.children;
           for(var i=0;i<sourcechild.length;i++){
               $(sourcechild[i]).attr("id",i)

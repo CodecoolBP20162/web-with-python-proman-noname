@@ -11,8 +11,8 @@ from models.board import Board
 from models.boardstable import Boardstable
 
 app = Flask(__name__)
-
 app.secret_key = "asdasdasds"
+
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -86,20 +86,17 @@ def save():
 
 
 @app.route("/load_board", methods=['GET', 'POST'])
-def load():
-    """
-    cell1 = {'name': 'Elso'}
-    cell2 = {'name': 'Masodik'}
-    cell3 = {'name': 'Harmadik'}
-    cell_list = [cell1, cell2, cell3]
-    data = {'new': cell_list}
-    """
-    boards = Board.select().join(Boardstable).where(Boardstable.user == current_user.id)
+def load_board():
+    board_list=get_user_boards(current_user.id)
+    return jsonify(board_list)
 
-    lista = []
-    for element in boards:
-        lista.append(board_to_json(element))
-    return jsonify(lista)
+def get_user_boards(userid):
+    boards = Board.select().join(Boardstable).where(Boardstable.user == userid)
+    boardlist = []
+    for board in boards:
+        boardlist.append(board_to_json(board))
+    return boardlist
+
 
 
 def board_to_json(board):

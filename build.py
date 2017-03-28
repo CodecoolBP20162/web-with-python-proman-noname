@@ -10,7 +10,7 @@ class Build:
     @classmethod
     def create_tables(cls):
         db.connect()
-        #db.drop_tables([User, Status, Board, Boardstable, Cell])
+        db.drop_tables([User, Status, Board, Boardstable, Cell])
         db.create_tables([User, Status, Board, Boardstable, Cell], safe=True)
         cls.create_status()
 

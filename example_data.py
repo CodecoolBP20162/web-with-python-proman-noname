@@ -6,7 +6,7 @@ from models.status import Status
 
 
 def create_example_data():
-    if True:
+    if not Cell.select():
         user = User(name='Example User', login_name='user', password='user')
         batman = User(name='Batman', login_name='batman', password='batman')
         user.save()

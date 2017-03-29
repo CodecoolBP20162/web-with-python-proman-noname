@@ -44,14 +44,11 @@ function addAnimation() {
             var c = this.classList;
             if (c.contains("flipped") === true && c.contains("clicked") === false) {
                 var new_card = document.getElementById("new_board");
-                c.add("clicked");
                 input_field.addEventListener("keypress", function () {
                     if (event.which == 13 || event.keyCode == 13) {
                         c.remove("flipped");
-                        c.remove("clicked");
                         create_new_board();
                         $('#input_field').val("");
-
                     }
                 })
             } else {

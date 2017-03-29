@@ -17,6 +17,7 @@ function showUserBoard() {
 }
 
 function fillBoards(boards) {
+    $('#board').empty()
     for (var i=0;i<boards.length;i++){
         var html='<div id="'+i+'" class="boardbox col-xs-3">'+boards[i].name+'</div>';
         $("#board").append(html);
@@ -51,6 +52,7 @@ function addAnimation() {
                         c.remove("clicked");
                         create_new_board();
                         $('#input_field').val("");
+                        showUserBoard();
                     }
                 })
             } else {

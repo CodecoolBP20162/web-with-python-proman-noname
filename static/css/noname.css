@@ -8,9 +8,11 @@
     height: 50px;
     width: 100px;
     border:solid 2px black;
-
 }
 
+.newList {
+    min-height: 20px;
+}
 
 .col-xs-3 {
     border:solid 2px black;
@@ -43,6 +45,3 @@
   filter: alpha(opacity=20);
 }
 
-.newList {
-    min-height: 20px;
-}

@@ -26,22 +26,14 @@ function fillBoards(boards) {
 
 function addBoardDiv() {
 
-    var html='<div class="col-xs-3 card effect__click"><div class="newBoard card__front" >Add new board</div>' +
-        '<div class="newBoard card__back" >Backboard</div></div></div>';
+    var html='<div class="col-xs-3 newBoard card effect__click"><div class="card__front" >Add new board</div>' +
+        '<div class="card__back" >Backboard</div></div></div>';
     $("#board").append(html);
 }
 
 function addAnimation() {
-  var cards = document.querySelectorAll(".card.effect__click");
-  for ( var i  = 0, len = cards.length; i < len; i++ ) {
-    var card = cards[i];
-    clickListener( card );
-  }
-
-  function clickListener(card) {
-    card.addEventListener( "click", function() {
+  $(".card.effect__click").bind("click",function () {
       var c = this.classList;
       c.contains("flipped") === true ? c.remove("flipped") : c.add("flipped");
-    });
-  }
+  })
 }

@@ -67,15 +67,6 @@ def curr_user():
         return jsonify(0)
 
 
-@app.route("/show_status")
-def show_status():
-    elements = []
-    status = Status.select()
-    for element in status:
-        elements.append(element.status)
-    return jsonify(elements)
-
-
 @app.route("/save_data", methods=['GET', 'POST'])
 def save():
     result = request.get_json()
@@ -98,11 +89,7 @@ def get_user_boards(userid):
 
 
 def board_to_json(board):
-    return {'name': board.name}
-
-
-def cell_to_json(cell):
-    return {'name': cell.name, 'text': cell.text}
+    return {'name': board.name, 'id_in_db':board.id}
 
 
 @app.route("/update_data")
@@ -119,9 +106,33 @@ def update_data():
         query.execute()
 
 
-@app.route("/load_data")
-def load_data():
-    pass
+@app.route("/get_status_list" ,methods=['GET', 'POST'])
+def get_status_list():
+    status_list = Status.select()
+    result = []
+    for status in status_list:
+        result.append(status.status)
+    return jsonify(result)
+
+
+@app.route("/load_cells_by_status",methods=['GET', 'POST'])
+def load_cells():
+    board_id = request.form["board_id"]
+    status = request.form["status"]
+    cell_list = get_board_cells(board_id,status)
+    print(cell_list)
+    return jsonify(cell_list)
+
+
+def get_board_cells(board_id,status):
+    cells = Cell.select().join(Status).where(Cell.board == board_id and Status.status == status)
+    cell_list = []
+    for cell in cells:
+        cell_list.append(cell_to_json(cell))
+    return cell_list
+
+def cell_to_json(cell):
+    return {'name': cell.name, 'text': cell.text, 'order': cell.order, 'status':cell.status.status}
 
 
 @app.route("/save_data")

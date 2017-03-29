@@ -5,22 +5,38 @@
     <title>Title</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/noname.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/flip.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css">
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha/css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha/js/bootstrap.min.js"></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.2/dragula.min.js'></script>
     <script src="{{ url_for('static', filename='js/usermain.js') }}" type="text/javascript"></script>
+    <script src="{{ url_for('static', filename='js/noname.js') }}" type="text/javascript"></script>
 </head>
 <body>
 <form action="logout">
             <input type="submit" value="LogOut" />
 </form>
-<div class="container">
+
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  <a href="#">Home</a>
+  <a href="#">New card</a>
+  <a href="#">Credits</a>
+  <a href="#">Contact</a>
+  <a href="#">Log out</a>
+</div>
+<span onclick="openNav()">&#9776; menu</span>
+
+<div class="container" id="main">
     <div class="row">
-        <div id="board" class="col-xs-9">
+        <div id="board" class="col-sm-9">
 
         </div>
     </div>
 </div>
+
+
+
 </body>
 </html>

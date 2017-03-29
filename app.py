@@ -1,4 +1,4 @@
-from flask import Flask,render_template,request
+from flask import Flask,render_template,request, jsonify
 from flask_login import LoginManager,login_required, login_user, logout_user, current_user
 
 

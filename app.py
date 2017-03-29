@@ -120,8 +120,8 @@ def load_cells():
     board_id = request.form["board_id"]
     status = request.form["status"]
     cell_list = get_board_cells(board_id,status)
-    print(cell_list)
-    return jsonify(cell_list)
+    ordered_cell_list = sorted(cell_list, key=lambda cell_list_key: cell_list_key['order'])
+    return jsonify(ordered_cell_list)
 
 
 def get_board_cells(board_id,status):

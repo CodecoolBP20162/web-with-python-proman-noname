@@ -5,5 +5,6 @@ from models.models import *
 class Cell(BaseModel):
     text = CharField()
     name = CharField()
+    order = IntegerField()
     status = ForeignKeyField(Status)
     board = ForeignKeyField(Board)

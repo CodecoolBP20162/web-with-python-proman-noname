@@ -34,6 +34,6 @@ def create_example_data():
         Boardstable.create(board=batman2, user=batman)
         Boardstable.create(board=batman3, user=batman)
 
-        Cell.create(text="Rocket",name="Weapon", board=board1, status=Status.get(Status.status == "New"))
-        Cell.create(text="Kalasnyikov", name="Weapon", board=board1, status=Status.get(Status.status == "In progress"))
-        Cell.create(text="Grenade", name="Weapon", board=board1, status=Status.get(Status.status == "Done"))
+        Cell.create(text="Rocket",name="Weapon", order=1, board=board1, status=Status.get(Status.status == "New"))
+        Cell.create(text="Kalasnyikov", name="Weapon", order=2, board=board1, status=Status.get(Status.status == "In progress"))
+        Cell.create(text="Grenade", name="Weapon", order=3, board=board1, status=Status.get(Status.status == "Done"))

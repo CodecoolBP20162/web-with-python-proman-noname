@@ -1,18 +1,17 @@
-from flask import Flask, render_template, request, redirect, url_for, jsonify, json
+from flask import Flask, render_template, request, redirect, url_for, jsonify
 from flask_login import LoginManager, login_required, login_user, logout_user, current_user
 from peewee import DoesNotExist
 
 import example_data
 from build import Build
-from models.status import Status
-from models.user import User
-from models.cell import Cell
 from models.board import Board
 from models.boardstable import Boardstable
+from models.cell import Cell
+from models.status import Status
+from models.user import User
 
 app = Flask(__name__)
 app.secret_key = "asdasdasds"
-
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -81,14 +80,14 @@ def show_status():
 def save():
     result = request.get_json()
     print(result)
-
     return 'alma'
 
 
 @app.route("/load_board", methods=['GET', 'POST'])
 def load_board():
-    board_list=get_user_boards(current_user.id)
+    board_list = get_user_boards(current_user.id)
     return jsonify(board_list)
+
 
 def get_user_boards(userid):
     boards = Board.select().join(Boardstable).where(Boardstable.user == userid)
@@ -98,13 +97,36 @@ def get_user_boards(userid):
     return boardlist
 
 
-
 def board_to_json(board):
     return {'name': board.name}
 
 
 def cell_to_json(cell):
     return {'name': cell.name, 'text': cell.text}
+
+
+@app.route("/update_data")
+def update_data():
+    result = request.get_json()
+    newid = result["newid"]
+    oldid = result["oldid"]
+    newstatus = result["newstatus"]
+    oldstatus = result["oldstatus"]
+    if (newid != oldid):
+        query = Cell.update(order=newid, status=newstatus).where(Cell.order == oldid and Cell.status == oldstatus)
+        query.execute()
+        query = Cell.update(order=oldid, status=newid).where(Cell.order == newid and Cell.status == newstatus)
+        query.execute()
+
+
+@app.route("/load_data")
+def load_data():
+    pass
+
+
+@app.route("/save_data")
+def save_data():
+    pass
 
 
 if __name__ == "__main__":

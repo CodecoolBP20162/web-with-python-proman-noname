@@ -40,7 +40,7 @@ def main():
     return render_template("index.html")
 
 
-@login_required
+
 @app.route("/login", methods=['GET', 'POST'])
 def login():
     if request.method == "POST":
@@ -127,6 +127,10 @@ def load_data():
 @app.route("/save_data")
 def save_data():
     pass
+
+@app.route("/mini_game", methods=['GET', 'POST'])
+def game():
+    return render_template("game.html")
 
 
 if __name__ == "__main__":

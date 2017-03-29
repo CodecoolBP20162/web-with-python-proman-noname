@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/noname.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css">
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha/css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha/js/bootstrap.min.js"></script>
@@ -14,37 +15,38 @@
 <form action="logout">
             <input type="submit" value="LogOut" />
 </form>
-<div class="container">
+
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  <a href="#">Home</a>
+  <a href="#">New card</a>
+  <a href="#">Credits</a>
+  <a href="#">Contact</a>
+  <a href="#">Log out</a>
+</div>
+<span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; menu</span>
+
+
+
+<div class="container-fluid" id="main">
     <div class="row">
-        <div class="col-xs-3">
-            <div>New</div>
-            <div id="new" class="newList">
-            </div>
-        </div>
-        <div class="col-xs-3">
-            <div>In Progress</div>
-            <div id="progress" class="newList">
-                <div><div>Elso</div></div>
-                <div>Masodik</div>
-                <div>Harmadik</div>
-            </div>
-        </div>
-        <div class="col-xs-3">
-            <div>Done</div>
-            <div id="done" class="newList">
-                <div>Elso</div>
-                <div>Masodik</div>
-                <div>Harmadik</div>
-            </div>
-        </div>
-        <div class="col-xs-3">
-            <div>Review</div>
-            <div id="review" class="newList">
-                <div>Elso</div>
-                <div>Masodik</div>
-                <div>Harmadik</div>
-            </div>
-        </div>
+        <div class="col-sm-3"><div id="new_status">
+            <div class="status_name">New</div>
+            <div id="new" class="newList"></div>
+        </div></div>
+         <div class="col-sm-3"><div id="in_progress_status">
+            <div class="status_name">In Progress</div>
+            <div id="progress" class="newList"></div>
+        </div></div>
+        <div class="col-sm-3" ><div id="review_status">
+            <div class="status_name">Review</div>
+            <div id="review" class="newList"></div>
+        </div></div>
+        <div class="col-sm-3"><div id="done_status">
+            <div class="status_name">Done</div>
+            <div id="done" class="newList"></div>
+        </div></div>
+
     </div>
 </div>
 </body>

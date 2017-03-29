@@ -38,7 +38,7 @@ function addAnimation() {
             var c = this.classList;
             console.log(c);
             if (c.contains("flipped") === true && c.contains("clicked") === false) {
-                c.add("clicked");
+                //c.add("clicked");
             } else {
                 c.add("flipped");
             }
@@ -51,7 +51,6 @@ function addInputEvent() {
                         var c=$(".card.effect__click");
                         event.preventDefault();
                         c.removeClass("flipped");
-                        c.removeClass("clicked");
                         create_new_board();
                     }
                 })
@@ -64,8 +63,11 @@ function create_new_board(){
         data:board_title,
         type:'POST',
         success:function(data){
-            $('#input_field').val("");
-            insertNewBoard(data)
+            if($('#input_field').val()!==""){
+                $('#input_field').val("");
+                insertNewBoard(data)
+            }
+
         },
         error: function(){
             alert("nope");

@@ -1,0 +1,68 @@
+.card__front {
+    background-image: url("/static/pictures/logo2.png");
+    background-size: 200px 200px;
+    background-repeat: no-repeat;
+}
+
+.col-xs-12{
+    max-width: 1000px;
+}
+
+.col-xs-3 {
+    width: 20%;
+}
+
+
+.card.effect__click {
+    border: transparent;
+}
+
+.card {
+  position: relative;
+  float: left;
+  text-align: center;
+  height:200px;
+    padding-bottom: 5px;
+    padding-right: 5px;
+}
+
+.card__front,
+.card__back {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 200px;
+  height: 200px;
+    border: solid 2px;
+    background-size: 200px 200px;
+    background-repeat: no-repeat;
+}
+
+.card__front,
+.card__back {
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+  -webkit-transition: -webkit-transform 0.5s;
+          transition: transform 0.5s;
+}
+
+.card__front {
+
+}
+
+.card__back {
+
+  -webkit-transform: rotateY(-180deg);
+          transform: rotateY(-180deg);
+}
+
+.card.effect__click.flipped .card__front {
+  -webkit-transform: rotateY(-180deg);
+          transform: rotateY(-180deg);
+}
+
+.card.effect__click.flipped .card__back {
+    -webkit-transform: rotateY(0);
+    transform: rotateY(0);
+}
+

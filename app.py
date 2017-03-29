@@ -89,7 +89,7 @@ def get_user_boards(userid):
 
 
 def board_to_json(board):
-    return {'name': board.name, 'id_in_db':board.id}
+    return {'name': board.name, 'id_in_db': board.id}
 
 
 @app.route("/update_data")
@@ -106,7 +106,7 @@ def update_data():
         query.execute()
 
 
-@app.route("/get_status_list" ,methods=['GET', 'POST'])
+@app.route("/get_status_list", methods=['GET', 'POST'])
 def get_status_list():
     status_list = Status.select()
     result = []
@@ -115,37 +115,40 @@ def get_status_list():
     return jsonify(result)
 
 
-@app.route("/load_cells_by_status",methods=['GET', 'POST'])
+@app.route("/load_cells_by_status", methods=['GET', 'POST'])
 def load_cells():
     board_id = request.form["board_id"]
     status = request.form["status"]
-    cell_list = get_board_cells(board_id,status)
+    cell_list = get_board_cells(board_id, status)
     ordered_cell_list = sorted(cell_list, key=lambda cell_list_key: cell_list_key['order'])
     return jsonify(ordered_cell_list)
 
 
-def get_board_cells(board_id,status):
-    cells = Cell.select().join(Status).where(Cell.board == board_id and Status.status == status)
+def get_board_cells(board_id, status):
+    cells = Cell.select().join(Board).where(Cell.board == board_id)
     cell_list = []
     for cell in cells:
-        cell_list.append(cell_to_json(cell))
+        if (cell.status.status == status):
+            cell_list.append(cell_to_json(cell))
     return cell_list
 
+
 def cell_to_json(cell):
-    return {'name': cell.name, 'text': cell.text, 'order': cell.order, 'status':cell.status.status}
+    return {'name': cell.name, 'text': cell.text, 'order': cell.order, 'status': cell.status.status}
 
 
 @app.route("/save_data")
 def save_data():
     pass
 
+
 @app.route("/create_new_board", methods=['POST'])
 @login_required
 def create_new_board():
-    board_title=request.form["input_field"]
-    if board_title!="":
-        new_board=Board.create(name=board_title)
-        Boardstable.create(board=new_board,user=current_user.id)
+    board_title = request.form["input_field"]
+    if board_title != "":
+        new_board = Board.create(name=board_title)
+        Boardstable.create(board=new_board, user=current_user.id)
     return jsonify(board_title)
 
 
@@ -153,4 +156,3 @@ if __name__ == "__main__":
     Build.create_tables()
     example_data.create_example_data()
     app.run(debug=True)
-

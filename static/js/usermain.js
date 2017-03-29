@@ -47,12 +47,11 @@ function addAnimation() {
                 c.add("clicked");
                 input_field.addEventListener("keypress", function () {
                     if (event.which == 13 || event.keyCode == 13) {
-                        event.preventDefault();
                         c.remove("flipped");
                         c.remove("clicked");
                         create_new_board();
                         $('#input_field').val("");
-                        showUserBoard();
+
                     }
                 })
             } else {

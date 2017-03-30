@@ -25,17 +25,12 @@ function showCards(board_id_in_db){
 }
 
 function renderCells(status,data) {
-    console.log(data);
     for (i=0;i<data.length;i++){
-        var html='<div id"'+(i+1)+'" >'+data[i].text+'</div>';
-
+        var html="<div id="+(i+1)+" data-dbid="+data[i].id_in_db+">"+data[i].text+"</div>";
         $('#'+status).append(html)
     }
 
 }
-
-
-
 
 
 function initDragula() {
@@ -48,10 +43,10 @@ function initDragula() {
       drake.on('drop',function (el, target,source) {
           var children=target.children;
           for(var i=0;i<children.length;i++){
-              var data={'oldstatus':source.id,'oldid':el.id,'newstatus':target.id,'newid':i};
-              updateData(data);
               $(children[i]).attr("id",i)
           }
+          var data={'old_db_id':el.dataset.dbid,'oldstatus':source.id,'oldid':el.id,'newstatus':target.id,'newid':i};
+          updateData(data);
 
           var sourcechild=source.children;
           for(var i=0;i<sourcechild.length;i++){

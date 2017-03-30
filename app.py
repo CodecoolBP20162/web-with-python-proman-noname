@@ -59,13 +59,14 @@ def login():
         return redirect(url_for("user_main"))
     return render_template("login.html")
 
-@app.route("/signup", methods=["GET","POST"])
+
+@app.route("/signup", methods=["GET", "POST"])
 def signup():
-    name=request.form['name']
-    username=request.form['username']
-    password=request.form['password']
-    User.create(name=name,password=password,login_name=username)
-    user=User.get(username==User.login_name)
+    name = request.form['name']
+    username = request.form['username']
+    password = request.form['password']
+    User.create(name=name, password=password, login_name=username)
+    user = User.get(username == User.login_name)
     login_user(user)
     return redirect(url_for("user_main"))
 
@@ -83,11 +84,35 @@ def curr_user():
         return jsonify(0)
 
 
+
+
+
+def rearange_cells(newid, oldid, id_in_db):
+    moved_cell = Cell.get(Cell.id == id_in_db)
+    cells = Cell.select()
+    for cell in cells:
+        if moved_cell.status == cell.status and moved_cell.board == cell.board:
+            if cell.order <= newid:
+                query = Cell.update(order=cell.order-1).where(Cell.id == cell.id)
+                query.execute()
+    query = Cell.update(order=newid).where(Cell.id == id_in_db)
+    query.execute()
+
+
 @app.route("/save_data", methods=['GET', 'POST'])
 def save():
     result = request.get_json()
-    print(result)
-    return 'alma'
+    newid = result["newid"]
+    oldid = int(result["oldid"])
+    newstatus = result["newstatus"]
+    oldstatus = result["oldstatus"]
+    id_in_db = int(result["old_db_id"])
+    print(newid)
+    if newid == oldid and newstatus == oldstatus:
+        return ""
+    if (newstatus == oldstatus):
+        rearange_cells(newid, oldid, id_in_db)
+    return ""
 
 
 @app.route("/load_board", methods=['GET', 'POST'])
@@ -108,22 +133,9 @@ def board_to_json(board):
     return {'name': board.name, 'id_in_db': board.id}
 
 
-@app.route("/update_data")
-def update_data():
-    result = request.get_json()
-    newid = result["newid"]
-    oldid = result["oldid"]
-    newstatus = result["newstatus"]
-    oldstatus = result["oldstatus"]
-    if (newid != oldid):
-        query = Cell.update(order=newid, status=newstatus).where(Cell.order == oldid and Cell.status == oldstatus)
-        query.execute()
-        query = Cell.update(order=oldid, status=newid).where(Cell.order == newid and Cell.status == newstatus)
-        query.execute()
-
-
 def cell_to_json(cell):
-    return {'name': cell.name, 'text': cell.text, 'order': cell.order, 'status': cell.status.status}
+    return {'name': cell.name, 'text': cell.text, 'order': cell.order, 'status': cell.status.status,
+            'id_in_db': cell.id}
 
 
 def init_cell_list(board_id):
@@ -151,15 +163,12 @@ def init_cell_list(board_id):
         Cell_list.cell_list.append(cell_to_json(cell))
 
 
-
 def get_board_cells(status):
     result = []
     for cell in Cell_list.cell_list:
         if cell['status'] == status:
             result.append(cell)
     return result
-
-
 
 
 @app.route("/load_cells_by_status", methods=['POST'])
@@ -169,10 +178,6 @@ def load_cells():
     sorted_cell_list = sorted(selected_cells_by_status, key=lambda cell_list_key: cell_list_key['order'])
     return jsonify(sorted_cell_list)
 
-
-@app.route("/update_cell_data")
-def save_cell_data():
-    pass
 
 @app.route("/mini_game", methods=['GET', 'POST'])
 def game():

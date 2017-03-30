@@ -8,10 +8,13 @@ $(function () {
 
 function formSubmitMod() {
     $('form').submit(function () {
+        $('#myModal').modal('hide');
         create_new_cell();
         return false
     });
 }
+
+
 
 function add_title(boardid) {
     $.post("/get_board_title", {board_id: boardid}, function (data) {
@@ -29,12 +32,14 @@ function create_new_cell(){
         data:posted_data,
         type:'POST',
         success:function(data){
-            console.log(data);
-            //if($('#new_cell_form').val()!==""){
-                //$('#new_cell_form').val("");
-               // console.log(data)
+            appendCell(data);
             }
         })
+}
+
+function appendCell(cell) {
+    var html = "<div id=" + cell.order + " data-dbid=" + cell.id + ">" + cell.name + "</div>";
+        $('#new').append(html)
 }
 
 function showCards(board_id_in_db) {

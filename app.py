@@ -244,9 +244,10 @@ def create_new_cell():
     cell_name = request.form['cell_title']
     boardid = request.form['boardid']
     if cell_name != "":
-        query = Cell.select().join(Status).where((Status.status == 'new') & (Cell.board == boardid))
-        new_cell = Cell.create(name=cell_name, status=1, board=boardid, order=(len(query) + 1))
-    return jsonify({'cellid': new_cell.id, 'cellname': new_cell.name})
+        query=Cell.select().join(Status).where((Status.status=='new') & (Cell.board==boardid))
+        new_cell = Cell.create(name=cell_name,status=1,board=boardid,order=(len(query)+1))
+    return jsonify({'id': new_cell.id, 'name': new_cell.name,'order':new_cell.order})
+
 
 
 if __name__ == "__main__":

@@ -19,6 +19,10 @@
     font-size:30px;
     font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
     font-variant: all-small-caps;
+    background-image:  url("/static/pictures/fox_face.png");
+    background-size: 80px 80px;
+    background-repeat: no-repeat;
+    background-position: right bottom;
 
 }
 
@@ -33,6 +37,10 @@
     color:black;
     font-size:30px;
     font-variant: all-small-caps;
+    background-image:  url("/static/pictures/empty_fox.png");
+    background-repeat: no-repeat;
+    background-position: right bottom;
+    background-size: 60%;
 
 
 }

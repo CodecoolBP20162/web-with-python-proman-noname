@@ -101,7 +101,10 @@ function create_new_board(){
 
 function addDeleteListener(boardid) {
     $("#"+boardid+'d').bind("click",function () {
-        deleteBoard(boardid)
+        var choice=confirm("Are you sure?");
+        if(choice){
+            deleteBoard(boardid)
+        }
     })
 
 }

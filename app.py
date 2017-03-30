@@ -152,6 +152,14 @@ def get_status_list():
     init_cell_list(board_id)
     return jsonify(result)
 
+@app.route("/get_main_title", methods=['GET', 'POST'])
+@login_required
+def get_main_title():
+    user_id = current_user.id
+    user = User.get(User.id == user_id)
+    return (user.name)
+
+
 @app.route("/get_board_title", methods=['GET', 'POST'])
 def get_board_title():
     board_id = request.form['board_id']

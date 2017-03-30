@@ -1,6 +1,13 @@
 $(function() {
-      showUserBoard();
+    add_title();
+    showUserBoard();
 });
+
+function add_title() {
+    $.post("/get_main_title", function (data) {
+        $("#title_board").append(data)
+        })
+}
 
 function addClickListenerToBoards(boards) {
     for (var i=0;i<boards.length;i++){

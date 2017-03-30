@@ -1,6 +1,13 @@
 $(function() {
-      showUserBoard();
+    add_title();
+    showUserBoard();
 });
+
+function add_title() {
+    $.post("/get_main_title", function (data) {
+        $("#title_board").append(data)
+        })
+}
 
 function addClickListenerToBoards(boards) {
     for (var i=0;i<boards.length;i++){
@@ -52,7 +59,7 @@ function fillBoards(boards) {
 function addBoardDiv() {
 
     var html='<div id="newBoard" class="col-xs-2 card effect__click"><div class="newBoard card__front" >Add new board</div>' +
-        '<form class="newBoard card__back" id="new_board"><input type="text" name=input_field id="input_field" placeholder="New Board Title"></div></div></div>';
+        '<form class="newBoard card__back" id="new_board"><input type="text" name=input_field id="input_field" maxlength="20" size="8" placeholder="New Board"></div></div></div>';
     $("#board").append(html);
     addInputEvent()
 }

@@ -59,13 +59,14 @@ def login():
         return redirect(url_for("user_main"))
     return render_template("login.html")
 
-@app.route("/signup", methods=["GET","POST"])
+
+@app.route("/signup", methods=["GET", "POST"])
 def signup():
-    name=request.form['name']
-    username=request.form['username']
-    password=request.form['password']
-    User.create(name=name,password=password,login_name=username)
-    user=User.get(username==User.login_name)
+    name = request.form['name']
+    username = request.form['username']
+    password = request.form['password']
+    User.create(name=name, password=password, login_name=username)
+    user = User.get(username == User.login_name)
     login_user(user)
     return redirect(url_for("user_main"))
 
@@ -83,11 +84,32 @@ def curr_user():
         return jsonify(0)
 
 
+def rearange_cells(newid, oldid, id_in_db):
+    moved_cell = Cell.get(Cell.id == id_in_db)
+    cells = Cell.select()
+    for cell in cells:
+        if moved_cell.status == cell.status and moved_cell.board == cell.board:
+            if cell.order <= newid:
+                query = Cell.update(order=cell.order - 1).where(Cell.id == cell.id)
+                query.execute()
+    query = Cell.update(order=newid).where(Cell.id == id_in_db)
+    query.execute()
+
+
 @app.route("/save_data", methods=['GET', 'POST'])
 def save():
     result = request.get_json()
-    print(result)
-    return 'alma'
+    newid = result["newid"]
+    oldid = int(result["oldid"])
+    newstatus = result["newstatus"]
+    oldstatus = result["oldstatus"]
+    id_in_db = int(result["old_db_id"])
+    print(newid)
+    if newid == oldid and newstatus == oldstatus:
+        return ""
+    if (newstatus == oldstatus):
+        rearange_cells(newid, oldid, id_in_db)
+    return ""
 
 
 @app.route("/load_board", methods=['GET', 'POST'])
@@ -123,7 +145,8 @@ def update_data():
 
 
 def cell_to_json(cell):
-    return {'name': cell.name, 'text': cell.text, 'order': cell.order, 'status': cell.status.status}
+    return {'name': cell.name, 'text': cell.text, 'order': cell.order, 'status': cell.status.status,
+            'id_in_db': cell.id}
 
 
 def init_cell_list(board_id):
@@ -143,6 +166,32 @@ def get_status_list():
     init_cell_list(board_id)
     return jsonify(result)
 
+@app.route("/get_main_title", methods=['GET', 'POST'])
+@login_required
+def get_main_title():
+    user_id = current_user.id
+    user = User.get(User.id == user_id)
+    return (user.name)
+
+
+@app.route("/get_board_title", methods=['GET', 'POST'])
+def get_board_title():
+    board_id = request.form['board_id']
+    board_title = Boardstable.get(Boardstable.id == board_id)
+    return (board_title.board.name)
+
+
+@app.route("/delete_board", methods=['POST'])
+def delete_board():
+    boardid = request.form['boardid']
+    q = Cell.delete().where(Cell.board_id == boardid)
+    q.execute()
+    q = Boardstable.delete().where(Boardstable.board == boardid)
+    q.execute()
+    q = Board.delete().where(Board.id == boardid)
+    q.execute()
+    return "ok"
+
 
 def init_cell_list(board_id):
     cells = Cell.select().join(Board).where(Cell.board == board_id)
@@ -150,17 +199,6 @@ def init_cell_list(board_id):
     for cell in cells:
         Cell_list.cell_list.append(cell_to_json(cell))
 
-
-@app.route("/delete_board", methods=['POST'])
-def delete_board():
-    boardid=request.form['boardid']
-    q=Cell.delete().where(Cell.board_id==boardid)
-    q.execute()
-    q=Boardstable.delete().where(Boardstable.board==boardid)
-    q.execute()
-    q = Board.delete().where(Board.id == boardid)
-    q.execute()
-    return "ok"
 
 def get_board_cells(status):
     result = []
@@ -170,8 +208,6 @@ def get_board_cells(status):
     return result
 
 
-
-
 @app.route("/load_cells_by_status", methods=['POST'])
 def load_cells():
     status = request.form["status"]
@@ -179,10 +215,6 @@ def load_cells():
     sorted_cell_list = sorted(selected_cells_by_status, key=lambda cell_list_key: cell_list_key['order'])
     return jsonify(sorted_cell_list)
 
-
-@app.route("/update_cell_data")
-def save_cell_data():
-    pass
 
 @app.route("/mini_game", methods=['GET', 'POST'])
 def game():

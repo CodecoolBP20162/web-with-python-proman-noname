@@ -7,21 +7,35 @@
 .boardbox {
     margin:5px;
     padding:10px;
-    height: 150px;
+    height: 250px;
     width: 100px;
     border:solid 2px black;
     word-wrap:break-word;
     margin-right: 3px;
     margin-bottom: 3px;
+    border-radius: 5px;
+    //background: rgba(193,213,224,1);
+    background-color: #fffbde;
+    color:black;
+    font-size:30px;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-variant: all-small-caps;
 
 }
 
 .newBoard {
     margin:5px ;
     padding:10px;
-    height: 150px !important;
+    height: 250px !important;
     width: 100px;
     border:solid 2px black;
+    border-radius: 5px;
+    background: #e7e3c5;
+    color:black;
+    font-size:30px;
+    font-variant: all-small-caps;
+
+
 }
 
 .gu-mirror {

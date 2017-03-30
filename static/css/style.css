@@ -173,7 +173,9 @@
     background-image: url("/static/pictures/fox.jpg");
     background-repeat: no-repeat;
 }
-
+.newList {
+    min-height: 40px;
+}
 .home_container{
     margin-top: 70px;
     float: right;

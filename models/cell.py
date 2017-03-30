@@ -3,7 +3,7 @@ from models.status import Status
 from models.models import *
 
 class Cell(BaseModel):
-    text = CharField()
+    text = CharField(default="")
     name = CharField()
     order = IntegerField()
     status = ForeignKeyField(Status)

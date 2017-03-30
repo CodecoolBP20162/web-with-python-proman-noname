@@ -1,21 +1,32 @@
+#boards_main{
+    margin-top: 30px;
+    margin-left: 150px;
+}
+
+#title{
+    margin-left: 440px;
+    font-size:40px;
+    font-family: Stay Writer;
+}
+
 .boardbox {
-    height: 50px;
+    margin:5px;
+    padding:10px;
+    height: 150px;
     width: 100px;
     border:solid 2px black;
+    word-wrap:break-word;
+    margin-right: 3px;
+    margin-bottom: 3px;
+
 }
 
 .newBoard {
-    height: 50px;
+    margin:5px ;
+    padding:10px;
+    height: 150px !important;
     width: 100px;
     border:solid 2px black;
-
-}
-
-
-.col-xs-3 {
-    border:solid 2px black;
-    margin-right: 3px;
-    margin-bottom: 3px;
 }
 
 .gu-mirror {
@@ -43,6 +54,3 @@
   filter: alpha(opacity=20);
 }
 
-.newList {
-    min-height: 20px;
-}

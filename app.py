@@ -142,6 +142,7 @@ def save_data():
     pass
 
 
+
 @app.route("/create_new_board", methods=['POST'])
 @login_required
 def create_new_board():
@@ -156,3 +157,4 @@ if __name__ == "__main__":
     Build.create_tables()
     example_data.create_example_data()
     app.run(debug=True)
+

@@ -60,7 +60,7 @@ function showUserBoard() {
 function fillBoards(boards) {
     $('#board').empty()
     for (var i=0;i<boards.length;i++){
-        var html='<div id="'+i+'" class="boardbox col-xs-3">'+boards[i].name+'</div>';
+        var html='<div id="'+i+'" class="boardbox col-xs-2">'+boards[i].name+'</div>';
         $("#board").append(html);
     }
     addClickListenerToBoards(boards)
@@ -69,7 +69,7 @@ function fillBoards(boards) {
 
 function addBoardDiv() {
 
-    var html='<div id="newBoard" class="col-xs-3 card effect__click"><div class="newBoard card__front" >Add new board</div>' +
+    var html='<div id="newBoard" class="col-xs-2 card effect__click"><div class="newBoard card__front" >Add new board</div>' +
         '<form class="newBoard card__back" id="new_board"><input type="text" name=input_field id="input_field" placeholder="New Board Title"></div></div></div>';
     $("#board").append(html);
     addInputEvent()
@@ -120,8 +120,7 @@ function create_new_board(){
 
 function insertNewBoard(boardname) {
     var boardnumb=$("#board").children().length-1;
-    var newItem = '<div id="'+boardnumb+'" class="boardbox col-xs-3">'+boardname+'</div>';
+    var newItem = '<div id="'+boardnumb+'" class="boardbox col-xs-2">'+boardname+'</div>';
     $(newItem).insertBefore("#newBoard");
 }
-
 

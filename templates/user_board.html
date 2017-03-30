@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -10,24 +9,22 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha/css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha/js/bootstrap.min.js"></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.2/dragula.min.js'></script>
-    <script src="{{ url_for('static', filename='js/noname.js') }}" type="text/javascript"></script>
+    <script src="{{ url_for('static', filename='js/userboard.js') }}" type="text/javascript"></script>
 </head>
-
 <body>
-    <div id="mySidenav" class="sidenav">
-        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-        <a href="/user_main">Home</a>
-        <a href="#">New card</a>
-        <a href="#">Credits</a>
-        <a href="#">Extra</a>
-        <a href="logout">Log out</a>
-    </div>
 
-    <span id="closing_span" onclick="openNav()">&#9776; menu </span>
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  <a href="/user_main">Home</a>
+  <a href="#">New card</a>
+  <a href="#">Credits</a>
+  <a href="#">Extra</a>
+  <a href="logout">Log out</a>
+</div>
+<span id="closing_span" onclick="openNav()">&#9776; menu</span>
+<span id="title">BOARD TITLE</span><br>
 
-    <span id="title" id="title_card">BOARD TITLE</span><br><br>
-
-    <!-- Button trigger modal -->
+<!-- Button trigger modal -->
     <button id="use_font" type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">Add new card</button>
 
     <!-- Modal -->
@@ -51,35 +48,26 @@
 
 
 
-    <div class="container-fluid" id="index_main">
-        <div class="row">
-            <div class="col-sm-3">
-                <div id="new_status">
-                    <div class="status_name">New</div>
-                    <div id="new" class="newList"></div>
-                </div>
-            </div>
-            <div class="col-sm-3">
-                <div id="in_progress_status">
-                    <div class="status_name">In Progress</div>
-                    <div id="progress" class="newList"></div>
-                </div>
-            </div>
-            <div class="col-sm-3">
-                <div id="review_status">
-                    <div class="status_name">Review</div>
-                    <div id="review" class="newList"></div>
-                </div>
-            </div>
-            <div class="col-sm-3">
-                <div id="done_status">
-                    <div class="status_name">Done</div>
-                    <div id="done" class="newList"></div>
-                </div>
-            </div>
+<div class="container-fluid" id="index_main">
+    <div class="row">
+        <div class="col-sm-3"><div id="new_status">
+            <div class="status_name">New</div>
+            <div id="new" class="newList"></div>
+        </div></div>
+         <div class="col-sm-3"><div id="in_progress_status">
+            <div class="status_name">In Progress</div>
+            <div id="progress" class="newList"></div>
+        </div></div>
+        <div class="col-sm-3" ><div id="review_status">
+            <div class="status_name">Review</div>
+            <div id="review" class="newList"></div>
+        </div></div>
+        <div class="col-sm-3"><div id="done_status">
+            <div class="status_name">Done</div>
+            <div id="done" class="newList"></div>
+        </div></div>
 
-        </div>
     </div>
+</div>
 </body>
-
 </html>

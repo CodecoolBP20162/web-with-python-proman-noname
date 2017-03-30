@@ -38,7 +38,7 @@ def logout():
 @app.route("/", methods=['GET', 'POST'])
 @login_required
 def main():
-    return render_template("index.html")
+    return render_template("user_main.html")
 
 
 @app.route("/user_main/board/", methods=['GET'])
@@ -84,16 +84,13 @@ def curr_user():
         return jsonify(0)
 
 
-
-
-
 def rearange_cells(newid, oldid, id_in_db):
     moved_cell = Cell.get(Cell.id == id_in_db)
     cells = Cell.select()
     for cell in cells:
         if moved_cell.status == cell.status and moved_cell.board == cell.board:
             if cell.order <= newid:
-                query = Cell.update(order=cell.order-1).where(Cell.id == cell.id)
+                query = Cell.update(order=cell.order - 1).where(Cell.id == cell.id)
                 query.execute()
     query = Cell.update(order=newid).where(Cell.id == id_in_db)
     query.execute()
@@ -156,6 +153,18 @@ def get_status_list():
     return jsonify(result)
 
 
+@app.route("/delete_board", methods=['POST'])
+def delete_board():
+    boardid = request.form['boardid']
+    q = Cell.delete().where(Cell.board_id == boardid)
+    q.execute()
+    q = Boardstable.delete().where(Boardstable.board == boardid)
+    q.execute()
+    q = Board.delete().where(Board.id == boardid)
+    q.execute()
+    return "ok"
+
+
 def init_cell_list(board_id):
     cells = Cell.select().join(Board).where(Cell.board == board_id)
     Cell_list.cell_list.clear()
@@ -191,7 +200,8 @@ def create_new_board():
     if board_title != "":
         new_board = Board.create(name=board_title)
         Boardstable.create(board=new_board, user=current_user.id)
-    return jsonify(board_title)
+
+    return jsonify({'boardid': new_board.id, 'boardname': new_board.name})
 
 
 if __name__ == "__main__":

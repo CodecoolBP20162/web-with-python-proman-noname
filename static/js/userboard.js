@@ -56,7 +56,6 @@ function renderCells(status,data) {
         var html='<div id"'+(i+1)+'" >'+data[i].name+'</div>';
         $('#'+status).append(html)
     }
-
 }
 
 

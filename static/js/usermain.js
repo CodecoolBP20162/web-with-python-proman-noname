@@ -1,41 +1,37 @@
-/**
- * Created by atsidir on 2017.03.28..
- */
 $(function() {
-      showUserBoard();
+    add_title();
+    showUserBoard();
 });
 
-
-
-function showCards(board_id_in_db){
-    $.post("/get_status_list",function( data ) {
-        for (var i =0;i<data.length;i++) {
-            var status = data[i];
-            getCellListByStatus(status)
-        }
-
-        function getCellListByStatus(status) {
-            $.post("/load_cells_by_status",{board_id:board_id_in_db, status:status}, function( data ) {
-                console.log(data)
-            });
-        }
-    })
-
+function add_title() {
+    $.post("/get_main_title", function (data) {
+        $("#title_board").append(data)
+        })
 }
 
 function addClickListenerToBoards(boards) {
     for (var i=0;i<boards.length;i++){
-        var board_id_in_db = boards[i]["id_in_db"]
-        var board = document.getElementById(i)
+        var board_id_in_db = boards[i]["id_in_db"];
+        var board = document.getElementById(board_id_in_db);
         addEventListenerToBoard(board,board_id_in_db)
     }
-
-    function addEventListenerToBoard(board,board_id_in_db) {
-        board.addEventListener("click", function(){
-            showCards(board_id_in_db)
-        });
-    }
 }
+
+function addEventListenerToBoard(board,board_id_in_db) {
+    board.addEventListener("mouseover", function () {
+        $("#" + board_id_in_db + "d").toggleClass('slide-left')
+    });
+
+    board.addEventListener("mouseout", function () {
+        $("#" + board_id_in_db + "d").toggleClass('slide-left')
+    });
+
+    board.addEventListener("click", function () {
+        window.location.replace("/user_main/board/?title=" + board_id_in_db);
+    });
+}
+
+
 
 function showUserBoard() {
     $.ajax({
@@ -48,19 +44,22 @@ function showUserBoard() {
 }
 
 function fillBoards(boards) {
-    $('#board').empty()
+    //$('#board').empty();
     for (var i=0;i<boards.length;i++){
-        var html='<div id="'+i+'" class="boardbox col-xs-2">'+boards[i].name+'</div>';
+        var deleteid=boards[i].id_in_db;
+        var deletehtml='<div id="'+deleteid+'d'+'" class="deleteButton" onclick="event.cancelBubble=true;">X</div>';
+        var html='<div id="'+boards[i].id_in_db+'" class="boardbox col-xs-2">'+boards[i].name+deletehtml+'</div>';
         $("#board").append(html);
+        addDeleteListener(deleteid)
     }
-    addClickListenerToBoards(boards)
+    addClickListenerToBoards(boards);
     addBoardDiv()
 }
 
 function addBoardDiv() {
 
     var html='<div id="newBoard" class="col-xs-2 card effect__click"><div class="newBoard card__front" >Add new board</div>' +
-        '<form class="newBoard card__back" id="new_board"><input type="text" name=input_field id="input_field" placeholder="New Board Title"></div></div></div>';
+        '<form class="newBoard card__back" id="new_board"><input type="text" name=input_field id="input_field" maxlength="20" size="8" placeholder="New Board"></div></div></div>';
     $("#board").append(html);
     addInputEvent()
 }
@@ -69,7 +68,6 @@ function addAnimation() {
     $(".card.effect__click").bind("click",function () {
 
             var c = this.classList;
-            console.log(c);
             if (c.contains("flipped") === true && c.contains("clicked") === false) {
                 //c.add("clicked");
             } else {
@@ -108,9 +106,44 @@ function create_new_board(){
     })
 }
 
-function insertNewBoard(boardname) {
-    var boardnumb=$("#board").children().length-1;
-    var newItem = '<div id="'+boardnumb+'" class="boardbox col-xs-2">'+boardname+'</div>';
-    $(newItem).insertBefore("#newBoard");
+
+
+function addDeleteListener(boardid) {
+    $("#"+boardid+'d').bind("click",function () {
+        var choice=confirm("Are you sure?");
+        if(choice){
+            deleteBoard(boardid)
+        }
+    })
+
 }
 
+function deleteBoard(boardid) {
+    $.post('/delete_board',{boardid:boardid}, function () {
+            $("#"+boardid).remove()
+    })
+}
+
+function insertNewBoard(board) {
+    var deletehtml='<div id="'+board.boardid+'d'+'" class="deleteButton" onclick="event.cancelBubble=true;">X</div>';
+    var newItem = '<div id="'+board.boardid+'" class="boardbox col-xs-2">'+board.boardname+deletehtml+'</div>';
+    $(newItem).insertBefore("#newBoard");
+
+    var newboard=document.getElementById(board.boardid);
+
+    addEventListenerToBoard(newboard,board.boardid);
+    addDeleteListener(board.boardid)
+}
+
+function loadGame() {
+    window.location.replace("/mini_game");
+}
+
+function openNav() {
+    document.getElementById("mySidenav").style.width = "250px";
+    //document.getElementById("boards_main").style.marginLeft = "250px";
+}
+function closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
+    //document.getElementById("boards_main").style.marginLeft= "150px";
+}

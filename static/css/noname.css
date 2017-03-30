@@ -3,30 +3,47 @@
     margin-left: 150px;
 }
 
-#title{
-    margin-left: 440px;
-    font-size:40px;
-    font-family: Stay Writer;
-}
 
 .boardbox {
     margin:5px;
     padding:10px;
-    height: 150px;
+    height: 250px;
     width: 100px;
     border:solid 2px black;
     word-wrap:break-word;
     margin-right: 3px;
     margin-bottom: 3px;
+    border-radius: 5px;
+    //background: rgba(193,213,224,1);
+    background-color: #fffbde;
+    color:black;
+    font-size:30px;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-variant: all-small-caps;
+    background-image:  url("/static/pictures/fox_face.png");
+    background-size: 80px 80px;
+    background-repeat: no-repeat;
+    background-position: right bottom;
 
 }
 
 .newBoard {
     margin:5px ;
     padding:10px;
-    height: 150px !important;
+    height: 250px !important;
     width: 100px;
     border:solid 2px black;
+    border-radius: 5px;
+    background: #e7e3c5;
+    color:black;
+    font-size:30px;
+    font-variant: all-small-caps;
+    background-image:  url("/static/pictures/empty_fox.png");
+    background-repeat: no-repeat;
+    background-position: right bottom;
+    background-size: 60%;
+
+
 }
 
 .gu-mirror {

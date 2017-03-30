@@ -4,6 +4,7 @@ from peewee import DoesNotExist
 
 import example_data
 from build import Build
+from cell_list import Cell_list
 from models.board import Board
 from models.boardstable import Boardstable
 from models.cell import Cell
@@ -37,10 +38,15 @@ def logout():
 @app.route("/", methods=['GET', 'POST'])
 @login_required
 def main():
-    return render_template("index.html")
+    return render_template("user_main.html")
 
 
+@app.route("/user_main/board/", methods=['GET'])
 @login_required
+def user_board():
+    return render_template("user_board.html")
+
+
 @app.route("/login", methods=['GET', 'POST'])
 def login():
     if request.method == "POST":
@@ -52,6 +58,17 @@ def login():
         login_user(user)
         return redirect(url_for("user_main"))
     return render_template("login.html")
+
+
+@app.route("/signup", methods=["GET", "POST"])
+def signup():
+    name = request.form['name']
+    username = request.form['username']
+    password = request.form['password']
+    User.create(name=name, password=password, login_name=username)
+    user = User.get(username == User.login_name)
+    login_user(user)
+    return redirect(url_for("user_main"))
 
 
 @app.route("/user_main", methods=['GET', 'POST'])
@@ -67,11 +84,31 @@ def curr_user():
         return jsonify(0)
 
 
+def rearange_cells(newid, oldid, id_in_db):
+    moved_cell = Cell.get(Cell.id == id_in_db)
+    cells = Cell.select()
+    for cell in cells:
+        if moved_cell.status == cell.status and moved_cell.board == cell.board:
+            if cell.order <= newid:
+                query = Cell.update(order=cell.order - 1).where(Cell.id == cell.id)
+                query.execute()
+    query = Cell.update(order=newid).where(Cell.id == id_in_db)
+    query.execute()
+
+
 @app.route("/save_data", methods=['GET', 'POST'])
 def save():
     result = request.get_json()
-    print(result)
-    return 'alma'
+    newid = result["newid"]
+    oldid = int(result["oldid"])
+    newstatus = result["newstatus"]
+    oldstatus = result["oldstatus"]
+    id_in_db = int(result["old_db_id"])
+    if newid == oldid and newstatus == oldstatus:
+        return ""
+    if (newstatus == oldstatus):
+        rearange_cells(newid, oldid, id_in_db)
+    return ""
 
 
 @app.route("/load_board", methods=['GET', 'POST'])
@@ -106,41 +143,89 @@ def update_data():
         query.execute()
 
 
+def cell_to_json(cell):
+    return {'name': cell.name, 'text': cell.text, 'order': cell.order, 'status': cell.status.status,
+            'id_in_db': cell.id}
+
+
+def init_cell_list(board_id):
+    cells = Cell.select().join(Board).where(Cell.board == board_id)
+    Cell_list.cell_list.clear()
+    for cell in cells:
+        Cell_list.cell_list.append(cell_to_json(cell))
+
+
+@app.route("/get_cell_text", methods=['GET', 'POST'])
+def get_cell_text():
+    cell_id = request.form["cell_id"]
+    cell = Cell.get(Cell.id == cell_id)
+    return cell.text
+
+
 @app.route("/get_status_list", methods=['GET', 'POST'])
 def get_status_list():
     status_list = Status.select()
+    board_id = request.form["board_id"]
     result = []
     for status in status_list:
         result.append(status.status)
+    init_cell_list(board_id)
     return jsonify(result)
 
 
-@app.route("/load_cells_by_status", methods=['GET', 'POST'])
-def load_cells():
-    board_id = request.form["board_id"]
-    status = request.form["status"]
-    cell_list = get_board_cells(board_id, status)
-    ordered_cell_list = sorted(cell_list, key=lambda cell_list_key: cell_list_key['order'])
-    return jsonify(ordered_cell_list)
+@app.route("/get_main_title", methods=['GET', 'POST'])
+@login_required
+def get_main_title():
+    user_id = current_user.id
+    user = User.get(User.id == user_id)
+    return (user.name)
 
 
-def get_board_cells(board_id, status):
+@app.route("/get_board_title", methods=['GET', 'POST'])
+def get_board_title():
+    board_id = request.form['board_id']
+    board_title = Boardstable.get(Boardstable.id == board_id)
+    return (board_title.board.name)
+
+
+@app.route("/delete_board", methods=['POST'])
+def delete_board():
+    boardid = request.form['boardid']
+    q = Cell.delete().where(Cell.board_id == boardid)
+    q.execute()
+    q = Boardstable.delete().where(Boardstable.board == boardid)
+    q.execute()
+    q = Board.delete().where(Board.id == boardid)
+    q.execute()
+    return "ok"
+
+
+def init_cell_list(board_id):
     cells = Cell.select().join(Board).where(Cell.board == board_id)
-    cell_list = []
+    Cell_list.cell_list.clear()
     for cell in cells:
-        if (cell.status.status == status):
-            cell_list.append(cell_to_json(cell))
-    return cell_list
+        Cell_list.cell_list.append(cell_to_json(cell))
 
 
-def cell_to_json(cell):
-    return {'name': cell.name, 'text': cell.text, 'order': cell.order, 'status': cell.status.status}
+def get_board_cells(status):
+    result = []
+    for cell in Cell_list.cell_list:
+        if cell['status'] == status:
+            result.append(cell)
+    return result
 
 
-@app.route("/save_data")
-def save_data():
-    pass
+@app.route("/load_cells_by_status", methods=['POST'])
+def load_cells():
+    status = request.form["status"]
+    selected_cells_by_status = get_board_cells(status)
+    sorted_cell_list = sorted(selected_cells_by_status, key=lambda cell_list_key: cell_list_key['order'])
+    return jsonify(sorted_cell_list)
 
+
+@app.route("/mini_game", methods=['GET', 'POST'])
+def game():
+    return render_template("game.html")
 
 
 @app.route("/create_new_board", methods=['POST'])
@@ -150,11 +235,22 @@ def create_new_board():
     if board_title != "":
         new_board = Board.create(name=board_title)
         Boardstable.create(board=new_board, user=current_user.id)
-    return jsonify(board_title)
+    return jsonify({'boardid': new_board.id, 'boardname': new_board.name})
+
+
+@app.route("/create_new_cell", methods=['POST'])
+@login_required
+def create_new_cell():
+    cell_name = request.form['cell_title']
+    boardid = request.form['boardid']
+    if cell_name != "":
+        query=Cell.select().join(Status).where((Status.status=='new') & (Cell.board==boardid))
+        new_cell = Cell.create(name=cell_name,status=1,board=boardid,order=(len(query)+1))
+    return jsonify({'id': new_cell.id, 'name': new_cell.name,'order':new_cell.order})
+
 
 
 if __name__ == "__main__":
     Build.create_tables()
     example_data.create_example_data()
     app.run(debug=True)
-

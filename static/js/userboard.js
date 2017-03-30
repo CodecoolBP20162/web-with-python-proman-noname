@@ -1,13 +1,14 @@
 $(function () {
 
     var boardid = getBoardIdFromUrl();
-    add_title();
+    add_title(boardid);
     showCards(boardid);
     initDragula();
     formSubmitMod();
 
 
 });
+
 function formSubmitMod() {
     $('form').submit(function () {
         create_new_cell();
@@ -15,8 +16,7 @@ function formSubmitMod() {
     });
 }
 
-function add_title() {
-    console.log(boardid);
+function add_title(boardid) {
     $.post("/get_board_title", {board_id: boardid}, function (data) {
         $("#title_card").append(data)
         });
@@ -61,8 +61,9 @@ function showCards(board_id_in_db) {
 }
 
 function renderCells(status, data) {
+    console.log(data);
     for (i = 0; i < data.length; i++) {
-        var html = "<div id=" + (i + 1) + " data-dbid=" + data[i].id_in_db + ">" + data[i].text + "</div>";
+        var html = "<div id=" + (i + 1) + " data-dbid=" + data[i].id_in_db + ">" + data[i].name + "</div>";
         $('#' + status).append(html)
     }
 }

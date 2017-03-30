@@ -1,18 +1,19 @@
 $(function () {
 
-    add_title();
-    initDragula();
     var boardid = getBoardIdFromUrl();
+    add_title();
     showCards(boardid);
+    initDragula();
 
+    function add_title() {
+    console.log(boardid)
+    $.post("/get_board_title", {board_id: boardid}, function (data) {
+        $("#title_card").append(data)
+        });
+    }
 
 });
 
-function add_title() {
-    $.post("/get_board_title", {board_id: getBoardIdFromUrl()}, function (data) {
-        $("#title_card").append(data)
-        })
-}
 
 function showCards(board_id_in_db) {
 

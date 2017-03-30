@@ -38,8 +38,8 @@
     border:0px solid black
 }
 
-span{
-    font-size:30px;
+#closing_span{
+    font-size:40px;
     cursor:pointer;
     font-family: Stay Writer;
 }
@@ -79,7 +79,6 @@ span{
     src: url('/static/font/Stay_Writer_/Stay_Writer.ttf')
 
 }
-
 
 .sidenav {
     height: 100%;

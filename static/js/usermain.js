@@ -9,8 +9,8 @@ $(function() {
 
 function addClickListenerToBoards(boards) {
     for (var i=0;i<boards.length;i++){
-        var board_id_in_db = boards[i]["id_in_db"]
-        var board = document.getElementById(i)
+        var board_id_in_db = boards[i]["id_in_db"];
+        var board = document.getElementById(i);
         addEventListenerToBoard(board,board_id_in_db)
     }
 

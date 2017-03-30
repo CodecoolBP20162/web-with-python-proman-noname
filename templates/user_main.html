@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title onclick="{{ url_for('game') }}">Title</title>
+    <title >Title</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/noname.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/flip.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css">
@@ -23,7 +23,7 @@
   <a href="logout">Log out</a>
 </div>
 <span id="closing_span" onclick="openNav()">&#9776; menu</span>
-<span id="title">TITLE</span>
+<span id="title" onclick="loadGame()">TITLE</span>
 
 <div class="container-fluid" id="boards_main">
     <div class="row">

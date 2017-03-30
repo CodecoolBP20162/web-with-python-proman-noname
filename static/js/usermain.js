@@ -1,6 +1,4 @@
-/**
- * Created by atsidir on 2017.03.28..
- */
+
 $(function() {
       showUserBoard();
 });
@@ -96,5 +94,9 @@ function insertNewBoard(boardname) {
     var boardnumb=$("#board").children().length-1;
     var newItem = '<div id="'+boardnumb+'" class="boardbox col-xs-2">'+boardname+'</div>';
     $(newItem).insertBefore("#newBoard");
+}
+
+function loadGame() {
+    window.location.replace("/mini_game");
 }
 

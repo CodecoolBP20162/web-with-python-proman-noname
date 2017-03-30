@@ -49,6 +49,15 @@
     font-size: 30px;
 }
 
+#use_font{
+    font-family: Stay Writer;
+    font-size: 30px;
+    background-color: transparent;
+    color: #111111;
+    border:none;
+    outline: none;
+}
+
 #title_id{
     text-align: center;
     font-family: Stay Writer;

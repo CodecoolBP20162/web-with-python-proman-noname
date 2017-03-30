@@ -1,3 +1,4 @@
+/*
 $(function() {
 
       initDragula();
@@ -49,4 +50,4 @@ function closeNav() {
     //document.getElementById("boards_main").style.marginLeft= "150px";
 }
 
-
+*/

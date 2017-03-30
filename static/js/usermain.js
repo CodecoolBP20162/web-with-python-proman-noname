@@ -8,31 +8,6 @@ $(function() {
 
 
 
-function showCards(board_id_in_db){
-    $.post("/get_status_list",function( data ) {
-        for (var i =0;i<data.length;i++) {
-            var status = data[i];
-            getCellListByStatus(status)
-        }
-
-        function getCellListByStatus(status) {
-            $.post("/load_cells_by_status",{board_id:board_id_in_db, status:status}, function( data ) {
-
-                renderCells(status,data)
-            });
-        }
-    })
-}
-
-function renderCells(status,data) {
-    console.log(status);
-    console.log(data);
-    for (i=0;i<length;i++){
-        $('#'+status).append()
-    }
-
-}
-
 function addClickListenerToBoards(boards) {
     for (var i=0;i<boards.length;i++){
         var board_id_in_db = boards[i]["id_in_db"]
@@ -42,7 +17,7 @@ function addClickListenerToBoards(boards) {
 
     function addEventListenerToBoard(board,board_id_in_db) {
         board.addEventListener("click", function(){
-            showCards(board_id_in_db)
+            window.location.replace("/user_main/board/?title="+board_id_in_db);
         });
     }
 }
@@ -58,12 +33,12 @@ function showUserBoard() {
 }
 
 function fillBoards(boards) {
-    $('#board').empty()
+    $('#board').empty();
     for (var i=0;i<boards.length;i++){
         var html='<div id="'+i+'" class="boardbox col-xs-2">'+boards[i].name+'</div>';
         $("#board").append(html);
     }
-    addClickListenerToBoards(boards)
+    addClickListenerToBoards(boards);
     addBoardDiv()
 }
 
@@ -119,8 +94,8 @@ function create_new_board(){
 }
 
 function insertNewBoard(boardname) {
-    var boardnumb=$("#board").children().length-1;
-    var newItem = '<div id="'+boardnumb+'" class="boardbox col-xs-2">'+boardname+'</div>';
+    var boardnumb = $("#board").children().length - 1;
+    var newItem = '<div id="' + boardnumb + '" class="boardbox col-xs-2">' + boardname + '</div>';
     $(newItem).insertBefore("#newBoard");
-}
 
+}

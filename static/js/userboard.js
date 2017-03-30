@@ -38,7 +38,7 @@ function create_new_cell(){
 }
 
 function appendCell(cell) {
-    var html = "<div id=" + cell.order + " data-dbid=" + cell.id + ">" + cell.name + "</div>";
+    var html = "<div id=" + cell.order + " class='text-center pagination-centered card' data-toggle='modal' data-target='#CellModal' data-dbid=" + cell.id + ">" + cell.name + "</div>";
         $('#new').append(html)
 }
 

@@ -87,21 +87,22 @@ function initDragula() {
 
     drake.on('drop', function (el, target, source) {
         var children = target.children;
+        var oldid=el.id;
         for (var i = 0; i < children.length; i++) {
-            $(children[i]).attr("id", i)
+            $(children[i]).attr("id", (i+1))
         }
         var data = {
             'old_db_id': el.dataset.dbid,
             'oldstatus': source.id,
-            'oldid': el.id,
+            'oldid': oldid,
             'newstatus': target.id,
-            'newid': i
+            'newid': el.id
         };
         updateData(data);
 
         var sourcechild = source.children;
         for (var i = 0; i < sourcechild.length; i++) {
-            $(sourcechild[i]).attr("id", i)
+            $(sourcechild[i]).attr("id", i+1)
         }
     });
 }

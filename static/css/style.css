@@ -38,6 +38,25 @@
     border:0px solid black
 }
 
+.title{
+    font-size:40px;
+    font-family: Stay Writer;
+}
+
+#title_home{
+    margin-left: 650px;
+    font-size: 50px;
+
+}
+
+#title_card{
+    margin-left: 440px;
+}
+
+#title_board{
+    margin-left: 450px;
+}
+
 #closing_span{
     font-size:40px;
     cursor:pointer;
@@ -127,3 +146,50 @@
   .sidenav {padding-top: 15px;}
   .sidenav a {font-size: 18px;}
 }
+
+#data_for_login, #data_for_sign_up{
+    margin-top: 10px;
+    display:none;
+    position: relative;
+    left:-30%;
+}
+
+#sign_up_btn{
+    position:relative;
+    left:-2%;
+}
+
+#login_button, #sign_up_button{
+    position:inherit;
+    margin-left: 95px;
+    margin-top: 5px;
+}
+
+.background{
+    background-image: url("/static/pictures/fox.jpg");
+    background-repeat: no-repeat;
+}
+
+.home_container{
+    margin-top: 70px;
+    float: right;
+    margin-right: 100px;
+    height:400px;
+    width:500px;
+    background-color: #ede5ce;
+}
+
+#welcome_text{
+    margin-top: 10px;
+    text-align: center;
+    font-family: "Stay Writer";
+    font-size:30px;
+}
+
+#login_div, #sign_up_div{
+    margin-top: 20px;
+    margin-left: 215px;
+    position: inherit;
+
+}
+

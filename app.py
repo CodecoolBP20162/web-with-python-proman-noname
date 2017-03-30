@@ -59,6 +59,16 @@ def login():
         return redirect(url_for("user_main"))
     return render_template("login.html")
 
+@app.route("/signup", methods=["GET","POST"])
+def signup():
+    name=request.form['name']
+    username=request.form['username']
+    password=request.form['password']
+    User.create(name=name,password=password,login_name=username)
+    user=User.get(username==User.login_name)
+    login_user(user)
+    return redirect(url_for("user_main"))
+
 
 @app.route("/user_main", methods=['GET', 'POST'])
 def user_main():

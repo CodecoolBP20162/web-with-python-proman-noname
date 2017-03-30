@@ -4,6 +4,7 @@ from peewee import DoesNotExist
 
 import example_data
 from build import Build
+from cell_list import Cell_list
 from models.board import Board
 from models.boardstable import Boardstable
 from models.cell import Cell
@@ -40,7 +41,12 @@ def main():
     return render_template("index.html")
 
 
+@app.route("/user_main/board/", methods=['GET'])
 @login_required
+def user_board():
+    return render_template("user_board.html")
+
+
 @app.route("/login", methods=['GET', 'POST'])
 def login():
     if request.method == "POST":
@@ -106,41 +112,67 @@ def update_data():
         query.execute()
 
 
-@app.route("/get_status_list", methods=['GET', 'POST'])
-def get_status_list():
-    status_list = Status.select()
-    result = []
-    for status in status_list:
-        result.append(status.status)
-    return jsonify(result)
-
-
-@app.route("/load_cells_by_status", methods=['GET', 'POST'])
-def load_cells():
-    board_id = request.form["board_id"]
-    status = request.form["status"]
-    cell_list = get_board_cells(board_id, status)
-    ordered_cell_list = sorted(cell_list, key=lambda cell_list_key: cell_list_key['order'])
-    return jsonify(ordered_cell_list)
-
-
-def get_board_cells(board_id, status):
-    cells = Cell.select().join(Board).where(Cell.board == board_id)
-    cell_list = []
-    for cell in cells:
-        if (cell.status.status == status):
-            cell_list.append(cell_to_json(cell))
-    return cell_list
-
-
 def cell_to_json(cell):
     return {'name': cell.name, 'text': cell.text, 'order': cell.order, 'status': cell.status.status}
 
 
-@app.route("/save_data")
-def save_data():
+def init_cell_list(board_id):
+    cells = Cell.select().join(Board).where(Cell.board == board_id)
+    Cell_list.cell_list.clear()
+    for cell in cells:
+        Cell_list.cell_list.append(cell_to_json(cell))
+
+
+@app.route("/get_status_list", methods=['GET', 'POST'])
+def get_status_list():
+    status_list = Status.select()
+    board_id = request.form["board_id"]
+    result = []
+    for status in status_list:
+        result.append(status.status)
+    init_cell_list(board_id)
+    return jsonify(result)
+
+
+def init_cell_list(board_id):
+    cells = Cell.select().join(Board).where(Cell.board == board_id)
+    Cell_list.cell_list.clear()
+    for cell in cells:
+        Cell_list.cell_list.append(cell_to_json(cell))
+
+
+@app.route("/load_cells_by_status", methods=['GET', 'POST'])
+def load_cells():
+    status = request.form["status"]
+    sorted_cells_by_status = get_board_cells(status)
+    ordered_cell_list = sorted(sorted_cells_by_status, key=lambda cell_list_key: cell_list_key['order'])
+
+    return jsonify(ordered_cell_list)
+
+
+def get_board_cells(status):
+    result = []
+    for cell in Cell_list.cell_list:
+        if cell['status'] == status:
+            result.append(cell)
+    return result
+
+
+@app.route("/load_cells_by_status", methods=['GET', 'POST'])
+def load_cells():
+    status = request.form["status"]
+    selected_cells_by_status = get_board_cells(status)
+    sorted_cell_list = sorted(selected_cells_by_status, key=lambda cell_list_key: cell_list_key['order'])
+    return jsonify(sorted_cell_list)
+
+
+@app.route("/update_cell_data")
+def save_cell_data():
     pass
 
+@app.route("/mini_game", methods=['GET', 'POST'])
+def game():
+    return render_template("game.html")
 
 
 @app.route("/create_new_board", methods=['POST'])
@@ -157,4 +189,3 @@ if __name__ == "__main__":
     Build.create_tables()
     example_data.create_example_data()
     app.run(debug=True)
-

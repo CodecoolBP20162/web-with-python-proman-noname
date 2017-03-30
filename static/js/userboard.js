@@ -1,9 +1,9 @@
 $(function () {
 
-    add_title();
-    initDragula();
     var boardid = getBoardIdFromUrl();
+    add_title();
     showCards(boardid);
+    initDragula();
     formSubmitMod();
 
 
@@ -16,10 +16,14 @@ function formSubmitMod() {
 }
 
 function add_title() {
-    $.post("/get_board_title", {board_id: getBoardIdFromUrl()}, function (data) {
+    console.log(boardid);
+    $.post("/get_board_title", {board_id: boardid}, function (data) {
         $("#title_card").append(data)
-        })
-}
+        });
+
+
+};
+
 
 function create_new_cell(){
     var cell_title=$('#name_id').val();

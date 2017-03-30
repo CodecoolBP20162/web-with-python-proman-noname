@@ -9,14 +9,14 @@ $(function() {
 
 
 function showCards(board_id_in_db){
-    $.post("/get_status_list",function( data ) {
+    $.post("/get_status_list",{board_id:board_id_in_db},function( data ) {
         for (var i =0;i<data.length;i++) {
             var status = data[i];
             getCellListByStatus(status)
         }
 
         function getCellListByStatus(status) {
-            $.post("/load_cells_by_status",{board_id:board_id_in_db, status:status}, function( data ) {
+            $.post("/load_cells_by_status",{status:status}, function( data ) {
                 console.log(data)
                 console.log(board_id_in_db)
             });

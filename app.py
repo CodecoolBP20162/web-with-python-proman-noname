@@ -104,7 +104,6 @@ def save():
     newstatus = result["newstatus"]
     oldstatus = result["oldstatus"]
     id_in_db = int(result["old_db_id"])
-    print(newid)
     if newid == oldid and newstatus == oldstatus:
         return ""
     if (newstatus == oldstatus):
@@ -156,6 +155,13 @@ def init_cell_list(board_id):
         Cell_list.cell_list.append(cell_to_json(cell))
 
 
+@app.route("/get_cell_text", methods=['GET', 'POST'])
+def get_cell_text():
+    cell_id = request.form["cell_id"]
+    cell = Cell.get(Cell.id == cell_id)
+    return cell.text
+
+
 @app.route("/get_status_list", methods=['GET', 'POST'])
 def get_status_list():
     status_list = Status.select()
@@ -165,6 +171,7 @@ def get_status_list():
         result.append(status.status)
     init_cell_list(board_id)
     return jsonify(result)
+
 
 @app.route("/get_main_title", methods=['GET', 'POST'])
 @login_required
@@ -228,22 +235,18 @@ def create_new_board():
     if board_title != "":
         new_board = Board.create(name=board_title)
         Boardstable.create(board=new_board, user=current_user.id)
-    return jsonify({'boardid':new_board.id,'boardname':new_board.name})
+    return jsonify({'boardid': new_board.id, 'boardname': new_board.name})
+
 
 @app.route("/create_new_cell", methods=['POST'])
 @login_required
 def create_new_cell():
     cell_name = request.form['cell_title']
-    boardid=request.form['boardid']
-    print(cell_name)
+    boardid = request.form['boardid']
     if cell_name != "":
-        query=Cell.select().join(Status).where((Status.status=='new') & (Cell.board==boardid))
-        new_cell = Cell.create(name=cell_name,status=1,board=boardid,order=(len(query)+1))
+        query = Cell.select().join(Status).where((Status.status == 'new') & (Cell.board == boardid))
+        new_cell = Cell.create(name=cell_name, status=1, board=boardid, order=(len(query) + 1))
     return jsonify({'cellid': new_cell.id, 'cellname': new_cell.name})
-
-
-
-
 
 
 if __name__ == "__main__":

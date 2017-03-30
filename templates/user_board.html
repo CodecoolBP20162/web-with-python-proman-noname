@@ -39,9 +39,21 @@
                     <form action="/create_new_cell" method='POST'>
                         <label for="name_id">Name</label><br>
                         <input type=text name="new_cell_form" id="name_id"> <br>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
                     </form>
                 </div>
+            </div>
+        </div>
+    </div>
+
+<div class="modal fade" id="CellModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div id=use_font class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="CellModalLabel"></h4>
+                </div>
+                <div class="modal-body" id="CellModalBody"></div>
             </div>
         </div>
     </div>
@@ -50,23 +62,32 @@
 
 <div class="container-fluid" id="index_main">
     <div class="row">
-        <div class="col-sm-3"><div id="new_status">
-            <div class="status_name">New</div>
-            <div id="new" class="newList"></div>
-        </div></div>
-         <div class="col-sm-3"><div id="in_progress_status">
-            <div class="status_name">In Progress</div>
-            <div id="progress" class="newList"></div>
-        </div></div>
-        <div class="col-sm-3" ><div id="review_status">
-            <div class="status_name">Review</div>
-            <div id="review" class="newList"></div>
-        </div></div>
-        <div class="col-sm-3"><div id="done_status">
+        <div class="col-sm-3">
+            <div id="new_status">
+                <div class="status_name">New</div>
+            </div>
+        </div>
+         <div class="col-sm-3">
+             <div id="in_progress_status">
+                <div class="status_name">In Progress</div>
+             </div>
+         </div>
+        <div class="col-sm-3" >
+            <div id="review_status">
+                <div class="status_name">Review</div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div id="done_status">
             <div class="status_name">Done</div>
-            <div id="done" class="newList"></div>
-        </div></div>
-
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3"><div id="new" class="newList"></div></div>
+        <div class="col-sm-3"><div id="progress" class="newList"></div></div>
+        <div class="col-sm-3"><div id="review" class="newList"></div></div>
+        <div class="col-sm-3"><div id="done" class="newList"></div></div>
     </div>
 </div>
 </body>

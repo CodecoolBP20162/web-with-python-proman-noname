@@ -141,14 +141,6 @@ def cell_to_json(cell):
 def save_data():
     pass
 
-@app.route("/create_new_board", methods=['POST'])
-@login_required
-def create_new_board():
-    board_title=request.form["input_field"]
-    if board_title!="":
-        new_board=Board.create(name=board_title)
-        Boardstable.create(board=new_board,user=current_user.id)
-    return jsonify(board_title)
 
 
 @app.route("/create_new_board", methods=['POST'])

@@ -239,7 +239,7 @@ def create_new_cell():
     if cell_name != "":
         query=Cell.select().join(Status).where((Status.status=='new') & (Cell.board==boardid))
         new_cell = Cell.create(name=cell_name,status=1,board=boardid,order=(len(query)+1))
-    return jsonify({'cellid': new_cell.id, 'cellname': new_cell.name})
+    return jsonify({'id': new_cell.id, 'name': new_cell.name,'order':new_cell.order})
 
 
 

@@ -17,11 +17,19 @@ function showCards(board_id_in_db){
 
         function getCellListByStatus(status) {
             $.post("/load_cells_by_status",{board_id:board_id_in_db, status:status}, function( data ) {
-                console.log(data)
-                console.log(board_id_in_db)
+
+                renderCells(status,data)
             });
         }
     })
+}
+
+function renderCells(status,data) {
+    console.log(status);
+    console.log(data);
+    for (i=0;i<length;i++){
+        $('#'+status).append()
+    }
 
 }
 

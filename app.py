@@ -115,8 +115,11 @@ def update_data():
 
 @app.route("/get_status_list", methods=['GET', 'POST'])
 def get_status_list():
+
     status_list = Status.select()
     board_id = request.form["board_id"]
+    print(board_id)
+
     result = []
     for status in status_list:
         result.append(status.status)
@@ -136,6 +139,7 @@ def load_cells():
     status = request.form["status"]
     sorted_cells_by_status = get_board_cells(status)
     ordered_cell_list = sorted(sorted_cells_by_status, key=lambda cell_list_key: cell_list_key['order'])
+
     return jsonify(ordered_cell_list)
 
 

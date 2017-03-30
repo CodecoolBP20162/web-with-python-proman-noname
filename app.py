@@ -17,6 +17,9 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = "login"
 
+class Cell_list:
+    cell_list = []
+
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -113,28 +116,35 @@ def update_data():
 @app.route("/get_status_list", methods=['GET', 'POST'])
 def get_status_list():
     status_list = Status.select()
+    board_id = request.form["board_id"]
     result = []
     for status in status_list:
         result.append(status.status)
+    init_cell_list(board_id)
     return jsonify(result)
+
+
+def init_cell_list(board_id):
+    cells = Cell.select().join(Board).where(Cell.board == board_id)
+    Cell_list.cell_list.clear()
+    for cell in cells:
+        Cell_list.cell_list.append(cell_to_json(cell))
 
 
 @app.route("/load_cells_by_status", methods=['GET', 'POST'])
 def load_cells():
-    board_id = request.form["board_id"]
     status = request.form["status"]
-    cell_list = get_board_cells(board_id, status)
-    ordered_cell_list = sorted(cell_list, key=lambda cell_list_key: cell_list_key['order'])
+    sorted_cells_by_status = get_board_cells(status)
+    ordered_cell_list = sorted(sorted_cells_by_status, key=lambda cell_list_key: cell_list_key['order'])
     return jsonify(ordered_cell_list)
 
 
-def get_board_cells(board_id, status):
-    cells = Cell.select().join(Board).where(Cell.board == board_id)
-    cell_list = []
-    for cell in cells:
-        if (cell.status.status == status):
-            cell_list.append(cell_to_json(cell))
-    return cell_list
+def get_board_cells(status):
+    result = []
+    for cell in Cell_list.cell_list:
+        if cell['status'] == status:
+            result.append(cell)
+    return result
 
 
 def cell_to_json(cell):

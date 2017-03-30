@@ -1,13 +1,9 @@
 $(function () {
-
     var boardid = getBoardIdFromUrl();
     add_title(boardid);
     showCards(boardid);
     initDragula();
     formSubmitMod();
-
-
-
 });
 
 function formSubmitMod() {
@@ -24,8 +20,6 @@ function add_title(boardid) {
     $.post("/get_board_title", {board_id: boardid}, function (data) {
         $("#title_card").append(data)
         });
-
-
 };
 
 
@@ -38,11 +32,8 @@ function create_new_cell(){
         data:posted_data,
         type:'POST',
         success:function(data){
-
             appendCell(data);
-
             }
-
         })
 }
 
@@ -69,8 +60,20 @@ function showCards(board_id_in_db) {
 
 function renderCells(status, data) {
     for (i = 0; i < data.length; i++) {
-        var html = "<div id=" + (i + 1) + " data-dbid=" + data[i].id_in_db + ">" + data[i].name + "</div>";
-        $('#' + status).append(html)
+            var html = "<div class='text-center pagination-centered card ' id=" + (i + 1) + " data-dbid=" + data[i].id_in_db + " data-toggle='modal' data-target='#CellModal'>" + data[i].name + "</div>";
+            $('#' + status).append(html);
+            addEventListenerToCell(data[i].id_in_db,data[i].name);
+    };
+
+    function addEventListenerToCell(id_in_db,name) {
+        $('[data-dbid='+id_in_db+']').bind("click", function () {
+            $.post("/get_cell_text", {cell_id:id_in_db} ,function (data) {
+            $("#CellModalBody").empty();
+            $("#CellModalLabel").empty();
+            $("#CellModalBody").append(data);
+            $("#CellModalLabel").append(name);
+            });
+        });
     }
 }
 

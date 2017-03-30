@@ -179,6 +179,13 @@ def init_cell_list(board_id):
         Cell_list.cell_list.append(cell_to_json(cell))
 
 
+@app.route("/get_cell_text", methods=['GET', 'POST'])
+def get_cell_text():
+    cell_id = request.form["cell_id"]
+    cell = Cell.get(Cell.id == cell_id)
+    return cell.text
+
+
 @app.route("/get_status_list", methods=['GET', 'POST'])
 def get_status_list():
     status_list = Status.select()
@@ -253,7 +260,6 @@ def create_new_board():
         new_board = Board.create(name=board_title)
         Boardstable.create(board=new_board, user=current_user.id)
     return jsonify({'boardid': new_board.id, 'boardname': new_board.name})
-
 
 @app.route("/create_new_cell", methods=['POST'])
 @login_required

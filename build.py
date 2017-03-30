@@ -17,11 +17,11 @@ class Build:
     @staticmethod
     def create_status():
         if not Status.select():
-            status = Status(status="New")
+            status = Status(status="new")
             status.save()
-            status = Status(status="In progress")
+            status = Status(status="progress")
             status.save()
-            status = Status(status="Review")
+            status = Status(status="review")
             status.save()
-            status = Status(status="Done")
+            status = Status(status="done")
             status.save()

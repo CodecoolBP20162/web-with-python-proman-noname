@@ -41,6 +41,12 @@ def main():
     return render_template("index.html")
 
 
+@app.route("/user_main/board/", methods=['GET'])
+@login_required
+def user_board():
+    return render_template("user_board.html")
+
+
 @login_required
 @app.route("/login", methods=['GET', 'POST'])
 def login():

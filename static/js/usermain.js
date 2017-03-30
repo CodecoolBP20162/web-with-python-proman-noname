@@ -99,6 +99,8 @@ function create_new_board(){
     })
 }
 
+
+
 function addDeleteListener(boardid) {
     $("#"+boardid+'d').bind("click",function () {
         deleteBoard(boardid)

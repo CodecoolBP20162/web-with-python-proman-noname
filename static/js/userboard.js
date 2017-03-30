@@ -7,6 +7,31 @@ $(function () {
 
 });
 
+$('form').submit(function () {
+    //create_new_cell();
+    return false;
+});
+
+function create_new_cell(){
+    var cell_title=$('#new_cell_form').serialize();
+    $.ajax({
+        url:'/create_new_cell',
+        data:cell_title,
+        type:'POST',
+        success:function(data){
+            console.log(data);
+            //if($('#new_cell_form').val()!==""){
+                //$('#new_cell_form').val("");
+               // console.log(data)
+
+            }
+
+        },
+        error: function(){
+            alert("nope");
+        }
+    })
+}
 
 function showCards(board_id_in_db){
 

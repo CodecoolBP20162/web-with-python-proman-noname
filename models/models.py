@@ -1,10 +1,8 @@
 from peewee import *
 
-
-db = PostgresqlDatabase("d616hb6tnalq4g", user="hluavdtoxzzzzi",
-                        password="2440940a23469502a3016704cbd19f32ccc04e9ba9dddab25ac3503af1bf5c12",
-                        host="ec2-54-75-249-162.eu-west-1.compute.amazonaws.com", port="5432")
-
+db = PostgresqlDatabase("de2fj2o6je21ba", user="xcivudbzfszher",
+                       password="88d799d5d7f787d802f519ab8d21676965279cf9199e7007fca16374fdc23abb",
+                       host="ec2-54-217-232-100.eu-west-1.compute.amazonaws.com", port="5432")
 
 class BaseModel(Model):
     class Meta:

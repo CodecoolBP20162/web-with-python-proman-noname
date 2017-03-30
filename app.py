@@ -38,7 +38,7 @@ def logout():
 @app.route("/", methods=['GET', 'POST'])
 @login_required
 def main():
-    return render_template("index.html")
+    return render_template("user_main.html")
 
 
 @app.route("/user_main/board/", methods=['GET'])
@@ -151,6 +151,16 @@ def init_cell_list(board_id):
         Cell_list.cell_list.append(cell_to_json(cell))
 
 
+@app.route("/delete_board", methods=['POST'])
+def delete_board():
+    boardid=request.form['boardid']
+    q=Cell.delete().where(Cell.board_id==boardid)
+    q.execute()
+    q=Boardstable.delete().where(Boardstable.board==boardid)
+    q.execute()
+    q = Board.delete().where(Board.id == boardid)
+    q.execute()
+    return "ok"
 
 def get_board_cells(status):
     result = []
@@ -186,7 +196,8 @@ def create_new_board():
     if board_title != "":
         new_board = Board.create(name=board_title)
         Boardstable.create(board=new_board, user=current_user.id)
-    return jsonify(board_title)
+
+    return jsonify({'boardid':new_board.id,'boardname':new_board.name})
 
 
 if __name__ == "__main__":

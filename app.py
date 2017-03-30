@@ -141,14 +141,6 @@ def init_cell_list(board_id):
         Cell_list.cell_list.append(cell_to_json(cell))
 
 
-@app.route("/load_cells_by_status", methods=['GET', 'POST'])
-def load_cells():
-    status = request.form["status"]
-    sorted_cells_by_status = get_board_cells(status)
-    ordered_cell_list = sorted(sorted_cells_by_status, key=lambda cell_list_key: cell_list_key['order'])
-
-    return jsonify(ordered_cell_list)
-
 
 def get_board_cells(status):
     result = []

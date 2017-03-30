@@ -84,33 +84,56 @@ def curr_user():
         return jsonify(0)
 
 
-def rearange_cells(newid, oldid, id_in_db):
+def rearrange_same_statused_cells(newid, oldid, id_in_db):
     moved_cell = Cell.get(Cell.id == id_in_db)
-    cells = Cell.select()
-    for cell in cells:
-        if moved_cell.status == cell.status and moved_cell.board == cell.board:
-            if cell.order <= newid:
-                query = Cell.update(order=cell.order - 1).where(Cell.id == cell.id)
-                query.execute()
-    query = Cell.update(order=newid).where(Cell.id == id_in_db)
-    query.execute()
+    if newid > oldid:
+        cells = Cell.select().where((Cell.order > oldid) & (Cell.order <= newid) & (Cell.board==moved_cell.board))
+        for cell in cells:
+            cell.order -= 1
+            cell.save()
+    else:
+        cells = Cell.select().where((Cell.order < oldid) & (Cell.order >= newid) & (Cell.status == moved_cell.status) & (Cell.board==moved_cell.board))
+        for cell in cells:
+            cell.order += 1
+            cell.save()
+    moved_cell.order = newid
+    moved_cell.save()
 
 
 @app.route("/save_data", methods=['GET', 'POST'])
 def save():
     result = request.get_json()
-    newid = result["newid"]
+    print(result)
+    newid = int(result["newid"])
     oldid = int(result["oldid"])
     newstatus = result["newstatus"]
     oldstatus = result["oldstatus"]
     id_in_db = int(result["old_db_id"])
-    print(newid)
-    if newid == oldid and newstatus == oldstatus:
+    if newstatus == oldstatus and newid == oldid:
         return ""
-    if (newstatus == oldstatus):
-        rearange_cells(newid, oldid, id_in_db)
+    elif (newstatus == oldstatus):
+        rearrange_same_statused_cells(newid, oldid, id_in_db)
+    else:
+        rearrange_different_statused_cells(newid,oldid, oldstatus, newstatus, id_in_db)
     return ""
 
+
+def rearrange_different_statused_cells(newid, oldid, oldstatus, newstatus, id_in_db):
+    moved_cell = Cell.get(Cell.id == id_in_db)
+    #newStatused rearrange
+    cells=Cell.select().where((Cell.status == Status.get(Status.status==newstatus)) & (Cell.board==moved_cell.board) & (Cell.order >= newid))
+    for cell in cells:
+        cell.order+=1
+        cell.save()
+    #oldStatus rearrange
+    cells = Cell.select().where((Cell.status == Status.get(Status.status == oldstatus)) & (Cell.board == moved_cell.board) & (Cell.order > oldid))
+    for cell in cells:
+        cell.order-=1
+        cell.save()
+
+    moved_cell.order=newid
+    moved_cell.status=Status.get(Status.status==newstatus)
+    moved_cell.save()
 
 @app.route("/load_board", methods=['GET', 'POST'])
 def load_board():
@@ -165,6 +188,7 @@ def get_status_list():
         result.append(status.status)
     init_cell_list(board_id)
     return jsonify(result)
+
 
 @app.route("/get_main_title", methods=['GET', 'POST'])
 @login_required
@@ -228,22 +252,18 @@ def create_new_board():
     if board_title != "":
         new_board = Board.create(name=board_title)
         Boardstable.create(board=new_board, user=current_user.id)
-    return jsonify({'boardid':new_board.id,'boardname':new_board.name})
+    return jsonify({'boardid': new_board.id, 'boardname': new_board.name})
+
 
 @app.route("/create_new_cell", methods=['POST'])
 @login_required
 def create_new_cell():
     cell_name = request.form['cell_title']
-    boardid=request.form['boardid']
-    print(cell_name)
+    boardid = request.form['boardid']
     if cell_name != "":
-        query=Cell.select().join(Status).where((Status.status=='new') & (Cell.board==boardid))
-        new_cell = Cell.create(name=cell_name,status=1,board=boardid,order=(len(query)+1))
-    return jsonify({'id': new_cell.id, 'name': new_cell.name,'order':new_cell.order})
-
-
-
-
+        query = Cell.select().join(Status).where((Status.status == 'new') & (Cell.board == boardid))
+        new_cell = Cell.create(name=cell_name, status=1, board=boardid, order=(len(query) + 1))
+    return jsonify({'id': new_cell.id, 'name': new_cell.name, 'order': new_cell.order})
 
 
 if __name__ == "__main__":

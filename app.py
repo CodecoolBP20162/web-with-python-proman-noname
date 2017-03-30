@@ -152,6 +152,12 @@ def get_status_list():
     init_cell_list(board_id)
     return jsonify(result)
 
+@app.route("/get_board_title", methods=['GET', 'POST'])
+def get_board_title():
+    board_id = request.form['board_id']
+    board_title = Boardstable.get(Boardstable.id == board_id)
+    return (board_title.board.name)
+
 
 @app.route("/delete_board", methods=['POST'])
 def delete_board():

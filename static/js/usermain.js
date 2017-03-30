@@ -113,3 +113,4 @@ function insertNewBoard(boardname) {
     var newItem = '<div id="'+boardnumb+'" class="boardbox col-xs-2">'+boardname+'</div>';
     $(newItem).insertBefore("#newBoard");
 }
+

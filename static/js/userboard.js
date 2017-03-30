@@ -3,10 +3,36 @@ $(function () {
      initDragula();
      var boardid=getBoardIdFromUrl();
      showCards(boardid);
+     formSubmitMod()
 
 
 });
+function formSubmitMod() {
+    $('form').submit(function () {
+        create_new_cell();
+        return false
+    });
+}
 
+
+function create_new_cell(){
+    var cell_title=$('#name_id').val();
+    var boardid=getBoardIdFromUrl();
+    var posted_data={cell_title:cell_title,boardid:boardid};
+    $.ajax({
+        url:'/create_new_cell',
+        data:posted_data,
+        type:'POST',
+        success:function(data){
+            console.log(data);
+            //if($('#new_cell_form').val()!==""){
+                //$('#new_cell_form').val("");
+               // console.log(data)
+
+            }
+
+        })
+}
 
 function showCards(board_id_in_db){
 
@@ -27,11 +53,9 @@ function showCards(board_id_in_db){
 function renderCells(status,data) {
     console.log(data);
     for (i=0;i<data.length;i++){
-        var html='<div id"'+(i+1)+'" >'+data[i].text+'</div>';
-
+        var html='<div id"'+(i+1)+'" >'+data[i].name+'</div>';
         $('#'+status).append(html)
     }
-
 }
 
 

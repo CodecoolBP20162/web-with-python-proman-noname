@@ -196,8 +196,22 @@ def create_new_board():
     if board_title != "":
         new_board = Board.create(name=board_title)
         Boardstable.create(board=new_board, user=current_user.id)
-
     return jsonify({'boardid':new_board.id,'boardname':new_board.name})
+
+@app.route("/create_new_cell", methods=['POST'])
+@login_required
+def create_new_cell():
+    cell_name = request.form['cell_title']
+    boardid=request.form['boardid']
+    print(cell_name)
+    if cell_name != "":
+        query=Cell.select().join(Status).where((Status.status=='new') & (Cell.board==boardid))
+        new_cell = Cell.create(name=cell_name,status=1,board=boardid,order=(len(query)+1))
+    return jsonify({'cellid': new_cell.id, 'cellname': new_cell.name})
+
+
+
+
 
 
 if __name__ == "__main__":

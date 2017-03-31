@@ -87,12 +87,14 @@ def curr_user():
 def rearrange_same_statused_cells(newid, oldid, id_in_db):
     moved_cell = Cell.get(Cell.id == id_in_db)
     if newid > oldid:
-        cells = Cell.select().where((Cell.order > oldid) & (Cell.order <= newid) & (Cell.board==moved_cell.board))
+        cells = Cell.select().where((Cell.order > oldid) & (Cell.order <= newid) & (Cell.board == moved_cell.board))
         for cell in cells:
             cell.order -= 1
             cell.save()
     else:
-        cells = Cell.select().where((Cell.order < oldid) & (Cell.order >= newid) & (Cell.status == moved_cell.status) & (Cell.board==moved_cell.board))
+        cells = Cell.select().where(
+            (Cell.order < oldid) & (Cell.order >= newid) & (Cell.status == moved_cell.status) & (
+            Cell.board == moved_cell.board))
         for cell in cells:
             cell.order += 1
             cell.save()
@@ -114,26 +116,31 @@ def save():
     elif (newstatus == oldstatus):
         rearrange_same_statused_cells(newid, oldid, id_in_db)
     else:
-        rearrange_different_statused_cells(newid,oldid, oldstatus, newstatus, id_in_db)
+        rearrange_different_statused_cells(newid, oldid, oldstatus, newstatus, id_in_db)
     return ""
 
 
 def rearrange_different_statused_cells(newid, oldid, oldstatus, newstatus, id_in_db):
     moved_cell = Cell.get(Cell.id == id_in_db)
-    #newStatused rearrange
-    cells=Cell.select().where((Cell.status == Status.get(Status.status==newstatus)) & (Cell.board==moved_cell.board) & (Cell.order >= newid))
+    # newStatused rearrange
+    cells = Cell.select().where(
+        (Cell.status == Status.get(Status.status == newstatus)) & (Cell.board == moved_cell.board) & (
+        Cell.order >= newid))
     for cell in cells:
-        cell.order+=1
+        cell.order += 1
         cell.save()
-    #oldStatus rearrange
-    cells = Cell.select().where((Cell.status == Status.get(Status.status == oldstatus)) & (Cell.board == moved_cell.board) & (Cell.order > oldid))
+    # oldStatus rearrange
+    cells = Cell.select().where(
+        (Cell.status == Status.get(Status.status == oldstatus)) & (Cell.board == moved_cell.board) & (
+        Cell.order > oldid))
     for cell in cells:
-        cell.order-=1
+        cell.order -= 1
         cell.save()
 
-    moved_cell.order=newid
-    moved_cell.status=Status.get(Status.status==newstatus)
+    moved_cell.order = newid
+    moved_cell.status = Status.get(Status.status == newstatus)
     moved_cell.save()
+
 
 @app.route("/load_board", methods=['GET', 'POST'])
 def load_board():
@@ -247,6 +254,15 @@ def load_cells():
     return jsonify(sorted_cell_list)
 
 
+@app.route("/update_cell_text", methods=['GET', 'POST'])
+def update_cell_text():
+    id = request.form["id_in_db"]
+    text = request.form["cell_text"]
+    query = Cell.update(text=text).where(Cell.id == id)
+    query.execute()
+    return "ok"
+
+
 @app.route("/mini_game", methods=['GET', 'POST'])
 def game():
     return render_template("game.html")
@@ -260,6 +276,7 @@ def create_new_board():
         new_board = Board.create(name=board_title)
         Boardstable.create(board=new_board, user=current_user.id)
     return jsonify({'boardid': new_board.id, 'boardname': new_board.name})
+
 
 @app.route("/create_new_cell", methods=['POST'])
 @login_required

@@ -68,12 +68,23 @@ function renderCells(status, data) {
     function addEventListenerToCell(id_in_db,name) {
         $('[data-dbid='+id_in_db+']').bind("click", function () {
             $.post("/get_cell_text", {cell_id:id_in_db} ,function (data) {
-            $("#CellModalBody").empty();
+            $("#modalText").empty();
             $("#CellModalLabel").empty();
-            $("#CellModalBody").append(data);
+            $("#modalText").val(data);
             $("#CellModalLabel").append(name);
             });
+                $("#modalText").on('keyup', function (e) {
+                    if (e.keyCode == 13) {
+                        var cell_text = $("#modalText").val();
+                        send_cell_data(cell_text);
+                        $('#CellModal').modal('toggle');
+                    }
+                });
+
         });
+       function send_cell_data(text) {
+                $.post("/update_cell_text", {cell_id:id_in_db, cell_text:text});
+             }
     }
 }
 

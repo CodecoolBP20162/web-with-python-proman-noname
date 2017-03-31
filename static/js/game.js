@@ -40,12 +40,13 @@ function addCardFunction() {
 
     function clickListener(card) {
         card.addEventListener("click", function () {
-            if (previousid !== this.id) {
-                previousid=this.id;
+            if (previousid !== this.id && isNotFound(this.id)) {
+                console.log("beenegedett");
+                previousid = this.id;
                 flipCard(this);
                 var imageId = imageList[card.id];
                 if (opened === 2) {
-                    flipBackTwoOpenedCards()
+                    flipBackTwoOpenedCards();
                 }
                 opened += 1;
                 if (firstp === 0) {
@@ -65,6 +66,19 @@ function addCardFunction() {
     }
 }
 
+function isNotFound(id) {
+    var imageId=imageList[id];
+    console.log(imageId);
+    for (i=0;i<found.length;i++){
+        if (found[i]===imageId)
+        {
+            console.log("hamis");
+            return false
+        }
+    }
+    return true
+}
+
 function flipCard(card) {
     var thisClassList = card.classList;
     var cardBack = card.childNodes[1];
@@ -78,7 +92,7 @@ function flipBackTwoOpenedCards() {
     firstCardClass.remove("flipped");
     firstCardBlack.style.backgroundImage = '';
     secondCardClass.remove("flipped");
-    secondCardBack.style.backgroundImage='';
+    secondCardBack.style.backgroundImage = '';
     opened = 0;
     firstp = 0;
 }

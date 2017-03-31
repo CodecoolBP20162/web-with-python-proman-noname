@@ -52,5 +52,9 @@ function showSignUp(){
     $('#data_for_sign_up').slideToggle("slow");
 }
 
+function loadGame() {
+    window.location.replace("/mini_game");
+}
+
 
 

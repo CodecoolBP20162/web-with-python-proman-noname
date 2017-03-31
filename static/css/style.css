@@ -256,11 +256,13 @@
 }
 
 
-.card {
+.cell_card {
     text-align: center;
     line-height: 45px;
     vertical-align: middle;
+    background-color: #F0E68C;
 }
+
 
 #game_button{
     background-color: #ede5ce;

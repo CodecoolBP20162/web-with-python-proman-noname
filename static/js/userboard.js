@@ -38,7 +38,7 @@ function create_new_cell(){
 }
 
 function appendCell(cell) {
-    var html = "<div id=" + cell.order + " class='text-center pagination-centered card' data-toggle='modal' data-target='#CellModal' data-dbid=" + cell.id + ">" + cell.name + "</div>";
+    var html = "<div id=" + cell.order + " class='text-center pagination-centered card cell_card' data-toggle='modal' data-target='#CellModal' data-dbid=" + cell.id + ">" + cell.name + "</div>";
         $('#new').append(html)
 }
 
@@ -60,7 +60,7 @@ function showCards(board_id_in_db) {
 
 function renderCells(status, data) {
     for (i = 0; i < data.length; i++) {
-            var html = "<div class='text-center pagination-centered card ' id=" + (i + 1) + " data-dbid=" + data[i].id_in_db + " data-toggle='modal' data-target='#CellModal'>" + data[i].name + "</div>";
+            var html = "<div class='text-center pagination-centered card cell_card ' id=" + (i + 1) + " data-dbid=" + data[i].id_in_db + " data-toggle='modal' data-target='#CellModal'>" + data[i].name + "</div>";
             $('#' + status).append(html);
             addEventListenerToCell(data[i].id_in_db,data[i].name);
     };
